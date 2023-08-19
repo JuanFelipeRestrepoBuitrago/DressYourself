@@ -20,8 +20,8 @@ def login(request):
     if request.method == 'GET':
         return render(request, 'login.html')
     else:
-        user = request.POST.get('user', '')
-        password = request.POST.get('password', '')
+        user = request.POST.get('user')
+        password = request.POST.get('password')
         if not user or user == '' or user == ' ' or not password or password == '' or password == ' ':
             messages.error(request, 'Invalid username or password.')
             return redirect('login')
@@ -29,7 +29,7 @@ def login(request):
             username = User.objects.get(Q(username=user) | Q(email=user)).username
         user = authenticate(username=username, password=password)
         if user is not None:
-            login(request, user)
+            login(request=request, user=user)
             return HttpResponse('OK')
         else:
             messages.error(request, 'Invalid username or password.')
