@@ -28,7 +28,7 @@ python -m pip install django
 python -m pip install Pillow
 ```
 
-**sqlparse**> the used version was the 0.4.4
+**sqlparse**: the used version was the 0.4.4
 ```cmd
 python -m pip install sqlparse
 ```
