@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Outfit, Garment, User
 from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from .models import UploadedImage
 
 
 # Create your views here.
@@ -35,4 +37,13 @@ def login(request):
             messages.error(request, 'Invalid username or password.')
             return redirect('login')
 
+def upload_show_image(request):
+    image = None
 
+    if request.method == 'POST':
+        image = request.FILES.get('image')
+        if image:
+            uploaded_image = UploadedImage.objects.create(image=image)
+            return redirect('upload_show_image')
+
+    return render(request, 'upload_show_image.html', {'image': image})
