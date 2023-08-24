@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subir y Previsualizar Imagen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #image-preview {
+            max-width: 300px;
+            display: block;
+            margin: 15px auto; /* Alineación central horizontal */
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label.upload-button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        label.upload-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload and preview image</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="image-input" class="upload-button">Select Image</label>
+            <input type="file" name="image" accept="image/*" id="image-input" onchange="previewImage()">
+            <br>
+            <img id="image-preview">
+            <br>
+            <button type="submit">Upload Image</button>
+        </form>
+    </div>
+
+    <script>
+        function previewImage() {
+            var imageInput = document.getElementById('image-input');
+            var imagePreview = document.getElementById('image-preview');
+            imagePreview.style.display = 'block';
+
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                imagePreview.src = event.target.result;
+            }
+            reader.readAsDataURL(imageInput.files[0]);
+        }
+    </script>
+</body>
+</html>

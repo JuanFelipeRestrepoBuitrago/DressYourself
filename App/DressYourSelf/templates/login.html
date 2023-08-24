@@ -1,0 +1,31 @@
+{% extends 'base/base_no_nav.html' %}
+
+{% block content %}
+	<main class="main-container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="messages alert-{{ message.tags }}">
+                    <p class="message">{{ message }}</p>
+                    <i class="fa-solid fa-times"></i>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="container">
+            <form action="" method="POST" class="login-form">
+                {% csrf_token %}
+                <div class="form-row">
+                    <label for="user">User</label>
+                    <input type="text" name="user" id="user" placeholder="Type Username or Email" required>
+                </div>
+                <div class="form-row">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Type Password" required>
+                </div>
+                <div class="form-row">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+            <p class="signup-link">Don't have an account? <a href="#{#{% url 'signup' %}#}">Sign up</a></p>
+        </div>
+    </main>
+{% endblock %}

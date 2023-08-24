@@ -3,3 +3,5 @@ __pycache__/
 venv/
 media/
 db.sqlite3
+entorno/
+.DS_Store
