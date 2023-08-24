@@ -7,7 +7,6 @@ from django.contrib import messages
 from .models import Outfit, Garment, User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import UploadedImage
 
 
 # Create your views here.
