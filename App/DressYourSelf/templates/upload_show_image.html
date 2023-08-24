@@ -1,98 +1,121 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Subir y Previsualizar Imagen</title>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+      body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f0f0;
+        font-family: "Montserrat", sans-serif;
+      }
 
-        .container {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+      .container {
+        text-align: center;
+      }
 
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
+      .upload-box {
+        width: 400px;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      }
 
-        #image-preview {
-            max-width: 300px;
-            display: block;
-            margin: 15px auto; /* Alineación central horizontal */
-        }
+      .upload-label {
+        display: block;
+        font-size: 24px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        color: #333;
+      }
 
-        button[type="submit"] {
-            background-color: #007bff;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 15px;
-        }
+      .image-input {
+        display: none;
+      }
 
-        button[type="submit"]:hover {
-            background-color: #0056b3;
-        }
+      .uploaded-image {
+        max-width: 100%;
+        height: auto;
+        margin-top: 15px;
+        display: none;
+      }
 
-        input[type="file"] {
-            display: none;
-        }
+      .upload-another-button {
+        display: none;
+        margin-top: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 8px 15px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
 
-        label.upload-button {
-            background-color: #007bff;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        label.upload-button:hover {
-            background-color: #0056b3;
-        }
+      .upload-another-button:hover {
+        background-color: #0056b3;
+      }
     </style>
-</head>
-<body>
+    <title>Upload Image</title>
+  </head>
+  <body>
     <div class="container">
-        <h1>Upload and preview image</h1>
-
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <label for="image-input" class="upload-button">Select Image</label>
-            <input type="file" name="image" accept="image/*" id="image-input" onchange="previewImage()">
-            <br>
-            <img id="image-preview">
-            <br>
-            <button type="submit">Upload Image</button>
-        </form>
+      <div class="upload-box" id="uploadBox">
+        <label for="imageInput" class="upload-label">Upload image</label>
+        <input
+          type="file"
+          id="imageInput"
+          class="image-input"
+          accept="image/*"
+        />
+        <img
+          id="uploadedImage"
+          class="uploaded-image"
+          src=""
+          alt="Imagen subida"
+        />
+        <button id="uploadAnotherBtn" class="upload-another-button">
+          Upload another imagen
+        </button>
+      </div>
     </div>
 
     <script>
-        function previewImage() {
-            var imageInput = document.getElementById('image-input');
-            var imagePreview = document.getElementById('image-preview');
-            imagePreview.style.display = 'block';
+      const imageInput = document.getElementById("imageInput");
+      const uploadedImage = document.getElementById("uploadedImage");
+      const uploadAnotherBtn = document.getElementById("uploadAnotherBtn");
 
-            var reader = new FileReader();
-            reader.onload = function(event) {
-                imagePreview.src = event.target.result;
-            }
-            reader.readAsDataURL(imageInput.files[0]);
-        }
+      imageInput.addEventListener("change", function () {
+        const file = imageInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          uploadedImage.src = e.target.result;
+          uploadedImage.style.display = "block";
+          uploadAnotherBtn.style.display = "block";
+        };
+
+        reader.readAsDataURL(file);
+      });
+
+      uploadAnotherBtn.addEventListener("click", function () {
+        imageInput.value = "";
+
+        uploadedImage.src = "";
+        uploadedImage.style.display = "none";
+        uploadAnotherBtn.style.display = "none";
+      });
     </script>
-</body>
+  </body>
 </html>
