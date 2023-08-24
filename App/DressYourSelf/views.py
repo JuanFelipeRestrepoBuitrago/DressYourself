@@ -10,7 +10,6 @@ def home(request):
 def add_garment(request):
     if request.method == 'GET':
         categories = Garment.Category.choices
-        print(categories)
         return render(request, 'add_garment.html', {
             'categories': categories
         })
@@ -23,19 +22,17 @@ def add_garment(request):
         size = request.POST.get('size')
         color = request.POST.get('color')
         user = User.objects.get(username='root')
-        try:
-            garment = Garment.objects.create(
-                name=name,
-                image=image,
-                description=description,
-                category=category,
-                brand=brand,
-                size=size,
-                color=color,
-                user=user
-            )
+        
+        garment = Garment.objects.create(
+            name=name,
+            image=image,
+            description=description,
+            category=category,
+            brand=brand,
+            size=size,
+            color=color,
+            user=user
+        )
 
-            return HttpResponse('Garment added!')
-        except Exception as e:
-            return HttpResponse('Error adding garment: ' + str(e))
+        return HttpResponse(f'Garment {garment.name} added successfully!')
         

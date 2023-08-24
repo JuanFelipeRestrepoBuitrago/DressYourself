@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container">
-        <form action="" method="POST" class="card">
+        <form action="" method="POST" class="card" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 <label for="name">Name</label>
@@ -10,11 +10,11 @@
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" value="" class="form-control" id="description" placeholder="Enter the garment's description" required></textarea>
+                <textarea name="description" value="" class="form-control" id="description" placeholder="Enter the garment's description"></textarea>
             </div>
             <div class="form-group">
                 <label for="image">Image</label>
-                <input type="file" name="image" value="" class="form-control" id="image" placeholder="Enter the garment's image" required>
+                <input type="file" name="image" class="form-control" id="image" required>
             </div>
             <div class="form-group">
                 <label for="category">Category</label>
