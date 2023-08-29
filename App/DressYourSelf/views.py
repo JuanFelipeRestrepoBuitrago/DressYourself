@@ -20,7 +20,8 @@ def add_garment(request):
         categories = Garment.Category.choices
         return render(request, 'add_garment.html', {
             'categories': categories,
-            'cssName': '/css/add_garment.css'
+            'cssName': '/css/add_garment.css',
+            'jsName': '/js/add_garment.js'
         })
     elif request.method == 'POST':
         name = request.POST.get('name')
