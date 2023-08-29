@@ -42,8 +42,10 @@
                 <label for="color">Color</label>
                 <input type="text" name="color" value="" class="form-control" id="color" placeholder="Enter the garment's color">
             </div>
-            <a href="{% url 'home' %}" class="btn btn-danger">Cancel</a>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <div class="form-group">
+                <a href="{% url 'home' %}" class="btn btn-danger">Cancel</a>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
         </form>
     </div>
 {% endblock %}
