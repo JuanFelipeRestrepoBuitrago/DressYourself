@@ -19,7 +19,8 @@ def add_garment(request):
     if request.method == 'GET':
         categories = Garment.Category.choices
         return render(request, 'add_garment.html', {
-            'categories': categories
+            'categories': categories,
+            'cssName': '/css/add_garment.css'
         })
     elif request.method == 'POST':
         name = request.POST.get('name')

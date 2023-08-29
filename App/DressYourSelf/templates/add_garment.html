@@ -16,13 +16,25 @@
                 <label for="image">Image</label>
                 <input type="file" name="image" class="form-control" id="image" required>
             </div>
-            <div class="form-group">
+            <div class="form-group dropdown">
                 <label for="category">Category</label>
+                <div class="select form-control">
+                    <input type="text" class="selected" id="category" name="category" required disable>
+                    <div class="caret"></div>
+                </div>
+                <ul class="menu">
+                    <li class="active option-disabled">Select a category</li>
+                    {% for category in categories %}
+                        <li>{{ category.1 }}</li>
+                    {% endfor %}
+                </ul>
+                <!-- <label for="category">Category</label>
                 <select name="category" id="category" class="form-control" required>
+                    <option selected disabled>Select a category</option>
                     {% for category in categories %}
                         <option value="{{ category.0 }}">{{ category.1 }}</option>
                     {% endfor %}
-                </select>
+                </select> -->
             </div>
             <div class="form-group">
                 <label for="brand">Brand</label>
