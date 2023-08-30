@@ -34,7 +34,7 @@ body {
 }
 
 .card {
-  width: 500px;
+  width: 600px;
   height: auto;
   background-color: var(--white-color);
   border-radius: 10px;
@@ -42,7 +42,7 @@ body {
   overflow: hidden;
   padding: 40px 32px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.3fr;
   gap: 16px;
   margin: 100px 0;
 }
@@ -167,6 +167,13 @@ body {
 .btn-primary {
   background-color: var(--primary-color);
   color: var(--white-color);
+}
+
+@media (max-width:640px){
+  .card {
+    width: 500px;
+    grid-template-columns: 1fr 1.2fr;
+  }
 }
 
 @media (max-width: 540px){
