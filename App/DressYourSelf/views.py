@@ -14,6 +14,7 @@ def home(request):
     return HttpResponse('This is the home page!')
 
 
+@login_required
 # Create your views here.
 def add_garment(request):
     if request.method == 'GET':
@@ -31,7 +32,7 @@ def add_garment(request):
         brand = request.POST.get('brand')
         size = request.POST.get('size')
         color = request.POST.get('color')
-        user = User.objects.get(username='root')
+        user = request.user
         
         garment = Garment.objects.create(
             name=name,
@@ -49,7 +50,7 @@ def add_garment(request):
 
 # transaction.atomic() is used to rollback the database if an error occurs
 @transaction.atomic
-def login(request):
+def signin(request):
     """
     Login view for the application
     :param request: request object
