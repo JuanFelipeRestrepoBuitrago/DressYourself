@@ -1,6 +1,6 @@
 {% load static %}
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="{% static cssName %}">
 </head>
 <body>
+    <nav class="navbar" style="background-color: aqua;">
+        Esta es la navbar
+    </nav>
     {% block content %}
     {% endblock %}
 

@@ -1,0 +1,51 @@
+{% extends 'base/base_no_nav.html' %}
+
+{% block content %}
+    <div class="container">
+        <form action="" method="POST" class="card" enctype="multipart/form-data">
+            <h1 class="title">New Garment</h1>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" value="" class="form-control" id="name" placeholder="Enter the garment's name" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea name="description" value="" class="form-control" id="description" placeholder="Enter the garment's description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Image</label>
+                <label for="image" class="form-control image-review">
+                    <img id="imagePreview" src="" alt="Upload an Image">
+                </label>
+                <input type="file" name="image" id="image" accept="image/*" required hidden>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select name="category" id="category" class="form-control" required>
+                    <option disabled selected value="">Select a category</option>
+                    {% for category in categories %}
+                        <option value="{{ category.0 }}">{{ category.1 }}</option>
+                    {% endfor %}
+                </select>
+                <div class="caret"></div>
+            </div>
+            <div class="form-group">
+                <label for="brand">Brand</label>
+                <input type="text" name="brand" value="" class="form-control" id="brand" placeholder="Enter the garment's brand">
+            </div>
+            <div class="form-group">
+                <label for="size">Size</label>
+                <input type="text" name="size" value="" class="form-control" id="size" placeholder="Enter the garment's size">
+            </div>
+            <div class="form-group">
+                <label for="color">Color</label>
+                <input type="text" name="color" value="" class="form-control" id="color" placeholder="Enter the garment's color">
+            </div>
+            <div class="form-group">
+                <a href="{% url 'home' %}" class="btn btn-danger">Cancel</a>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

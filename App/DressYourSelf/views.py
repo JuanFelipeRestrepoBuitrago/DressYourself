@@ -7,13 +7,50 @@ from django.contrib import messages
 from .models import Outfit, Garment, User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import UploadedImage
 
 
 # Create your views here.
+def home(request):
+    return HttpResponse('This is the home page!')
+
+
+@login_required
+# Create your views here.
+def add_garment(request):
+    if request.method == 'GET':
+        categories = Garment.Category.choices
+        return render(request, 'add_garment.html', {
+            'categories': categories,
+            'cssName': '/css/add_garment.css',
+            'jsName': '/js/add_garment.js'
+        })
+    elif request.method == 'POST':
+        name = request.POST.get('name')
+        image = request.FILES.get('image')
+        description = request.POST.get('description')
+        category = request.POST.get('category')
+        brand = request.POST.get('brand')
+        size = request.POST.get('size')
+        color = request.POST.get('color')
+        user = request.user
+        
+        garment = Garment.objects.create(
+            name=name,
+            image=image,
+            description=description,
+            category=category,
+            brand=brand,
+            size=size,
+            color=color,
+            user=user
+        )
+
+        return HttpResponse(f'Garment {garment.name} added successfully!')
+    
+
 # transaction.atomic() is used to rollback the database if an error occurs
 @transaction.atomic
-def login(request):
+def signin(request):
     """
     Login view for the application
     :param request: request object

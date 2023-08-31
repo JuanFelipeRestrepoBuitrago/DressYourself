@@ -3,10 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet" />
     <style>
       body {
         margin: 0;
@@ -15,13 +12,13 @@
         align-items: center;
         min-height: 100vh;
         background-color: #f0f0f0;
-        font-family: "Montserrat", sans-serif;
+        font-family: 'Montserrat', sans-serif;
       }
-
+      
       .container {
         text-align: center;
       }
-
+      
       .upload-box {
         width: 400px;
         padding: 30px;
@@ -29,7 +26,7 @@
         border-radius: 15px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
       }
-
+      
       .upload-label {
         display: block;
         font-size: 24px;
@@ -37,18 +34,18 @@
         cursor: pointer;
         color: #333;
       }
-
+      
       .image-input {
         display: none;
       }
-
+      
       .uploaded-image {
         max-width: 100%;
         height: auto;
         margin-top: 15px;
         display: none;
       }
-
+      
       .upload-another-button {
         display: none;
         margin-top: 15px;
@@ -62,7 +59,7 @@
         cursor: pointer;
         font-size: 16px;
       }
-
+      
       .upload-another-button:hover {
         background-color: #0056b3;
       }
@@ -73,49 +70,37 @@
     <div class="container">
       <div class="upload-box" id="uploadBox">
         <label for="imageInput" class="upload-label">Upload image</label>
-        <input
-          type="file"
-          id="imageInput"
-          class="image-input"
-          accept="image/*"
-        />
-        <img
-          id="uploadedImage"
-          class="uploaded-image"
-          src=""
-          alt="Imagen subida"
-        />
-        <button id="uploadAnotherBtn" class="upload-another-button">
-          Upload another imagen
-        </button>
+        <input type="file" id="imageInput" class="image-input" accept="image/*" />
+        <img id="uploadedImage" class="uploaded-image" src="" alt="Imagen subida" />
+        <button id="uploadAnotherBtn" class="upload-another-button">Upload another imagen</button>
       </div>
     </div>
 
     <script>
-      const imageInput = document.getElementById("imageInput");
-      const uploadedImage = document.getElementById("uploadedImage");
-      const uploadAnotherBtn = document.getElementById("uploadAnotherBtn");
-
-      imageInput.addEventListener("change", function () {
-        const file = imageInput.files[0];
-        const reader = new FileReader();
-
+      const imageInput = document.getElementById('imageInput')
+      const uploadedImage = document.getElementById('uploadedImage')
+      const uploadAnotherBtn = document.getElementById('uploadAnotherBtn')
+      
+      imageInput.addEventListener('change', function () {
+        const file = imageInput.files[0]
+        const reader = new FileReader()
+      
         reader.onload = function (e) {
-          uploadedImage.src = e.target.result;
-          uploadedImage.style.display = "block";
-          uploadAnotherBtn.style.display = "block";
-        };
-
-        reader.readAsDataURL(file);
-      });
-
-      uploadAnotherBtn.addEventListener("click", function () {
-        imageInput.value = "";
-
-        uploadedImage.src = "";
-        uploadedImage.style.display = "none";
-        uploadAnotherBtn.style.display = "none";
-      });
+          uploadedImage.src = e.target.result
+          uploadedImage.style.display = 'block'
+          uploadAnotherBtn.style.display = 'block'
+        }
+      
+        reader.readAsDataURL(file)
+      })
+      
+      uploadAnotherBtn.addEventListener('click', function () {
+        imageInput.value = ''
+      
+        uploadedImage.src = ''
+        uploadedImage.style.display = 'none'
+        uploadAnotherBtn.style.display = 'none'
+      })
     </script>
   </body>
 </html>

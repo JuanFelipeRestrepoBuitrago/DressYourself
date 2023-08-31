@@ -21,13 +21,12 @@ class Garment(models.Model):
         COSTUME = 'C', _('Costume')
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='garments/')
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True)
     category = models.CharField(max_length=2, choices=Category.choices, default=Category.COSTUME)
-    brand = models.CharField(max_length=100, null=True, blank=True)
-    size = models.CharField(max_length=100, null=True, blank=True)
-    color = models.CharField(max_length=100, null=True, blank=True)
+    brand = models.CharField(max_length=100, null=True)
+    size = models.CharField(max_length=100, null=True)
+    color = models.CharField(max_length=100, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
     def __str__(self):
         return self.name
 
@@ -37,9 +36,9 @@ class Garment(models.Model):
 
 class Outfit(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True)
     garments = models.ManyToManyField(Garment)
-    image = models.ImageField(upload_to='outfits/', null=True, blank=True)
+    image = models.ImageField(upload_to='outfits/', null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -47,7 +46,3 @@ class Outfit(models.Model):
 
     class Meta:
         ordering = ['name']
-
-class UploadedImage(models.Model):
-    image = models.ImageField(upload_to='images/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
