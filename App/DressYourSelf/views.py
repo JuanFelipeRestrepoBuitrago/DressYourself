@@ -14,7 +14,6 @@ from django.db import IntegrityError
 
 
 # Create your views here.
-
 @login_required
 # Create your views here.
 def add_garment(request):

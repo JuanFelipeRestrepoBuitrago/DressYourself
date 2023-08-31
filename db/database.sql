@@ -20,8 +20,7 @@ DROP TABLE IF EXISTS dress_your_self.clothes;
 CREATE TABLE dress_your_self.clothes (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
-    description VARCHAR(500) NOT NULL,
-    image 
+    description VARCHAR(500) NOT NULL
 );
 
 
