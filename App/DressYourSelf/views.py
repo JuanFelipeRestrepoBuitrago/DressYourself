@@ -14,10 +14,6 @@ from django.db import IntegrityError
 
 
 # Create your views here.
-def home(request):
-    return HttpResponse('This is the home page!')
-
-
 @login_required
 # Create your views here.
 def add_garment(request):
