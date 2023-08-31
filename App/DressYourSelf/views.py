@@ -8,6 +8,10 @@ from .models import Outfit, Garment, User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.models import User
+from django.db import IntegrityError
+
 
 # Create your views here.
 def home(request):
@@ -51,28 +55,61 @@ def add_garment(request):
 # transaction.atomic() is used to rollback the database if an error occurs
 @transaction.atomic
 def signin(request):
-    """
-    Login view for the application
-    :param request: request object
-    :return: response with the login page
-    """
+    
     if request.method == 'GET':
-        return render(request, 'login.html')
+        return render(request,'signin.html', {
+            'form': AuthenticationForm
+        })
+    else: 
+        user = authenticate(
+            request, username=request.POST['username'], password =request.POST['password'])
+        if user is None: 
+            return render(request,'signin.html', {
+                'form': AuthenticationForm,
+                'error': 'Usuario o contraseña incorrecta'
+            })
+        else:
+            login(request, user)
+            return redirect('home')
+    
+def signUp(request):
+    if request.method == 'GET':
+        return render(request, 'signup.html',{
+        'form' : UserCreationForm
+        })
+        
     else:
-        user = request.POST.get('user')
-        password = request.POST.get('password')
-        if not user or user == '' or user == ' ' or not password or password == '' or password == ' ':
-            messages.error(request, 'Invalid username or password.')
-            return redirect('login')
-        else:
-            username = User.objects.get(Q(username=user) | Q(email=user)).username
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request=request, user=user)
-            return HttpResponse('OK')
-        else:
-            messages.error(request, 'Invalid username or password.')
-            return redirect('login')
+        if request.POST['password1'] == request.POST['password2']:
+            #usamos try por si hay errores
+            try:
+                #registrar usuario
+                user=User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
+                #aca se guarda en la base de datos
+                user.save()
+                login(request, user)
+                return redirect('home')
+            except IntegrityError:
+                return render(request, 'signup.html',{ 
+                    'form' : UserCreationForm,
+                    "error": 'El usuario ya existe'
+                })
+                
+        return render(request, 'signup.html',{
+            'form': UserCreationForm,
+            "error": 'Las contraseñas no coinciden'
+        })
+    
+    
+    
+def home(request):
+    return render(request,'home.html')
+
+def tasks(request):
+    return render(request,'tasks.html')
+
+def signout(request):
+    logout(request)
+    return redirect('home')
 
 def upload_show_image(request):
     image = None
