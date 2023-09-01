@@ -3,7 +3,7 @@ from .views import *
 from . import views
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', views.home, name='home'),
     path('add_garment/', views.add_garment, name='add_garment'),
     # Route for handling the login page
     path('login', signin, name='login'),

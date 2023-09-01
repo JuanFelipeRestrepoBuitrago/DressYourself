@@ -7,11 +7,9 @@ from django.contrib import messages
 from .models import Outfit, Garment, User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-
 
 # Create your views here.
 @login_required
