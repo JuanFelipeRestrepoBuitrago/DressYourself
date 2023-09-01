@@ -7,7 +7,6 @@ from django.contrib import messages
 from .models import Outfit, Garment, User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
@@ -106,14 +105,3 @@ def tasks(request):
 def signout(request):
     logout(request)
     return redirect('home')
-
-def upload_show_image(request):
-    image = None
-
-    if request.method == 'POST':
-        image = request.FILES.get('image')
-        if image:
-            uploaded_image = UploadedImage.objects.create(image=image)
-            return redirect('upload_show_image')
-
-    return render(request, 'upload_show_image.html', {'image': image})
