@@ -45,6 +45,17 @@ def add_garment(request):
         )
 
         return HttpResponse(f'Garment {garment.name} added successfully!')
+
+
+@login_required
+def garments(request):
+    garments = Garment.objects.filter(user=request.user)
+    if request.method == 'GET':
+        return render(request, 'garments.html', {
+            'garments': garments,
+            'cssName': '/css/garments.css',
+            'jsName': '/js/garments.js'
+        })
     
 
 # transaction.atomic() is used to rollback the database if an error occurs

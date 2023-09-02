@@ -4,7 +4,8 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('add_garment/', views.add_garment, name='add_garment'),
+    path('garments/add', views.add_garment, name='add_garment'),
+    path('garments', views.garments, name='garments'),
     # Route for handling the login page
     path('login', signin, name='login'),
     path('signUp/', signUp, name = 'signUp'),
