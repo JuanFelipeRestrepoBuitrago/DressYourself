@@ -45,7 +45,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 16px;
 
     border: 1px solid rgba(0, 0, 0, 0.125);
     min-width: 0;
@@ -59,4 +58,22 @@ body {
     border-radius: 8px;
     object-fit: cover;
     cursor: pointer;
+}
+
+.card-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card-title {
+    font-size: var(--md);
+    font-weight: bold;
+    color: var(--black-color);
+}
+
+.card-text {
+    font-size: var(--sm);
+    color: var(--black-color);
 }

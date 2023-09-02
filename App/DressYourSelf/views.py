@@ -44,7 +44,7 @@ def add_garment(request):
             user=user
         )
 
-        return HttpResponse(f'Garment {garment.name} added successfully!')
+        return redirect('garments')
 
 
 @login_required

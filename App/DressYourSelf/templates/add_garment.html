@@ -25,7 +25,7 @@
                 <select name="category" id="category" class="form-control" required>
                     <option disabled selected value="">Select a category</option>
                     {% for category in categories %}
-                        <option value="{{ category.0 }}">{{ category.1 }}</option>
+                        <option value="{{ category.1 }}">{{ category.1 }}</option>
                     {% endfor %}
                 </select>
                 <div class="caret"></div>
