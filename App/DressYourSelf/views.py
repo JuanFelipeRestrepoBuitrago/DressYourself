@@ -46,9 +46,7 @@ def add_garment(request):
 # transaction.atomic() is used to rollback the database if an error occurs
 @transaction.atomic
 def signin(request):
-    if request.method == 'GET':
-        return render(request, 'signin.html')
-    elif request.method == 'POST':
+    if request.method == 'POST':
         username = CustomUser.objects.all().get(
             Q(username=request.POST.get('username')) | Q(email=request.POST.get('username'))).username
         user = authenticate(username=username, password=request.POST.get('password'))
@@ -58,10 +56,12 @@ def signin(request):
         else:
             login(request, user)
             return redirect('home')
+    else:
+        return 404
 
 
 @transaction.atomic
-def signUp(request):
+def authentication(request):
     if request.method == 'GET':
         return render(request, 'signup.html')
     elif request.method == 'POST':
@@ -76,11 +76,11 @@ def signUp(request):
                 login(request, user)
                 return redirect('home')
             except IntegrityError:
-                messages.warning(request, 'Username already taken or email already registered')
-                return redirect('signUp')
+                messages.info(request, 'Username already taken or email already registered')
+                return redirect('authentication')
         else:
             messages.error(request, 'Passwords must match')
-            return redirect('signUp')
+            return redirect('authentication')
 
 
 def home(request):
