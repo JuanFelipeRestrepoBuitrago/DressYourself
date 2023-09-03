@@ -1,52 +1,49 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/837b03d3a2.js" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" type="text/css" href={% static 'css/signUp.css' %} />
+    <link rel="icon" type="image/x-icon" href={% static 'images_page/logo.png' %} />
     <title>Login</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 100px;
-        }
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .card-title {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            font-weight: bold;
-        }
-        .signup-link {
-            margin-top: 20px;
-            text-align: center;
-        }
-    </style>
 </head>
+
 <body>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title text-center">Login</h2>
-                        <form action="/signin/" method="POST">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <div class="text-center mt-3">
-                                <button type="submit" class="btn btn-primary">SignIn</button>
-                            </div>
-                            <p class="signup-link">Don't have an account? <a href={% url 'signUp' %}>Sign up</a></p>
-                        </form>
+        <div class="forms-container">
+            <div class="signin-signup">
+                <form action="#" class="sign-in-form">
+                    <h2 class="title">Sign in</h2>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Username" />
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Password" />
+                    </div>
+                    <input type="submit" value="Login" class="btn solid" />
+                    <p class="social-text">Or Sign in with</p>
+                    <div class="social-media">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-x-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-google"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-apple"></i>
+                        </a>
+                    </div>
+                </form>
+                <img src={% static 'images_page/logo_bg.png' %} class="image" alt="" />
+    <script src={% static 'js/signUp.js' %}></script>
 </body>
+
 </html>
