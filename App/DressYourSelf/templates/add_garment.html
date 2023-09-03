@@ -1,7 +1,21 @@
 {% extends 'base/base_no_nav.html' %}
 
 {% block content %}
-    <div class="container">
+    <div class="main-container">
+        <div class="row">
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="alert alert-dismissible alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+                            <strong class="text-dark">{{ message }}</strong>
+                            <button type="button" class="btn btn-close" data-bs-dismiss="alert">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
         <form action="" method="POST" class="card" enctype="multipart/form-data">
             <h1 class="title">New Garment</h1>
             {% csrf_token %}

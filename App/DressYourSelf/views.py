@@ -19,32 +19,57 @@ def add_garment(request):
     if request.method == 'GET':
         categories = Garment.Category.choices
         return render(request, 'add_garment.html', {
+            'cssBootstrap': False,
+            'jsBootstrap': True,
             'categories': categories,
             'cssName': '/css/add_garment.css',
             'jsName': '/js/add_garment.js'
         })
     elif request.method == 'POST':
-        name = request.POST.get('name')
-        image = request.FILES.get('image')
-        description = request.POST.get('description')
-        category = request.POST.get('category')
-        brand = request.POST.get('brand')
-        size = request.POST.get('size')
-        color = request.POST.get('color')
-        user = request.user
+        try:
+            if request.POST.get('name') == '' or request.POST.get('name') is None or request.POST.get('name') == ' ':
+                raise IntegrityError('Name is required')
+            else:
+                name = request.POST.get('name')
+            if request.POST.get('category') == '' or request.POST.get('category') is None or request.POST.get('category') == ' ':
+                raise IntegrityError('Category is required')
+            else:
+                category = request.POST.get('category')
+            image = request.FILES.get('image')
+            if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get('description') == ' ':
+                description = None
+            else:
+                description = request.POST.get('description')
+            if request.POST.get('brand') == '' or request.POST.get('brand') is None or request.POST.get('brand') == ' ':
+                brand = None
+            else:
+                brand = request.POST.get('brand')
+            if request.POST.get('size') == '' or request.POST.get('size') is None or request.POST.get('size') == ' ':
+                size = None
+            else:
+                size = request.POST.get('size')
+            if request.POST.get('color') == '' or request.POST.get('color') is None or request.POST.get('color') == ' ':
+                color = None
+            else:
+                color = request.POST.get('color')
+            user = request.user
         
-        garment = Garment.objects.create(
-            name=name,
-            image=image,
-            description=description,
-            category=category,
-            brand=brand,
-            size=size,
-            color=color,
-            user=user
-        )
 
-        return redirect('garments')
+            garment = Garment.objects.create(
+                name=name,
+                image=image,
+                description=description,
+                category=category,
+                brand=brand,
+                size=size,
+                color=color,
+                user=user
+            )
+
+            return redirect('garments')
+        except IntegrityError as e:
+            messages.error(request, e)
+            return redirect('add_garment')
 
 
 @login_required
