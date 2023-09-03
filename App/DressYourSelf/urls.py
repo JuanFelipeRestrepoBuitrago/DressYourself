@@ -8,7 +8,7 @@ urlpatterns = [
     path('garments', views.garments, name='garments'),
     # Route for handling the login page
     path('login', signin, name='login'),
-    path('signUp/', signUp, name = 'signUp'),
-    path('logout/', signout, name = 'logout'),
+    path('signUp/', signUp, name='signUp'),
+    path('logout/', signout, name='logout'),
     path('signin/', signin, name='signin')
 ]
