@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'DressYourSelf',
 ]
 
+AUTH_USER_MODEL = 'DressYourSelf.CustomUser'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -128,9 +130,10 @@ MEDIA_URL = '/media/'
 # Path where media files are stored
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
 
-LOGIN_URL = '/signin'
+LOGIN_URL = '/authentication'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

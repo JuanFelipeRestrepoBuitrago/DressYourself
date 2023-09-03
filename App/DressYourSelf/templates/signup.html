@@ -12,18 +12,23 @@
 </head>
 
 <body>
+    {% if messages %}
+    <div class="container sign-up-mode">
+    {% else %}
     <div class="container">
+    {% endif %}
         <div class="forms-container">
             <div class="signin-signup">
-                <form action="#" class="sign-in-form">
+                <form action="{% url 'signin' %}" method="POST" class="sign-in-form">
+                    {% csrf_token %}
                     <h2 class="title">Sign in</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Username" />
+                        <input type="text" placeholder="Username" id="username" name="username"/>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Password" />
+                        <input type="password" placeholder="Password" id="password" name="password"/>
                     </div>
                     <input type="submit" value="Login" class="btn solid" />
                     <p class="social-text">Or Sign in with</p>
@@ -42,20 +47,33 @@
                         </a>
                     </div>
                 </form>
-                <form action="#" class="sign-up-form">
-                    <img src={% static 'images_page/logo_bg.png' %} class="image" alt="" />
+                <form action="{% url 'authentication' %}" method="POST" class="sign-up-form">
+                    {% csrf_token %}
+                    <img src={% static 'images_page/logo_bg.png' %} class="image" alt=""/>
                     <h2 class="title">Sign up</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Username" />
+                        <input type="text" placeholder="Username" id="username" name="username" required/>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" placeholder="Email" />
+                        <input type="email" placeholder="Email" id="email" name="email" required/>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-envelope"></i>
+                        <input type="text" placeholder="First Name" id="name" name="name" required/>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-envelope"></i>
+                        <input type="text" placeholder="Last Name" id="lastname" name="lastname" required/>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Password" />
+                        <input type="password" placeholder="Password" id="password" name="password"/>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Confirm Password" id="passwordc" name="passwordc"/>
                     </div>
                     <input type="submit" class="btn" value="Sign up" />
                     <p class="social-text">Or Sign up with</p>
