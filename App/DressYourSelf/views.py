@@ -1,14 +1,11 @@
-from django.shortcuts import render, redirect
 from django.db import transaction, IntegrityError
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Outfit, Garment, User
+from .models import Outfit, Garment, CustomUser
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.db import IntegrityError
 
 
 # Create your views here.
@@ -31,7 +28,7 @@ def add_garment(request):
         size = request.POST.get('size')
         color = request.POST.get('color')
         user = request.user
-        
+
         garment = Garment.objects.create(
             name=name,
             image=image,
@@ -44,20 +41,20 @@ def add_garment(request):
         )
 
         return HttpResponse(f'Garment {garment.name} added successfully!')
-    
+
 
 # transaction.atomic() is used to rollback the database if an error occurs
 @transaction.atomic
 def signin(request):
     if request.method == 'GET':
-        return render(request,'signin.html',)
+        return render(request, 'signin.html')
     elif request.method == 'POST':
-        username = User.objects.all().get(Q(username=request.POST.get('username')) | Q(email=request.POST.get('username'))).username
+        username = CustomUser.objects.all().get(
+            Q(username=request.POST.get('username')) | Q(email=request.POST.get('username'))).username
         user = authenticate(username=username, password=request.POST.get('password'))
-        if user is None: 
-            return render(request, 'signin.html', {
-                'error': 'Usuario o contraseña incorrecta'
-            })
+        if user is None:
+            messages.error(request, 'Usuario o contraseña incorrecta')
+            return redirect('signin')
         else:
             login(request, user)
             return redirect('home')
@@ -71,29 +68,24 @@ def signUp(request):
         if request.POST['password'] == request.POST['passwordc']:
             try:
                 # Creates a new user object
-                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'], email=request.POST['email'], first_name=request.POST['first_name'], last_name=request.POST['last_name'])
+                user = CustomUser.objects.create(username=request.POST['username'], password=request.POST['password'],
+                                                 email=request.POST['email'], first_name=request.POST['name'],
+                                                 last_name=request.POST['lastname'])
                 # Saves the user object
                 user.save()
                 login(request, user)
                 return redirect('home')
             except IntegrityError:
-                return render(request, 'signup.html',{ 
-                    'form' : UserCreationForm,
-                    "error": 'El usuario ya existe'
-                })
-                
-        return render(request, 'signup.html',{
-            'form': UserCreationForm,
-            "error": 'Las contraseñas no coinciden'
-        })
-    
-    
-    
-def home(request):
-    return render(request,'home.html')
+                messages.warning(request, 'Username already taken or email already registered')
+                return redirect('signUp')
+        else:
+            messages.error(request, 'Passwords must match')
+            return redirect('signUp')
 
-def tasks(request):
-    return render(request,'tasks.html')
+
+def home(request):
+    return render(request, 'home.html')
+
 
 def signout(request):
     logout(request)

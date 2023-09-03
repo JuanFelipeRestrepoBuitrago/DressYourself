@@ -1,6 +1,15 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+
+
+class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True, max_length=254)
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.username
 
 
 # Create your models here.
@@ -26,7 +35,8 @@ class Garment(models.Model):
     brand = models.CharField(max_length=100, null=True)
     size = models.CharField(max_length=100, null=True)
     color = models.CharField(max_length=100, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.name
 
@@ -39,7 +49,7 @@ class Outfit(models.Model):
     description = models.TextField(null=True)
     garments = models.ManyToManyField(Garment)
     image = models.ImageField(upload_to='outfits/', null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

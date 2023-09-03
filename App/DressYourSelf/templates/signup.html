@@ -12,7 +12,11 @@
 </head>
 
 <body>
+    {% if messages %}
+    <div class="container sign-up-mode">
+    {% else %}
     <div class="container">
+    {% endif %}
         <div class="forms-container">
             <div class="signin-signup">
                 <form action="{% url 'signin' %}" method="POST" class="sign-in-form">
@@ -57,7 +61,7 @@
                     </div>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <input type="text" placeholder="Name" id="name" name="name" required/>
+                        <input type="text" placeholder="First Name" id="name" name="name" required/>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
