@@ -47,7 +47,7 @@
                         </a>
                     </div>
                 </form>
-                <form action="{% url 'signUp' %}" method="POST" class="sign-up-form">
+                <form action="{% url 'authentication' %}" method="POST" class="sign-up-form">
                     {% csrf_token %}
                     <img src={% static 'images_page/logo_bg.png' %} class="image" alt=""/>
                     <h2 class="title">Sign up</h2>
