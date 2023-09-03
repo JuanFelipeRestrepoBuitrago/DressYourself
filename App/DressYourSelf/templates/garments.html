@@ -11,6 +11,16 @@
                         <h3 class="card-title">{{ garment.name }}</h3>
                         <p class="card-text">{{ garment.category }}</p>
                     </div>
+                    <div class="inactive garment-info">
+                        <p data-garment-id="{{ garment.id }}">{{ garment.id }}</p>
+                        <p data-garment-name="{{ garment.name }}">{{ garment.name }}</p>
+                        <p data-garment-category="{{ garment.category }}">{{ garment.category }}</p>
+                        <p data-garment-image="{{ garment.image.url }}">{{ garment.image.url }}</p>
+                        <p data-garment-description="{{ garment.description }}">{{ garment.description }}</p>
+                        <p data-garment-brand="{{ garment.brand }}">{{ garment.brand }}</p>
+                        <p data-garment-size="{{ garment.size }}">{{ garment.size }}</p>
+                        <p data-garment-color="{{ garment.color }}">{{ garment.color }}</p>
+                    </div>
                 </div>
             {% endfor %}
         </div>

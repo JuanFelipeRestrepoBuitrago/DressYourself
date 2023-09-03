@@ -15,14 +15,21 @@
 }
 
 *, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  background-color: var(--background-color);
-  font-family: "Montserrat", sans-serif;
+    background-color: var(--background-color);
+    font-family: "Montserrat", sans-serif;
+    background-image: url(../images_page/hero-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.inactive {
+    display: none;
 }
 
 .main-container {
@@ -31,7 +38,7 @@ body {
 
 .garments-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 240px);
+    grid-template-columns: repeat(auto-fill, 180px);
     gap: 26px;
     place-content: center;
 }
@@ -40,12 +47,13 @@ body {
     background-color: var(--white-color);
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 16px;
     box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     justify-content: center;
-
+    position: relative;
+    cursor: pointer;
     border: 1px solid rgba(0, 0, 0, 0.125);
     min-width: 0;
     word-wrap: break-word;
@@ -55,16 +63,20 @@ body {
 .card-img {
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 16px;
     object-fit: cover;
-    cursor: pointer;
 }
 
 .card-body {
-    padding: 16px;
+    padding: 8px 16px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    background-color: var(--background-hover-color);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-radius: 16px;
 }
 
 .card-title {
