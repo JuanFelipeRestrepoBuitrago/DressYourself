@@ -4,88 +4,81 @@
 <html>
 
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="DressYourSelf" />
+   <meta charset="utf-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+   <meta name="keywords" content="" />
+   <meta name="description" content="" />
+   <meta name="author" content="DressYourSelf" />
 
-  <title>DressYourSelf</title>
+   <title>DressYourSelf</title>
 
-  <link rel="icon" type="image/x-icon" href={% static 'images_page/logo.png' %} />
+   <link rel="icon" type="image/x-icon" href={% static 'images_page/logo.png' %} />
 
 
-  <link rel="stylesheet" type="text/css" href={% static 'css/bootstrap.css' %} />
+   <link rel="stylesheet" type="text/css" href={% static 'css/bootstrap.css' %} />
 
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
 
-  <link href={% static 'css/home.css' %} rel="stylesheet" type="text/css" media="all" />
+   <link href={% static 'css/home.css' %} rel="stylesheet" type="text/css" media="all" />
 
 </head>
 
 <body>
 
-  <div class="hero_area">
-    <!-- header section strats -->
-    <header class="header_section">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand ml-auto" href="index.html">
-            <span>
-              DressYourSelf
-            </span>
-          </a>
-        </nav>
-      </div>
-    </header>
-          </a>
-          </a>
-    </header>
-    <div style="float: righ; margin-left: 990px;">
-      <img src={% static 'images_page/logo-blur.png' %} alt="blur logo" width="150" height="150">
-  </div>
-    <!-- end header section -->
+   <div class="hero_area">
+      <!-- header section strats -->
+      <header class="header_section">
+         <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container ">
+               <a class="navbar-brand ml-auto" href="#">
+                  <span>
+                     DressYourSelf
+                  </span>
+               </a>
+            </nav>
+         </div>
+         <div style="float: righ; margin-left: 990px;">
+            <img src={% static 'images_page/logo-blur.png' %} alt="blur-logo" width="150" height="150">
+         </div>
+         <!-- end header section -->
 
-    <!-- Sección con imagen fija -->
-<section class="slider_section">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="detail_box">
-          <h1>
-            Welcome  to DressYourSelf
-          </h1>
-          <p>
-            With this page you can try on outfits virtually </p>
-          <div class="btn-box">
-            <a href="{% url 'signin' %}" class="btn-1">
-              Login
-            </a>
-            <a href="{% url 'signUp' %}" class="btn-2">
-              Sign Up
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="img-box">
-         <img src={% static 'images_page/virtual2.png' %} alt="" style="max-width: 100%; height: auto;">
-      </div>
-      </div>
-    </div>
-  </div>
-</section>
-  </div>
-    <!-- footer section -->
-    <section class="container-fluid footer_section">
+         <!-- Sección con imagen fija -->
+         <section class="slider_section">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="detail_box">
+                        <h1>
+                           Welcome to DressYourSelf
+                        </h1>
+                        <p>
+                           With this page you can try on outfits virtually </p>
+                        <div class="btn-box">
+                           <a href="{% url 'signUp' %}" class="btn-2">
+                              Let's go
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="img-box">
+                        <img src={% static 'images_page/virtual4.png' %} alt="" style="max-width: 100%; height: auto;">
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+   </div>
+   <!-- footer section -->
+   <section class="container-fluid footer_section">
       <div class="container">
-        <p style="color: black;">&copy; </span> 2023 All Rights Reserved By
-          <a href="https://html.design/" style="color: black;">DressYourSelf TEAM</a>
-      </p>
+         <p style="color: black;">&copy; </span> 2023 All Rights Reserved By
+            <a href="#" style="color: black;">DressYourSelf TEAM</a>
+         </p>
       </div>
-    </section>
-  </div>
+   </section>
+   </div>
 
 </body>
 
