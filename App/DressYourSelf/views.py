@@ -46,16 +46,22 @@ def add_garment(request):
 # transaction.atomic() is used to rollback the database if an error occurs
 @transaction.atomic
 def signin(request):
-    if request.method == 'POST':
-        username = CustomUser.objects.all().get(
-            Q(username=request.POST.get('username')) | Q(email=request.POST.get('username'))).username
-        user = authenticate(username=username, password=request.POST.get('password'))
-        if user is None:
-            messages.error(request, 'Usuario o contraseña incorrecta')
+    if request.method == 'GET':
+        return render(request, 'signin.html')
+    elif request.method == 'POST':
+        try:
+            username = CustomUser.objects.all().get(
+                Q(username=request.POST.get('username')) | Q(email=request.POST.get('username'))).username
+            user = authenticate(username=username, password=request.POST.get('password'))
+            if user is None:
+                messages.error(request, 'Invalid username or password')
+                return redirect('signin')
+            else:
+                login(request, user)
+                return redirect('home')
+        except CustomUser.DoesNotExist:
+            messages.error(request, 'User does not exist')
             return redirect('signin')
-        else:
-            login(request, user)
-            return redirect('home')
     else:
         return 404
 
