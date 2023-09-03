@@ -8,7 +8,6 @@ from .models import Outfit, Garment, User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
 from django.db import IntegrityError
 
 
@@ -50,36 +49,30 @@ def add_garment(request):
 # transaction.atomic() is used to rollback the database if an error occurs
 @transaction.atomic
 def signin(request):
-    
     if request.method == 'GET':
-        return render(request,'signin.html', {
-            'form': AuthenticationForm
-        })
-    else: 
-        user = authenticate(
-            request, username=request.POST['username'], password =request.POST['password'])
+        return render(request,'signin.html',)
+    elif request.method == 'POST':
+        username = User.objects.all().get(Q(username=request.POST.get('username')) | Q(email=request.POST.get('username'))).username
+        user = authenticate(username=username, password=request.POST.get('password'))
         if user is None: 
-            return render(request,'signin.html', {
-                'form': AuthenticationForm,
+            return render(request, 'signin.html', {
                 'error': 'Usuario o contraseña incorrecta'
             })
         else:
             login(request, user)
             return redirect('home')
-    
+
+
+@transaction.atomic
 def signUp(request):
     if request.method == 'GET':
-        return render(request, 'signup.html',{
-        'form' : UserCreationForm
-        })
-        
-    else:
-        if request.POST['password1'] == request.POST['password2']:
-            #usamos try por si hay errores
+        return render(request, 'signup.html')
+    elif request.method == 'POST':
+        if request.POST['password'] == request.POST['passwordc']:
             try:
-                #registrar usuario
-                user=User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
-                #aca se guarda en la base de datos
+                # Creates a new user object
+                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'], email=request.POST['email'], first_name=request.POST['first_name'], last_name=request.POST['last_name'])
+                # Saves the user object
                 user.save()
                 login(request, user)
                 return redirect('home')
