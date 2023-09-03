@@ -98,20 +98,11 @@ a:focus {
    margin: 5px;
 }
 
-.slider_section .detail_box .btn-box a.btn-1 {
-   display: inline-block;
-   padding: 8px 0;
-   background-color: #0d6630;
-   color: #ffffff;
-   border-radius: 30px;
-}
-
-
 .slider_section .detail_box .btn-box a.btn-2 {
    display: inline-block;
    padding: 8px 0;
-   background-color: #ffffff;
-   color: #000000;
+   background-color: #5995fd;
+   color: #ffffff;
    border-radius: 30px;
 }
 
