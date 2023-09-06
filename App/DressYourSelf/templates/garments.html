@@ -13,40 +13,33 @@
                     </div>
                     <div class="inactive garment-info">
                         <p data-garment-id="{{ garment.id }}">{{ garment.id }}</p>
-                        <p data-garment-name="{{ garment.name }}">{{ garment.name }}</p>
-                        <p data-garment-category="{{ garment.category }}">{{ garment.category }}</p>
-                        <p data-garment-image="{{ garment.image.url }}">{{ garment.image.url }}</p>
-                        <p data-garment-description="{{ garment.description }}">{{ garment.description }}</p>
-                        <p data-garment-brand="{{ garment.brand }}">{{ garment.brand }}</p>
-                        <p data-garment-size="{{ garment.size }}">{{ garment.size }}</p>
-                        <p data-garment-color="{{ garment.color }}">{{ garment.color }}</p>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
-    <aside class="garment-detail">
+    <aside class="garment-detail inactive">
         <div class="close-garment-detail">
             <i class="fas fa-times"></i>
         </div>
         {% for garment in garments %}
-        	<div class="garment-detail-content inactive">
+        	<div class="garment-detail-content inactive" data-garment-id="{{ garment.id }}">
                 <img src="{{ garment.image.url }}" alt="Bike">
 
-                <div class="product-info">
-                    <p>{{ garment.name }}</p>
-                    <p>{{ garment.category }}</p>
+                <div class="garment-info">
+                    <p class="garment-name">{{ garment.name }}</p>
+                    <p class="garment-category">{{ garment.category }}</p>
                     {% if garment.description %}
-                        <p>{{ garment.description }}</p>
+                        <p class="garment-description">{{ garment.description }}</p>
                     {% endif %}
                     {% if garment.brand %}
-                        <p>{{ garment.brand }}</p>
+                        <p class="garment-brand">{{ garment.brand }}</p>
                     {% endif %}
                     {% if garment.size %}
-                        <p>{{ garment.size }}</p>
+                        <p class="garment-size">{{ garment.size }}</p>
                     {% endif %}
                     {% if garment.color %}
-                        <p>{{ garment.color }}</p>
+                        <p class="garment-color">{{ garment.color }}</p>
                     {% endif %}
 
                     <div class="buttons-container">

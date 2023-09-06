@@ -24,6 +24,9 @@
 body {
     background-color: var(--background-color);
     font-family: "Montserrat", sans-serif;
+    background-image: url(../images_page/hero-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .main-container {

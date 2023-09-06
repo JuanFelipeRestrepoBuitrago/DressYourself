@@ -138,26 +138,26 @@ body {
     border-radius: 0 0 12px 12px;
 }
 
-.garment-detail .product-info {
+.garment-detail .garment-info {
     margin: 12px 12px 0 12px;
     padding: 0;
 }
 
-.garment-detail .product-info p:nth-child(1) {
+.garment-detail .garment-info p:nth-child(1) {
     font-weight: bold;
     font-size: var(--md);
     margin-top: 0;
     margin-bottom: 4px;
 }
 
-.garment-detail .product-info p:nth-child(2) {
+.garment-detail .garment-info p:nth-child(2) {
     color: var(--black-color);
     font-size: var(--md);
     margin-top: 0;
     margin-bottom: 36px;
 }
 
-.garment-detail .product-info p:nth-child(3) {
+.garment-detail .garment-info p:nth-child(3) {
     color: var(--black-color);
     font-size: var(--sm);
     margin-top: 0;
