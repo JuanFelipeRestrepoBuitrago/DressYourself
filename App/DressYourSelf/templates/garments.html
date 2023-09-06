@@ -25,4 +25,48 @@
             {% endfor %}
         </div>
     </div>
+    <aside class="garment-detail">
+        <div class="close-garment-detail">
+            <i class="fas fa-times"></i>
+        </div>
+        {% for garment in garments %}
+        	<div class="garment-detail-content inactive">
+                <img src="{{ garment.image.url }}" alt="Bike">
+
+                <div class="product-info">
+                    <p>{{ garment.name }}</p>
+                    <p>{{ garment.category }}</p>
+                    {% if garment.description %}
+                        <p>{{ garment.description }}</p>
+                    {% endif %}
+                    {% if garment.brand %}
+                        <p>{{ garment.brand }}</p>
+                    {% endif %}
+                    {% if garment.size %}
+                        <p>{{ garment.size }}</p>
+                    {% endif %}
+                    {% if garment.color %}
+                        <p>{{ garment.color }}</p>
+                    {% endif %}
+
+                    <div class="buttons-container">
+                        <form action="{% url 'edit_garment' id=garment.id %}" method="GET">
+                            {% csrf_token %}
+                            <button name="update" type="submit" class="btn btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </form>
+                        <form action="{% url 'garments' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{ garment.id }}">
+                            <button name="delete" type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </aside>
 {% endblock %}

@@ -15,8 +15,6 @@ def add_garment(request):
     if request.method == 'GET':
         categories = Garment.Category.choices
         return render(request, 'add_garment.html', {
-            'cssBootstrap': False,
-            'jsBootstrap': True,
             'categories': categories,
             'cssName': '/css/add_garment.css',
             'jsName': '/js/add_garment.js'
@@ -69,13 +67,41 @@ def add_garment(request):
 
 
 @login_required
+@transaction.atomic
 def garments(request):
     garments = Garment.objects.filter(user=request.user)
     if request.method == 'GET':
         return render(request, 'garments.html', {
+            'cssBootstrap': False,
+            'jsBootstrap': False,
             'garments': garments,
             'cssName': '/css/garments.css',
             'jsName': '/js/garments.js'
+        })
+    elif request.method == 'POST':
+        try:
+            id = request.POST.get('id')
+            garment = Garment.objects.get(id=id)
+            garment.delete()
+            return redirect('garments')
+        except IntegrityError as e:
+            messages.error(request, e)
+            return redirect('garments')
+
+
+@login_required
+@transaction.atomic
+def edit_garment(request, id):
+    garment = Garment.objects.get(id=id)
+    if request.method == 'GET':
+        categories = Garment.Category.choices
+        return render(request, 'edit_garment.html', {
+            'categories': categories,
+            'cssBootstrap': False,
+            'jsBootstrap': True,
+            'garment': garment,
+            'cssName': '/css/add_garment.css',
+            'jsName': '/js/add_garment.js'
         })
 
 # transaction.atomic() is used to rollback the database if an error occurs
