@@ -11,7 +11,9 @@
   --background-hover-color: #e6e6e6;
   --background-color: #f0f0f0;
   --primary-color: #4d79ff;
+    --primary-hover-color: #3c5eff;
   --danger-color: #ff4d4d;
+    --danger-hover-color: #ff3c3c;
 }
 
 *, *::before, *::after {
@@ -93,7 +95,7 @@ body {
 .garment-detail {
     width: 320px;
     padding-bottom: 24px;
-    position: fixed;
+    position: absolute;
     z-index: 2;
     right: 0;
     top: 0;
@@ -143,29 +145,74 @@ body {
     padding: 0;
 }
 
-.garment-detail .garment-info p:nth-child(1) {
+.garment-detail .garment-info .garment-name {
     font-weight: bold;
-    font-size: var(--md);
+    font-size: var(--lg);
     margin-top: 0;
     margin-bottom: 4px;
 }
 
-.garment-detail .garment-info p:nth-child(2) {
+.garment-detail .garment-info .garment-category {
     color: var(--black-color);
     font-size: var(--md);
     margin-top: 0;
-    margin-bottom: 36px;
+    margin-bottom: 16px;
 }
 
-.garment-detail .garment-info p:nth-child(3) {
+.garment-detail .garment-info .garment-description {
+    color: var(--black-color);
+    font-size: var(--xs);
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.garment-optional {
     color: var(--black-color);
     font-size: var(--sm);
     margin-top: 0;
-    margin-bottom: 36px;
+    margin-bottom: 8px;
 }
 
-.add-to-cart-button {
+.buttons-container {
+    margin-top: 40px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.buttons-container :nth-child(n){
+    width: auto;
+    height: auto;
+}
+
+.btn {
+    border-radius: 8px;
+    border: none;
+    padding: 8px 12px;
+    font-size: var(--lg);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: var(--white-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover-color);
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-hover-color);
 }

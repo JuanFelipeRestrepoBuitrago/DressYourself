@@ -33,13 +33,13 @@
                         <p class="garment-description">{{ garment.description }}</p>
                     {% endif %}
                     {% if garment.brand %}
-                        <p class="garment-brand">{{ garment.brand }}</p>
+                        <p class="garment-optional"><strong>Brand:</strong> {{ garment.brand }}</p>
                     {% endif %}
                     {% if garment.size %}
-                        <p class="garment-size">{{ garment.size }}</p>
+                        <p class="garment-optional"><strong>Size:</strong> {{ garment.size }}</p>
                     {% endif %}
                     {% if garment.color %}
-                        <p class="garment-color">{{ garment.color }}</p>
+                        <p class="garment-optional"><strong>Color:</strong> {{ garment.color }}</p>
                     {% endif %}
 
                     <div class="buttons-container">
