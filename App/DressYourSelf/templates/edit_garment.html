@@ -16,8 +16,8 @@
                 </ul>
             {% endif %}
         </div>
-        <form action="" method="POST" class="card" enctype="multipart/form-data">
-            <h1 class="title">New Garment</h1>
+        <form action="{% url 'edit_garment' id=garment.id %}" method="POST" class="card" enctype="multipart/form-data">
+            <h1 class="title">Edit Garment</h1>
             {% csrf_token %}
             <div class="form-group">
                 <label for="name">Name</label>
@@ -25,15 +25,14 @@
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" class="form-control" id="description" placeholder="Enter the garment's description">{% if garment.description %}{{ garment.description }}{% endif %}
-                </textarea>
+                <textarea name="description" class="form-control" id="description" placeholder="Enter the garment's description">{% if garment.description %}{{ garment.description }}{% endif %}</textarea>
             </div>
             <div class="form-group">
                 <label>Image</label>
                 <label for="image" class="form-control image-review">
                     <img id="imagePreview" src="{{ garment.image.url }}" alt="Upload an Image">
                 </label>
-                <input type="file" name="image" id="image" accept="image/*" required hidden>
+                <input type="file" name="image" id="image" accept="image/*" hidden>
             </div>
             <div class="form-group">
                 <label for="category">Category</label>

@@ -50,16 +50,13 @@
                     {% endif %}
 
                     <div class="buttons-container">
-                        <form action="{% url 'edit_garment' id=garment.id %}" method="GET">
-                            {% csrf_token %}
-                            <button name="update" type="submit" class="btn btn-primary">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </form>
+                        <a href="{% url 'edit_garment' garment.id %}" class="btn btn-primary">
+                            <i class="fas fa-edit"></i>
+                        </a>
                         <form action="{% url 'garments' %}" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="id" value="{{ garment.id }}">
-                            <button name="delete" type="submit" class="btn btn-danger">
+                            <button type="submit" class="btn btn-danger">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </form>
