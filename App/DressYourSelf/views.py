@@ -20,32 +20,144 @@ def add_garment(request):
             'jsName': '/js/add_garment.js'
         })
     elif request.method == 'POST':
-        name = request.POST.get('name')
-        image = request.FILES.get('image')
-        description = request.POST.get('description')
-        category = request.POST.get('category')
-        brand = request.POST.get('brand')
-        size = request.POST.get('size')
-        color = request.POST.get('color')
-        user = request.user
+        try:
+            if request.POST.get('name') == '' or request.POST.get('name') is None or request.POST.get('name') == ' ':
+                raise IntegrityError('Name is required')
+            else:
+                name = request.POST.get('name')
+            if request.POST.get('category') == '' or request.POST.get('category') is None or request.POST.get('category') == ' ':
+                raise IntegrityError('Category is required')
+            else:
+                category = request.POST.get('category')
+            image = request.FILES.get('image')
+            if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get('description') == ' ':
+                description = None
+            else:
+                description = request.POST.get('description')
+            if request.POST.get('brand') == '' or request.POST.get('brand') is None or request.POST.get('brand') == ' ':
+                brand = None
+            else:
+                brand = request.POST.get('brand')
+            if request.POST.get('size') == '' or request.POST.get('size') is None or request.POST.get('size') == ' ':
+                size = None
+            else:
+                size = request.POST.get('size')
+            if request.POST.get('color') == '' or request.POST.get('color') is None or request.POST.get('color') == ' ':
+                color = None
+            else:
+                color = request.POST.get('color')
+            user = request.user
+        
 
-        garment = Garment.objects.create(
-            name=name,
-            image=image,
-            description=description,
-            category=category,
-            brand=brand,
-            size=size,
-            color=color,
-            user=user
-        )
+            garment = Garment.objects.create(
+                name=name,
+                image=image,
+                description=description,
+                category=category,
+                brand=brand,
+                size=size,
+                color=color,
+                user=user
+            )
 
-        return HttpResponse(f'Garment {garment.name} added successfully!')
+            return redirect('garments')
+        except IntegrityError as e:
+            messages.error(request, e)
+            return redirect('add_garment')
+
+
+@login_required
+@transaction.atomic
+def garments(request):
+    garments = Garment.objects.filter(user=request.user)
+    if request.method == 'GET':
+        return render(request, 'garments.html', {
+            'cssBootstrap': False,
+            'jsBootstrap': False,
+            'garments': garments,
+            'cssName': '/css/garments.css',
+            'jsName': '/js/garments.js'
+        })
+    elif request.method == 'POST':
+        try:
+            id = request.POST.get('id')
+            garment = Garment.objects.get(id=id)
+            garment.delete()
+            return redirect('garments')
+        except IntegrityError as e:
+            messages.error(request, e)
+            return redirect('garments')
+
+
+@login_required
+@transaction.atomic
+def edit_garment(request, id):
+    garment = Garment.objects.get(id=id)
+    if request.method == 'GET':
+        categories = Garment.Category.choices
+        return render(request, 'edit_garment.html', {
+            'categories': categories,
+            'cssBootstrap': False,
+            'jsBootstrap': True,
+            'garment': garment,
+            'cssName': '/css/add_garment.css',
+            'jsName': '/js/add_garment.js'
+        })
+    elif request.method == 'POST':
+        try:
+            if request.POST.get('name') == '' or request.POST.get('name') is None or request.POST.get('name') == ' ':
+                raise IntegrityError('Name is required')
+            else:
+                name = request.POST.get('name')
+            if request.POST.get('category') == '' or request.POST.get('category') is None or request.POST.get(
+                    'category') == ' ':
+                raise IntegrityError('Category is required')
+            else:
+                category = request.POST.get('category')
+            if request.FILES.get('image') is None:
+                image = garment.image
+            else:
+                image = request.FILES.get('image')
+            if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
+                    'description') == ' ':
+                description = None
+            else:
+                description = request.POST.get('description')
+            if request.POST.get('brand') == '' or request.POST.get('brand') is None or request.POST.get('brand') == ' ':
+                brand = None
+            else:
+                brand = request.POST.get('brand')
+            if request.POST.get('size') == '' or request.POST.get('size') is None or request.POST.get('size') == ' ':
+                size = None
+            else:
+                size = request.POST.get('size')
+            if request.POST.get('color') == '' or request.POST.get('color') is None or request.POST.get('color') == ' ':
+                color = None
+            else:
+                color = request.POST.get('color')
+            user = request.user
+
+            garment.name = name
+            garment.image = image
+            garment.description = description
+            garment.category = category
+            garment.brand = brand
+            garment.size = size
+            garment.color = color
+
+            garment.save()
+
+            return redirect('garments')
+        except IntegrityError as e:
+            messages.error(request, e)
+            return redirect('edit_garment')
 
 
 # transaction.atomic() is used to rollback the database if an error occurs
 @transaction.atomic
 def signin(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'GET':
         return render(request, 'signin.html')
     elif request.method == 'POST':
@@ -61,13 +173,15 @@ def signin(request):
                 return redirect('home')
         except CustomUser.DoesNotExist:
             messages.error(request, 'User does not exist')
-            return redirect('signin')
+            return redirect('authentication')
     else:
         return 404
 
 
 @transaction.atomic
 def authentication(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'GET':
         return render(request, 'signup.html')
     elif request.method == 'POST':

@@ -1,0 +1,88 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <div class="main-container">
+        <div class="search-container">
+            <input type="text" id="search" class="input" placeholder="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="garments-container">
+            {% for garment in garments %}
+            	<div class="card garment-card">
+                    <img src="{{ garment.image.url }}" class="card-img" alt="Garment Image">
+
+                    <div class="card-body garment-details">
+                        <h3 class="card-title">{{ garment.name }}</h3>
+                        <p class="card-text">{{ garment.category }}</p>
+                    </div>
+                    <div class="inactive garment-info">
+                        <p data-garment-id="{{ garment.id }}">{{ garment.id }}</p>
+                        <p data-garment-name="{{ garment.name }}">{{ garment.name }}</p>
+                        <p data-garment-category="{{ garment.category }}">{{ garment.category }}</p>
+                        {% if garment.description %}
+                            <p data-garment-description="{{ garment.description }}">{{ garment.description }}</p>
+                        {% else %}
+                            <p data-garment-description="">No description available</p>
+                        {% endif %}
+                        {% if garment.brand %}
+                            <p data-garment-brand="{{ garment.brand }}">{{ garment.brand }}</p>
+                        {% else %}
+                            <p data-garment-brand="">No brand available</p>
+                        {% endif %}
+                        {% if garment.size %}
+                            <p data-garment-size="{{ garment.size }}">{{ garment.size }}</p>
+                        {% else %}
+                            <p data-garment-size="">No size available</p>
+                        {% endif %}
+                        {% if garment.color %}
+                            <p data-garment-color="{{ garment.color }}">{{ garment.color }}</p>
+                        {% else %}
+                            <p data-garment-color="">No color available</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <aside class="garment-detail inactive">
+        <div class="close-garment-detail">
+            <i class="fas fa-times"></i>
+        </div>
+        {% for garment in garments %}
+        	<div class="garment-detail-content inactive" data-garment-id="{{ garment.id }}">
+                <img src="{{ garment.image.url }}" alt="Bike">
+
+                <div class="garment-info">
+                    <p class="garment-name">{{ garment.name }}</p>
+                    <p class="garment-category">{{ garment.category }}</p>
+                    {% if garment.description %}
+                        <p class="garment-description">{{ garment.description }}</p>
+                    {% endif %}
+                    {% if garment.brand %}
+                        <p class="garment-optional"><strong>Brand:</strong> {{ garment.brand }}</p>
+                    {% endif %}
+                    {% if garment.size %}
+                        <p class="garment-optional"><strong>Size:</strong> {{ garment.size }}</p>
+                    {% endif %}
+                    {% if garment.color %}
+                        <p class="garment-optional"><strong>Color:</strong> {{ garment.color }}</p>
+                    {% endif %}
+
+                    <div class="buttons-container">
+                        <a href="{% url 'edit_garment' garment.id %}" class="btn btn-primary">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="{% url 'garments' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{ garment.id }}">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </aside>
+{% endblock %}
