@@ -2,6 +2,10 @@
 
 {% block content %}
     <div class="main-container">
+        <div class="search-container">
+            <input type="text" id="search" class="input" placeholder="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
         <div class="garments-container">
             {% for garment in garments %}
             	<div class="card garment-card">
@@ -13,6 +17,28 @@
                     </div>
                     <div class="inactive garment-info">
                         <p data-garment-id="{{ garment.id }}">{{ garment.id }}</p>
+                        <p data-garment-name="{{ garment.name }}">{{ garment.name }}</p>
+                        <p data-garment-category="{{ garment.category }}">{{ garment.category }}</p>
+                        {% if garment.description %}
+                            <p data-garment-description="{{ garment.description }}">{{ garment.description }}</p>
+                        {% else %}
+                            <p data-garment-description="">No description available</p>
+                        {% endif %}
+                        {% if garment.brand %}
+                            <p data-garment-brand="{{ garment.brand }}">{{ garment.brand }}</p>
+                        {% else %}
+                            <p data-garment-brand="">No brand available</p>
+                        {% endif %}
+                        {% if garment.size %}
+                            <p data-garment-size="{{ garment.size }}">{{ garment.size }}</p>
+                        {% else %}
+                            <p data-garment-size="">No size available</p>
+                        {% endif %}
+                        {% if garment.color %}
+                            <p data-garment-color="{{ garment.color }}">{{ garment.color }}</p>
+                        {% else %}
+                            <p data-garment-color="">No color available</p>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
