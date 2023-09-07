@@ -35,7 +35,7 @@ body {
 }
 
 .main-container {
-    margin: 26px 4px 0 4px;
+    margin: 26px 8px 0 8px;
 }
 
 .search-container {
@@ -258,4 +258,41 @@ body {
 
 .btn-danger:hover {
     background-color: var(--danger-hover-color);
+}
+
+@media screen and (max-width: 580px) {
+    .garments-container {
+        grid-template-columns: repeat(auto-fill, 140px);
+    }
+
+    .card-title {
+        font-size: var(--sm);
+    }
+
+    .card-text {
+        font-size: var(--xs);
+    }
+
+    .garment-detail {
+        width: 100%;
+        border-left: none;
+    }
+}
+
+@media (max-width: 425px) {
+    .garment-detail .garment-info .garment-name {
+        font-size: var(--md);
+    }
+
+    .garment-detail .garment-info .garment-category {
+        font-size: var(--sm);
+    }
+
+    .garment-detail .garment-info .garment-description {
+        font-size: var(--xxs);
+    }
+
+    .garment-optional {
+        font-size: var(--xxs);
+    }
 }
