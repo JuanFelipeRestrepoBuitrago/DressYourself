@@ -16,49 +16,53 @@
                 </ul>
             {% endif %}
         </div>
-        <form action="" method="POST" class="card" enctype="multipart/form-data">
-            <h1 class="title">New Garment</h1>
+        <form action="{% url 'edit_garment' id=garment.id %}" method="POST" class="card" enctype="multipart/form-data">
+            <h1 class="title">Edit Garment</h1>
             {% csrf_token %}
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" name="name" value="" class="form-control" id="name" placeholder="Enter the garment's name" required>
+                <input type="text" name="name" value="{{ garment.name }}" class="form-control" id="name" placeholder="Enter the garment's name" required>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" class="form-control" id="description" placeholder="Enter the garment's description"></textarea>
+                <textarea name="description" class="form-control" id="description" placeholder="Enter the garment's description">{% if garment.description %}{{ garment.description }}{% endif %}</textarea>
             </div>
             <div class="form-group">
                 <label>Image</label>
                 <label for="image" class="form-control image-review">
-                    <img id="imagePreview" src="" alt="Upload an Image">
+                    <img id="imagePreview" src="{{ garment.image.url }}" alt="Upload an Image">
                 </label>
-                <input type="file" name="image" id="image" accept="image/*" required hidden>
+                <input type="file" name="image" id="image" accept="image/*" hidden>
             </div>
             <div class="form-group">
                 <label for="category">Category</label>
                 <select name="category" id="category" class="form-control" required>
-                    <option disabled selected value="">Select a category</option>
+                    <option disabled>Select a category</option>
                     {% for category in categories %}
-                        <option value="{{ category.1 }}">{{ category.1 }}</option>
+                        {% if garment.category == category.1 %}
+                            <option value="{{ category.1 }}" selected>{{ category.1 }}</option>
+                        {% else %}
+                            <option value="{{ category.1 }}">{{ category.1 }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
                 <div class="caret"></div>
             </div>
             <div class="form-group">
                 <label for="brand">Brand</label>
-                <input type="text" name="brand" value="" class="form-control" id="brand" placeholder="Enter the garment's brand">
+                <input type="text" name="brand" value="{% if garment.brand %}{{ garment.brand }}{% endif %}" class="form-control" id="brand" placeholder="Enter the garment's brand">
             </div>
             <div class="form-group">
                 <label for="size">Size</label>
-                <input type="text" name="size" value="" class="form-control" id="size" placeholder="Enter the garment's size">
+                <input type="text" name="size" value="{% if garment.size %}{{ garment.size }}{% endif %}" class="form-control" id="size" placeholder="Enter the garment's size">
             </div>
             <div class="form-group">
                 <label for="color">Color</label>
-                <input type="text" name="color" value="" class="form-control" id="color" placeholder="Enter the garment's color">
+                <input type="text" name="color" value="{% if garment.color %}{{ garment.color }}{% endif %}" class="form-control" id="color" placeholder="Enter the garment's color">
             </div>
             <div class="form-group">
-                <a href="{% url 'home' %}" class="btn btn-danger">Cancel</a>
-                <button type="submit" class="btn btn-primary">Add</button>
+                <a href="{% url 'garments' %}" class="btn btn-danger">Cancel</a>
+                <button type="submit" class="btn btn-primary">Edit</button>
             </div>
         </form>
     </div>
