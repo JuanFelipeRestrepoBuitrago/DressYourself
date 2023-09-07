@@ -38,6 +38,49 @@ body {
     margin: 26px 4px 0 4px;
 }
 
+.search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 26px;
+    width: 100%;
+}
+
+.search-container input{
+    width: 100%;
+    outline: none;
+    height: 40px;
+    border-radius: 8px 0 0 8px;
+    border: 1px solid var(--background-border-color);
+    background-color: var(--white-color);
+    padding: 4px 0 4px 12px;
+    font-size: var(--sm);
+    color: var(--black-color);
+}
+
+.search-container:focus input, .search-container:hover input {
+    border: 1px solid var(--background-hover-color);
+}
+
+.search-container i {
+    color: var(--black-color);
+    font-size: var(--md);
+    padding: 4px 8px;
+    border-radius: 0 8px 8px 0;
+    transition: all 0.2s ease-in-out;
+    background-color: var(--background-color);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-container:focus i, .search-container:hover i {
+    background-color: var(--background-hover-color);
+    cursor: pointer;
+}
+
 .garments-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, 180px);
