@@ -61,7 +61,7 @@ form.sign-in-form {
 }
 
 .title {
-  font-size: 2.2rem;
+  font-size: 3.2rem;
   color: #aaa;
   margin-bottom: 10px;
 }
@@ -167,9 +167,9 @@ form.sign-in-form {
   height: 2000px;
   width: 2000px;
   top: -10%;
-  right: 48%;
+  right: 40%;
   transform: translateY(-50%);
-  background-image: linear-gradient(-45deg, #4481eb 0%, #04befe 100%);
+  background-image: linear-gradient(-55deg, #4481eb 0%, #04befe 100%);
   transition: 1.8s ease-in-out;
   border-radius: 50%;
   z-index: 6;
@@ -184,7 +184,7 @@ form.sign-in-form {
 .panel {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-around;
   text-align: center;
   z-index: 6;
@@ -192,12 +192,12 @@ form.sign-in-form {
 
 .left-panel {
   pointer-events: all;
-  padding: 3rem 17% 2rem 12%;
+  padding: 0rem 17% 2rem 12%;
 }
 
 .right-panel {
   pointer-events: none;
-  padding: 3rem 12% 2rem 17%;
+  padding: 0rem 12% 2rem 17%;
 }
 
 .panel .content {
@@ -374,28 +374,14 @@ form.sign-in-form {
   }
 }
 
-@media (max-width: 250px) {
-  form {
-    padding: 0 1.5rem;
-  }
+@media (max-width: 768px) {
+  /* Estilos para pantallas pequeñas */
+}
 
-  .image {
-    display: none;
-  }
-  .panel .content {
-    padding: 0.5rem 1rem;
-  }
-  .container {
-    padding: 1.5rem;
-  }
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Estilos para pantallas medianas */
+}
 
-  .container:before {
-    bottom: 72%;
-    left: 50%;
-  }
-
-  .container.sign-up-mode:before {
-    bottom: 28%;
-    left: 50%;
-  }
+@media (min-width: 1025px) {
+  /* Estilos para pantallas grandes */
 }
