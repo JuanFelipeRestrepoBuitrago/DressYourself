@@ -49,7 +49,6 @@
                 </form>
                 <form action="{% url 'authentication' %}" method="POST" class="sign-up-form">
                     {% csrf_token %}
-                    <img src={% static 'images_page/logo_bg.png' %} class="image" alt=""/>
                     <h2 class="title">Sign up</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
@@ -98,9 +97,10 @@
         <div class="panels-container">
             <div class="panel left-panel">
                 <div class="content">
+                    <img src={% static 'images_page/logo_bg.png' %} class="image" alt=""/>  
                     <h3>New here ?</h3>
                     <p>
-                        Discover a world of possibilities with us. Join our community today and experience the best in virtual clothes.
+                        Discover a world of possibilities with us.
                     </p>
                     <button class="btn transparent" id="sign-up-btn">
                         Sign up
@@ -109,9 +109,10 @@
             </div>
             <div class="panel right-panel">
                 <div class="content">
+                    <img src={% static 'images_page/logo_bg.png' %} class="image" alt=""/>
                     <h3>One of us ?</h3>
                     <p>
-                        Login to your account and continue enjoying everything we have to offer.
+                        Login to your account and continue enjoying.
                     </p>
                     <button class="btn transparent" id="sign-in-btn">
                         Sign in
