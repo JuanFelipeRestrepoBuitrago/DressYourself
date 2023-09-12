@@ -38,9 +38,66 @@
                 <a href="{% url 'home' %}" class="btn btn-danger">Cancel</a>
                 <button type="submit" class="btn btn-primary">Add</button>
             </div>
+
             <div class="form-group">
                 <label for="tops">Top</label>
                 <input type="text" name="tops" value="" hidden id="tops">
+                <div class="garments-container tops">
+                    <button class="btn btn-input" type="button" id>
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="garments">
+{#                            <div class="garment">#}
+{#                                <img src="{{ top.image.url }}" alt="{{ top.name }}">#}
+{#                                <p>{{ top.name }}</p>#}
+{#                            </div>#}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bottoms">Bottom</label>
+                <input type="text" name="bottoms" value="" hidden id="bottoms">
+                <div class="garments-container bottoms">
+                    <button class="btn btn-input" type="button" id>
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="garments">
+{#                            <div class="garment">#}
+{#                                <img src="{{ top.image.url }}" alt="{{ top.name }}">#}
+{#                                <p>{{ top.name }}</p>#}
+{#                            </div>#}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="footwears">Footwear</label>
+                <input type="text" name="footwears" value="" hidden id="footwears">
+                <div class="garments-container footwears">
+                    <button class="btn btn-input" type="button" id>
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="garments">
+{#                            <div class="garment">#}
+{#                                <img src="{{ top.image.url }}" alt="{{ top.name }}">#}
+{#                                <p>{{ top.name }}</p>#}
+{#                            </div>#}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="others">Others</label>
+                <input type="text" name="others" value="" hidden id="others">
+                <div class="garments-container bottoms">
+                    <button class="btn btn-input" type="button" id>
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="garments">
+{#                            <div class="garment">#}
+{#                                <img src="{{ top.image.url }}" alt="{{ top.name }}">#}
+{#                                <p>{{ top.name }}</p>#}
+{#                            </div>#}
+                    </div>
+                </div>
             </div>
         </form>
     </div>
