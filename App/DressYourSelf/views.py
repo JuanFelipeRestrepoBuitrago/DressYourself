@@ -16,6 +16,8 @@ def add_garment(request):
         categories = Garment.Category.choices
         return render(request, 'add_garment.html', {
             'categories': categories,
+            'cssBootstrap': False,
+            'jsBootstrap': True,
             'cssName': '/css/add_garment.css',
             'jsName': '/js/add_garment.js'
         })
@@ -151,6 +153,41 @@ def edit_garment(request, id):
         except IntegrityError as e:
             messages.error(request, e)
             return redirect('edit_garment')
+
+
+@login_required
+# Create your views here.
+def add_outfit(request):
+    if request.method == 'GET':
+        return render(request, 'add_outfit.html', {
+            'cssBootstrap': False,
+            'jsBootstrap': True,
+            'cssName': '/css/add_outfit.css',
+            'jsName': '/js/add_outfit.js'
+        })
+    elif request.method == 'POST':
+        try:
+            if request.POST.get('name') == '' or request.POST.get('name') is None or request.POST.get('name') == ' ':
+                raise IntegrityError('Name is required')
+            else:
+                name = request.POST.get('name')
+            image = request.FILES.get('image')
+            if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
+                    'description') == ' ':
+                description = None
+            else:
+                description = request.POST.get('description')
+
+            garment = Garment.objects.create(
+                name=name,
+                image=image,
+                description=description
+            )
+
+            return redirect('home')
+        except IntegrityError as e:
+            messages.error(request, e)
+            return redirect('add_outfit')
 
 
 # transaction.atomic() is used to rollback the database if an error occurs
