@@ -212,10 +212,16 @@ def signout(request):
     logout(request)
     return redirect('home')
 
-@login_required
 def closet_outfits(request):
+    # Obtener el parámetro de búsqueda desde la URL
+    search_query = request.GET.get('search')
+
     # Recuperar todos los outfits del usuario actual
     outfits = Outfit.objects.filter(user=request.user)
+
+    if search_query:
+        # Si se proporciona un parámetro de búsqueda, filtrar los outfits por nombre
+        outfits = outfits.filter(name__icontains=search_query)
 
     if request.method == 'POST':
         # Si se envía una solicitud POST, significa que se solicitó eliminar un outfit
@@ -224,4 +230,4 @@ def closet_outfits(request):
         outfit_to_delete.delete()
         return redirect('closet_outfits')
 
-    return render(request, 'closet_outfits.html', {'outfits': outfits})
+    return render(request, 'closet_outfits.html', {'outfits': outfits, 'search_query': search_query})
