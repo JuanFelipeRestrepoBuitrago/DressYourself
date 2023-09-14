@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 
+
 # Create your views here.
 @login_required
 # Create your views here.
@@ -210,3 +211,23 @@ def home(request):
 def signout(request):
     logout(request)
     return redirect('home')
+
+def closet_outfits(request):
+    # Obtener el parámetro de búsqueda desde la URL
+    search_query = request.GET.get('search')
+
+    # Recuperar todos los outfits del usuario actual
+    outfits = Outfit.objects.filter(user=request.user)
+
+    if search_query:
+        # Si se proporciona un parámetro de búsqueda, filtrar los outfits por nombre
+        outfits = outfits.filter(name__icontains=search_query)
+
+    if request.method == 'POST':
+        # Si se envía una solicitud POST, significa que se solicitó eliminar un outfit
+        outfit_id = request.POST.get('outfit_id')
+        outfit_to_delete = Outfit.objects.get(id=outfit_id)
+        outfit_to_delete.delete()
+        return redirect('closet_outfits')
+
+    return render(request, 'closet_outfits.html', {'outfits': outfits, 'search_query': search_query})
