@@ -63,7 +63,9 @@
                   </div>
                   <div class="col-md-6">
                      <div class="img-box">
-                        <img src={% static 'images_page/virtual4.png' %} alt="" style="max-width: 100%; height: auto;">
+                        <img id="virtual3" src="{% static 'images_page/virtual4.png' %}" alt=""
+                           style="max-width: 100%; height: auto;">
+
                      </div>
                   </div>
                </div>
@@ -81,5 +83,38 @@
    </div>
 
 </body>
+<script>
+   window.onload = function () {
+      var image = document.getElementById('virtual3');
+
+      var initialScale = 0.8;
+      image.style.transform = 'scale(' + initialScale + ')';
+
+      var targetScale = 1.0;
+
+      var duration = 3000;
+
+      var startTime = null;
+
+      function animateImage(timestamp) {
+         if (!startTime) {
+            startTime = timestamp;
+         }
+
+         var progress = (timestamp - startTime) / duration;
+         if (progress >= 1) {
+            image.style.transform = 'scale(' + targetScale + ')';
+         } else {
+
+            var newScale = initialScale + progress * (targetScale - initialScale);
+            image.style.transform = 'scale(' + newScale + ')';
+
+            requestAnimationFrame(animateImage);
+         }
+      }
+
+      requestAnimationFrame(animateImage);
+   };
+</script>
 
 </html>

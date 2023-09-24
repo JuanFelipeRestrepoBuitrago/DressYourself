@@ -1,6 +1,6 @@
 body {
    font-family: "Poppins", sans-serif;
-   color: #0c0c0c;
+   color: #090909;
    background-color: #ffffff;
 }
 
@@ -8,11 +8,11 @@ body {
 .hero_area {   
    height: 105vh;
    position: relative;
-   background-image: url("../images_page/hero-bg.png");
+   background-image: url("../images_page/12.gif");
    background-size: cover;
    background-position: bottom;
+   background-repeat: repeat;
 }
-
 
 
 .header_section .container-fluid {

@@ -11,6 +11,7 @@ urlpatterns = [
     path('authentication/', authentication, name='authentication'),
     path('signin/', signin, name='signin'),
     path('logout/', signout, name='logout'),
-     path('closet_outfits/', closet_outfits, name='closet_outfits'),    
+    path('closet_outfits/', closet_outfits, name='closet_outfits'),    
+    path('new-home/', new_home, name='new-home'),
     
 ]

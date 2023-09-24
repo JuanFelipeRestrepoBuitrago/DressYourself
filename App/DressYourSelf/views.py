@@ -158,7 +158,7 @@ def edit_garment(request, id):
 @transaction.atomic
 def signin(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('new-home')
     if request.method == 'GET':
         return render(request, 'signin.html')
     elif request.method == 'POST':
@@ -171,7 +171,7 @@ def signin(request):
                 return redirect('signin')
             else:
                 login(request, user)
-                return redirect('home')
+                return redirect('new-home')
         except CustomUser.DoesNotExist:
             messages.error(request, 'User does not exist')
             return redirect('authentication')
@@ -211,6 +211,9 @@ def home(request):
 def signout(request):
     logout(request)
     return redirect('home')
+
+def new_home(request):
+    return render(request, 'new-home.html')
 
 def closet_outfits(request):
     # Obtener el parámetro de búsqueda desde la URL

@@ -1,0 +1,183 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+   <meta name="keywords" content="" />
+   <meta name="description" content="" />
+   <meta name="author" content="DressYourSelf" />
+
+   <title>DressYourSelf</title>
+
+   <link rel="icon" type="image/x-icon" href={% static 'images_page/logo.png' %} />
+   <script src="https://kit.fontawesome.com/e4712713f1.js" crossorigin="anonymous"></script>
+   <link rel="stylesheet" type="text/css" href={% static 'css/bootstrap.css' %} />
+
+   <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+
+   <link href={% static 'css/home.css' %} rel="stylesheet" type="text/css" media="all" />
+   <style>
+      .body {
+          font-family: "Poppins", sans-serif;
+      }
+      .navbar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 20px;
+          border: none;
+      }
+
+      .navbar-logo {
+          font-size: 20px;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          text-decoration: none;
+      }
+
+      .navbar li {
+          font-size: 16px;
+      }
+
+      .navbar a {
+          text-decoration: none;
+      }
+
+      .appear-animation {
+         opacity: 0;
+         transform: translateY(20px);
+         transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+     }
+
+     .appeared {
+         opacity: 1;
+         transform: translateY(0);
+     }
+     
+   </style>
+</head>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   <a class="navbar-brand navbar-logo" href="{% url "new-home" %}">DressYourSelf</a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+   </button>
+   <div class="collapse navbar-collapse" id="navbarNav">
+       <ul class="navbar-nav ml-auto">
+           <li class="nav-item">
+               <a class="nav-link" href="{% url "new-home" %}"><i class="fas fa-home"></i> Home</a>
+           </li>
+           <li class="nav-item">
+               <a class="nav-link" href="{% url "garments" %}"><i class="fas fa-tshirt"></i> Garments</a>
+           </li>
+           <li class="nav-item">
+               <a class="nav-link" href="{% url "add_garment" %}"><i class="fas fa-upload"></i> Upload Image</a>
+           </li>
+           {% if user.is_authenticated %}
+               <li class="nav-item">
+                   <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+               </li>
+           {% else %}
+               <li class="nav-item">
+                   <a class="nav-link" href="/signUp"><i class="fas fa-user-plus"></i> SignUp</a>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" href="/signin"><i class="fas fa-sign-in-alt"></i> Login</a>
+               </li>
+           {% endif %}
+       </ul>
+   </div>
+</nav>
+<body>
+
+   <div class="hero_area">
+      <!-- header section strats -->
+      <header class="header_section">
+         <div class="container-fluid">
+         </div>
+         <div style="float: righ; margin-left: 965px;">
+            <img src={% static 'images_page/logo-blur.png' %} alt="blur-logo" width="150" height="150">
+         </div>
+         <!-- end header section -->
+
+         <!-- Sección con imagen fija -->
+         <section class="slider_section">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="detail_box">
+                        <h1>
+                           Get the most out of DressYourSelf
+                        </h1>
+                        <p>
+                           We want you to take advantage of our application, so here we leave you with what you can do with it.</p>
+                        <div class="btn-box">
+                           <a href="{% url 'authentication' %}" class="btn-2">
+                              Learn more
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="img-box">
+                        <img id="virtual3" src="{% static 'images_page/virtual3.png' %}" alt="" style="max-width: 100%; height: auto;">
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+   </div>
+   <!-- footer section -->
+   <section class="container-fluid footer_section">
+      <div class="container">
+         <p style="color: black;">&copy; </span> 2023 All Rights Reserved By
+            <a href="#" style="color: black;">DressYourSelf TEAM</a>
+         </p>
+      </div>
+   </section>
+   </div>
+
+</body>
+   <script>
+      window.onload = function() {
+        var image = document.getElementById('virtual3');
+    
+       
+        var initialScale = 0.8; 
+        image.style.transform = 'scale(' + initialScale + ')';
+    
+      
+        var targetScale = 1.0;  
+    
+        var duration = 3000; 
+    
+        var startTime = null;
+    
+        function animateImage(timestamp) {
+          if (!startTime) {
+            startTime = timestamp;
+          }
+    
+          var progress = (timestamp - startTime) / duration;
+          if (progress >= 1) {
+            image.style.transform = 'scale(' + targetScale + ')';
+          } else {
+            var newScale = initialScale + progress * (targetScale - initialScale);
+            image.style.transform = 'scale(' + newScale + ')';
+    
+            requestAnimationFrame(animateImage);
+          }
+        }
+
+        requestAnimationFrame(animateImage);
+      };
+    </script>
+    
+</html>
