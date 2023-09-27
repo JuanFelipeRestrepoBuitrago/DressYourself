@@ -270,3 +270,44 @@ body {
     padding: 16px;
     font-size: var(--md);
 }
+
+@media (max-width: 640px) {
+    .card {
+        width: 500px;
+        grid-template-columns: 1fr 1.2fr;
+    }
+}
+
+@media (max-width: 540px) {
+    .main-container {
+        padding: 0 20px;
+    }
+    .card {
+        width: 100%;
+        /*display: flex;*/
+        /*flex-direction: column;*/
+        grid-template-columns: 1fr ;
+    }
+
+    .form-group:nth-child(4) {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+    }
+
+    .form-group:nth-child(5) {
+        grid-column: 1 / 2;
+        grid-row: 8 / 9;
+    }
+
+    .image-review {
+        max-height: 300px;
+    }
+
+    #imagePreview {
+        max-height: 300px;
+    }
+
+    .btn {
+        width: 40%;
+    }
+}
