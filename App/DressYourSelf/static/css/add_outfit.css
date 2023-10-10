@@ -390,12 +390,9 @@ body {
     margin-bottom: 16px;
 }
 
-.modal .btn-close {
+.btn-close {
     border-radius: 50%;
     background-color: var(--white-color);
-    height: auto;
-    width: auto;
-    padding: 4px 6px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -404,19 +401,24 @@ body {
     right: 12px;
 }
 
-.modal .btn-close i {
+.modal .btn-close {
+    height: auto;
+    width: auto;
+    padding: 4px 6px;
+}
+
+.btn-close i {
     color: var(--black-color);
     font-size: var(--md);
     transition: color 0.3s;
 }
 
-.modal .btn-close:hover i, .modal .btn-close:focus i {
+.btn-close:hover i, .btn-close:focus i {
     color: var(--white-color);
 }
 
-.modal .btn-close:hover, .modal .btn-close:focus {
+.btn-close:hover, .btn-close:focus {
     background-color: var(--black-hover-color);
-    opacity: 0.5;
 }
 
 .garments {
@@ -439,6 +441,33 @@ body {
     border-radius: 0 0 15px 15px;
     padding: 4px 12px;
     font-size: var(--xs);
+}
+
+.modal .garment .btn-close {
+    background-color: var(--background-color);
+    height: auto;
+    width: auto;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 35%;
+    right: 35%;
+}
+
+.modal .garment .btn-close i {
+    color: var(--black-color);
+    font-size: var(--xl);
+    transition: color 0.3s;
+}
+
+.garment .btn-close:hover i, .modal .garment .btn-close:focus i {
+    color: var(--white-color);
+}
+
+.garment .btn-close:hover, .modal .garment .btn-close:focus {
+    background-color: var(--black-hover-color);
 }
 
 @media (max-width: 960px) {

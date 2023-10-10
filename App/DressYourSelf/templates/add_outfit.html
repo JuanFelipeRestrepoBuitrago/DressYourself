@@ -65,6 +65,9 @@
                                         >
                                         <img src="{{ top.image.url }}" alt="{{ top.name }}">
                                         <p>{{ top.name }}</p>
+                                        <button type="button" class="btn btn-close inactive">
+                                            <i class="fas fa-times"></i>
+                                        </button>
                                     </div>
                                 {% endfor %}
                             </div>
@@ -79,29 +82,34 @@
                 <label for="bottoms">Bottom</label>
                 <input type="text" name="bottoms" value="" hidden id="bottoms">
                 <div class="garments-container bottoms">
-                    <button class="btn btn-input" type="button" data-modal-button>
-                        <i class="fas fa-plus"></i>
-                    </button>
                     <div class="chosen-garments">
+                        <button class="btn btn-input" type="button" data-modal-button>
+                            <i class="fas fa-plus"></i>
+                        </button>
 {#                            <div class="garment">#}
 {#                                <img src="{{ top.image.url }}" alt="{{ top.name }}">#}
 {#                                <p>{{ top.name }}</p>#}
 {#                            </div>#}
                     </div>
 
-                    <dialog class="modal garments inactive">
+                    <dialog class="modal inactive">
                         <h3 class="title">Choose a Bottom</h3>
-                        <div class="garments">
-                            {% for bottom in bottoms %}
-                            	<div class="garment"
-                                    data-garment-id="{{ bottom.id }}"
-                                    data-garment-name="{{ bottom.name }}"
-                                    data-garment-image="{{ bottom.image.url }}"
-                                    >
-                                    <img src="{{ bottom.image.url }}" alt="{{ bottom.name }}">
-                                    <p>{{ bottom.name }}</p>
-                                </div>
-                            {% endfor %}
+                        <div class="garments-container">
+                            <div class="garments">
+                                {% for bottom in bottoms %}
+                                	<div class="garment"
+                                        data-garment-id="{{ bottom.id }}"
+                                        data-garment-name="{{ bottom.name }}"
+                                        data-garment-image="{{ bottom.image.url }}"
+                                        >
+                                        <img src="{{ bottom.image.url }}" alt="{{ bottom.name }}">
+                                        <p>{{ bottom.name }}</p>
+                                        <button type="button" class="btn btn-close inactive">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
                         <button type="button" class="btn btn-close" data-modal-close>
                             <i class="fas fa-times"></i>
@@ -113,29 +121,34 @@
                 <label for="footwears">Footwear</label>
                 <input type="text" name="footwears" value="" hidden id="footwears">
                 <div class="garments-container footwears">
-                    <button class="btn btn-input" type="button" data-modal-button>
-                        <i class="fas fa-plus"></i>
-                    </button>
                     <div class="chosen-garments">
+                        <button class="btn btn-input" type="button" data-modal-button>
+                            <i class="fas fa-plus"></i>
+                        </button>
 {#                            <div class="garment">#}
 {#                                <img src="{{ top.image.url }}" alt="{{ top.name }}">#}
 {#                                <p>{{ top.name }}</p>#}
 {#                            </div>#}
                     </div>
 
-                    <dialog class="modal garments inactive">
+                    <dialog class="modal inactive">
                         <h3 class="title">Choose a Footwear</h3>
-                        <div class="garments">
-                            {% for footwear in footwears %}
-                            	<div class="garment"
-                                    data-garment-id="{{ footwear.id }}"
-                                    data-garment-name="{{ footwear.name }}"
-                                    data-garment-image="{{ footwear.image.url }}"
-                                    >
-                                    <img src="{{ footwear.image.url }}" alt="{{ footwear.name }}">
-                                    <p>{{ footwear.name }}</p>
-                                </div>
-                            {% endfor %}
+                        <div class="garments-container">
+                            <div class="garments">
+                                {% for footwear in footwears %}
+                                	<div class="garment"
+                                        data-garment-id="{{ footwear.id }}"
+                                        data-garment-name="{{ footwear.name }}"
+                                        data-garment-image="{{ footwear.image.url }}"
+                                        >
+                                        <img src="{{ footwear.image.url }}" alt="{{ footwear.name }}">
+                                        <p>{{ footwear.name }}</p>
+                                        <button type="button" class="btn btn-close inactive">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
                         <button type="button" class="btn btn-close" data-modal-close>
                             <i class="fas fa-times"></i>
@@ -146,30 +159,35 @@
             <div class="form-group">
                 <label for="others">Others</label>
                 <input type="text" name="others" value="" hidden id="others">
-                <div class="garments-container bottoms">
-                    <button class="btn btn-input" type="button" data-modal-button>
-                        <i class="fas fa-plus"></i>
-                    </button>
+                <div class="garments-container others">
                     <div class="chosen-garments">
+                        <button class="btn btn-input" type="button" data-modal-button>
+                            <i class="fas fa-plus"></i>
+                        </button>
 {#                            <div class="garment">#}
 {#                                <img src="{{ top.image.url }}" alt="{{ top.name }}">#}
 {#                                <p>{{ top.name }}</p>#}
 {#                            </div>#}
                     </div>
 
-                    <dialog class="modal garments inactive">
+                    <dialog class="modal inactive">
                         <h3 class="title">Choose a Garment</h3>
-                        <div class="garments">
-                            {% for others in others %}
-                            	<div class="garment"
-                                    data-garment-id="{{ others.id }}"
-                                    data-garment-name="{{ others.name }}"
-                                    data-garment-image="{{ others.image.url }}"
-                                    >
-                                    <img src="{{ others.image.url }}" alt="{{ others.name }}">
-                                    <p>{{ others.name }}</p>
-                                </div>
-                            {% endfor %}
+                        <div class="garments-container">
+                            <div class="garments">
+                                {% for other in others %}
+                                	<div class="garment"
+                                        data-garment-id="{{ other.id }}"
+                                        data-garment-name="{{ other.name }}"
+                                        data-garment-image="{{ other.image.url }}"
+                                        >
+                                        <img src="{{ other.image.url }}" alt="{{ other.name }}">
+                                        <p>{{ other.name }}</p>
+                                        <button type="button" class="btn btn-close inactive">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
                         <button type="button" class="btn btn-close" data-modal-close>
                             <i class="fas fa-times"></i>
