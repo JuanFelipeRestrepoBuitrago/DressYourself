@@ -167,8 +167,6 @@ def add_outfit(request):
     footwears = Garment.objects.filter(user=request.user, category="Footwear")
     others = Garment.objects.filter(user=request.user).exclude(category="Top").exclude(category="Bottom").exclude(
         category="Footwear")
-    print(tops)
-    print(bottoms)
     if request.method == 'GET':
         return render(request, 'add_outfit.html', {
             'cssBootstrap': False,

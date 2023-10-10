@@ -470,6 +470,23 @@ body {
     background-color: var(--black-hover-color);
 }
 
+.text-center {
+    text-align: center;
+    width: 100%;
+    font-size: var(--md);
+}
+
+.text-center a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.text-center a:hover, .text-center a:focus {
+    color: var(--primary-hover-color);
+    text-decoration: underline;
+}
+
 @media (max-width: 960px) {
     .modal {
         width: 91%;
