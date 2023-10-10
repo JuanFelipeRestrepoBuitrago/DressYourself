@@ -43,63 +43,88 @@
                 <label for="tops">Top</label>
                 <input type="text" name="tops" value="" hidden id="tops">
                 <div class="garments-container tops">
-                    <button class="btn btn-input" type="button" id>
+                    <button class="btn btn-input" type="button" data-modal-button>
                         <i class="fas fa-plus"></i>
                     </button>
-                    <div class="garments">
+                    <div class="chosen-garments">
 {#                            <div class="garment">#}
 {#                                <img src="{{ top.image.url }}" alt="{{ top.name }}">#}
 {#                                <p>{{ top.name }}</p>#}
 {#                            </div>#}
                     </div>
+
+                    <dialog class="modal inactive">
+                        <h3 class="title">Choose a garment</h3>
+                        <div class="garments">
+                            {% for top in tops %}
+                            	<div class="garment"
+                                    data-garment-id="{{ top.id }}"
+                                    data-garment-name="{{ top.name }}"
+                                    data-garment-image="{{ top.image.url }}"
+                                    >
+                                    <img src="{{ top.image.url }}" alt="{{ top.name }}">
+                                    <p>{{ top.name }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </dialog>
                 </div>
             </div>
             <div class="form-group">
                 <label for="bottoms">Bottom</label>
                 <input type="text" name="bottoms" value="" hidden id="bottoms">
                 <div class="garments-container bottoms">
-                    <button class="btn btn-input" type="button" id>
+                    <button class="btn btn-input" type="button" data-modal-button>
                         <i class="fas fa-plus"></i>
                     </button>
-                    <div class="garments">
+                    <div class="chosen-garments">
 {#                            <div class="garment">#}
 {#                                <img src="{{ top.image.url }}" alt="{{ top.name }}">#}
 {#                                <p>{{ top.name }}</p>#}
 {#                            </div>#}
                     </div>
+
+                    <dialog class="modal garments inactive">
+
+                    </dialog>
                 </div>
             </div>
             <div class="form-group">
                 <label for="footwears">Footwear</label>
                 <input type="text" name="footwears" value="" hidden id="footwears">
                 <div class="garments-container footwears">
-                    <button class="btn btn-input" type="button" id>
+                    <button class="btn btn-input" type="button" data-modal-button>
                         <i class="fas fa-plus"></i>
                     </button>
-                    <div class="garments">
+                    <div class="chosen-garments">
 {#                            <div class="garment">#}
 {#                                <img src="{{ top.image.url }}" alt="{{ top.name }}">#}
 {#                                <p>{{ top.name }}</p>#}
 {#                            </div>#}
                     </div>
+
+                    <dialog class="modal garments inactive">
+
+                    </dialog>
                 </div>
             </div>
             <div class="form-group">
                 <label for="others">Others</label>
                 <input type="text" name="others" value="" hidden id="others">
                 <div class="garments-container bottoms">
-                    <button class="btn btn-input" type="button" id>
+                    <button class="btn btn-input" type="button" data-modal-button>
                         <i class="fas fa-plus"></i>
                     </button>
-                    <div class="garments">
+                    <div class="chosen-garments">
 {#                            <div class="garment">#}
 {#                                <img src="{{ top.image.url }}" alt="{{ top.name }}">#}
 {#                                <p>{{ top.name }}</p>#}
 {#                            </div>#}
                     </div>
-                    <div class="chosen-garments">
-                        
-                    </div>
+
+                    <dialog class="modal garments inactive">
+
+                    </dialog>
                 </div>
             </div>
         </form>

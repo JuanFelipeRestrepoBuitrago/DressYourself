@@ -162,12 +162,22 @@ def edit_garment(request, identification):
 @login_required
 # Create your views here.
 def add_outfit(request):
+    tops = Garment.objects.filter(user=request.user, category="Top")
+    bottoms = Garment.objects.filter(user=request.user, category="Bottom")
+    footwears = Garment.objects.filter(user=request.user, category="Footwear")
+    others = Garment.objects.filter(user=request.user).exclude(category="Top").exclude(category="Bottom").exclude(
+        category="Footwear")
+
     if request.method == 'GET':
         return render(request, 'add_outfit.html', {
             'cssBootstrap': False,
             'jsBootstrap': True,
             'cssName': '/css/add_outfit.css',
-            'jsName': '/js/add_outfit.js'
+            'jsName': '/js/add_outfit.js',
+            'tops': tops,
+            'bottoms': bottoms,
+            'footwears': footwears,
+            'others': others
         })
     elif request.method == 'POST':
         try:

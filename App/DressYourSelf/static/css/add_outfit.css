@@ -23,6 +23,10 @@
     box-sizing: border-box;
 }
 
+.inactive {
+    display: none !important;
+}
+
 body {
     background-color: var(--background-color);
     font-family: "Montserrat", sans-serif;
@@ -271,10 +275,91 @@ body {
     font-size: var(--md);
 }
 
+.modal {
+    max-width: 900px;
+    margin: auto;
+    background-color: var(--white-color);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    padding: 40px 32px;
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.modal .title {
+    font-size: var(--lg);
+    font-weight: bold;
+    color: var(--black-color);
+    width: 100%;
+    text-align: left;
+    margin-bottom: 16px;
+}
+
+.garments {
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+    gap: 8px;
+}
+
+.garment {
+    width: 140px;
+    height: auto;
+    border: 1px solid var(--background-border-color);
+    border-radius: 16px;
+    background-color: var(--background-color);
+    transition: background 0.3s;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+}
+
+/*Hover of an image*/
+.garment:hover {
+    background-color: var(--background-hover-color);
+    opacity: 0.7;
+}
+
+.garment img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    object-fit: cover;
+}
+
+.garment p {
+    padding: 8px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: var(--background-color);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-radius: 0 0 16px 16px;
+    font-size: var(--sm);
+}
+
+.garment:hover p {
+    background-color: var(--background-hover-color);
+}
+
+@media (max-width: 960px) {
+    .modal {
+        width: 91%;
+    }
+}
+
 @media (max-width: 640px) {
     .card {
         width: 500px;
         grid-template-columns: 1fr 1.2fr;
+    }
+
+    .garment p {
+        font-size: var(--xs);
     }
 }
 
