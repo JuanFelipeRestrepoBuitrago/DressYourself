@@ -306,6 +306,7 @@ body {
     border: none;
     outline: none;
     width: 100%;
+    position: relative;
 }
 
 .modal .title {
@@ -315,6 +316,35 @@ body {
     width: 100%;
     text-align: left;
     margin-bottom: 16px;
+}
+
+.modal .btn-close {
+    border-radius: 50%;
+    background-color: var(--white-color);
+    height: auto;
+    width: auto;
+    padding: 4px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.modal .btn-close i {
+    color: var(--black-color);
+    font-size: var(--md);
+    transition: color 0.3s;
+}
+
+.modal .btn-close:hover i, .modal .btn-close:focus i {
+    color: var(--white-color);
+}
+
+.modal .btn-close:hover, .modal .btn-close:focus {
+    background-color: var(--black-hover-color);
+    opacity: 0.5;
 }
 
 .garments {
