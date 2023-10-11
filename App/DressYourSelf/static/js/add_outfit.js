@@ -1,4 +1,4 @@
-const imageInput = document.querySelector('#image');
+const imageInput = document.querySelector('#outfitImage');
 const imagePreview = document.querySelector('#imagePreview')
 
 imageInput.addEventListener('change', () => {

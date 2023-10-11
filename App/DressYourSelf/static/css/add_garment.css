@@ -29,6 +29,16 @@ body {
     background-size: cover;
 }
 
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    left: 0;
+}
+
 .main-container {
     width: 100%;
     min-height: 100vh;
@@ -164,6 +174,7 @@ body {
 .form-group:nth-child(5) {
     grid-column: 2 / 3;
     grid-row: 2 / 8;
+    position: relative;
 }
 
 .form-group:nth-child(6) {

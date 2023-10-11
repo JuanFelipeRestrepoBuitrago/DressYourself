@@ -28,11 +28,11 @@
                 <textarea name="description" class="form-control" id="description" placeholder="Enter the garment's description"></textarea>
             </div>
             <div class="form-group">
+                <input type="file" class="hidden" name="outfitImage" id="outfitImage" accept="image/*" required>
                 <label>Image</label>
-                <label for="image" class="form-control image-review">
+                <label for="outfitImage" class="form-control image-review">
                     <img id="imagePreview" src="" alt="Upload an Image">
                 </label>
-                <input type="file" name="image" id="image" accept="image/*" required hidden>
             </div>
             <div class="form-group">
                 <a href="{% url 'home' %}" class="btn btn-danger">Cancel</a>

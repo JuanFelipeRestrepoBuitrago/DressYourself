@@ -27,6 +27,16 @@
     display: none !important;
 }
 
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    left: 0;
+}
+
 body {
     background-color: var(--background-color);
     font-family: "Montserrat", sans-serif;
@@ -216,6 +226,7 @@ body {
 .form-group:nth-child(4) {
     grid-column: 2 / 3;
     grid-row: 1 / 6;
+    position: relative;
 }
 
 .form-group:nth-child(5) {

@@ -194,7 +194,8 @@ def add_outfit(request):
             garment = Garment.objects.create(
                 name=name,
                 image=image,
-                description=description
+                description=description,
+                user=request.user
             )
 
             garment.save()
