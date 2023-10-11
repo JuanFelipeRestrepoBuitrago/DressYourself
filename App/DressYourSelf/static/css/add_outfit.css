@@ -511,8 +511,21 @@ body {
         grid-template-columns: 1fr 1.2fr;
     }
 
-    .garment p {
-        font-size: var(--xs);
+    .modal .title {
+        font-size: var(--md);
+    }
+
+    .garments .garment p {
+        font-size: var(--xxs);
+    }
+
+    .garments .garment {
+        width: 120px;
+        height: 120px;
+    }
+
+    .modal .garment .btn-close i {
+        font-size: var(--lg);
     }
 }
 
@@ -522,8 +535,6 @@ body {
     }
     .card {
         width: 100%;
-        /*display: flex;*/
-        /*flex-direction: column;*/
         grid-template-columns: 1fr ;
     }
 
@@ -552,6 +563,5 @@ body {
 
     .form-group:nth-child(10) {
         align-items: start;
-
     }
 }
