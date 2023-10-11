@@ -362,10 +362,28 @@ body {
     border-radius: 0 0 3px 3px;
     padding: 4px 12px;
     font-size: var(--xxs);
+    color: var(--black-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .garment:hover p {
     background-color: var(--background-hover-color);
+}
+
+.chosen-garments .garment .btn-close {
+    background-color: var(--background-color);
+    padding: 4px 6px;
+    top: 5%;
+    right: 5%;
+    height: auto;
+    width: auto;
+}
+
+.chosen-garments .garment .btn-close i {
+    color: var(--black-color);
+    font-size: var(--xs);
+    transition: color 0.3s;
 }
 
 .modal {
@@ -445,13 +463,7 @@ body {
 
 .modal .garment .btn-close {
     background-color: var(--background-color);
-    height: auto;
-    width: auto;
     padding: 8px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
     top: 35%;
     right: 35%;
 }
