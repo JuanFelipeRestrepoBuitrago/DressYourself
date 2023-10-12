@@ -184,21 +184,63 @@ def add_outfit(request):
                 raise IntegrityError('Name is required')
             else:
                 name = request.POST.get('name')
+
             image = request.FILES.get('image')
+
             if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
                     'description') == ' ':
                 description = None
             else:
                 description = request.POST.get('description')
 
-            garment = Garment.objects.create(
+            if request.POST.get('tops') == '' or request.POST.get('tops') is None or request.POST.get('tops') == ' ':
+                tops = None
+            else:
+                tops = request.POST.get('tops')
+                tops = tops.split(',')
+                tops = Garment.objects.filter(id__in=tops)
+
+            if request.POST.get('bottoms') == '' or request.POST.get('bottoms') is None or request.POST.get(
+                    'bottoms') == ' ':
+                bottoms = None
+            else:
+                bottoms = request.POST.get('bottoms')
+                bottoms = bottoms.split(',')
+                bottoms = Garment.objects.filter(id__in=bottoms)
+
+            if request.POST.get('footwears') == '' or request.POST.get('footwears') is None or request.POST.get(
+                    'footwears') == ' ':
+                footwears = None
+            else:
+                footwears = request.POST.get('footwears')
+                footwears = footwears.split(',')
+                footwears = Garment.objects.filter(id__in=footwears)
+
+            if request.POST.get('others') == '' or request.POST.get('others') is None or request.POST.get(
+                    'others') == ' ':
+                others = None
+            else:
+                others = request.POST.get('others')
+                others = others.split(',')
+                others = Garment.objects.filter(id__in=others)
+
+            user = request.user
+            outfit = Outfit.objects.create(
                 name=name,
                 image=image,
                 description=description,
-                user=request.user
+                user=user
             )
+            if tops is not None:
+                outfit.garments.add(*tops)
+            if bottoms is not None:
+                outfit.garments.add(*bottoms)
+            if footwears is not None:
+                outfit.garments.add(*footwears)
+            if others is not None:
+                outfit.garments.add(*others)
 
-            garment.save()
+            outfit.save()
 
             return redirect('home')
         except IntegrityError as e:
