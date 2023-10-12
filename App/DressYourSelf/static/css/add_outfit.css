@@ -135,7 +135,7 @@ body {
     background-color: transparent;
     border: none;
     width: auto;
-    height: 100%;
+    height: auto;
 }
 
 .alert .btn-close i {
@@ -426,11 +426,11 @@ body {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 12px;
     right: 12px;
 }
 
 .modal .btn-close {
+    top: 12px;
     height: auto;
     width: auto;
     padding: 4px 6px;
