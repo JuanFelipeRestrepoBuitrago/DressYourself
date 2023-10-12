@@ -67,7 +67,7 @@ def add_garment(request):
 
             return redirect('garments')
         except IntegrityError as e:
-            messages.error(request, e)
+            messages.error(request, "The name of the garment is already taken")
             return redirect('add_garment')
 
 
@@ -155,7 +155,7 @@ def edit_garment(request, identification):
 
             return redirect('garments')
         except IntegrityError as e:
-            messages.error(request, e)
+            messages.error(request, "The name of the garment is already taken")
             return redirect('edit_garment')
 
 
@@ -185,7 +185,7 @@ def add_outfit(request):
             else:
                 name = request.POST.get('name')
 
-            image = request.FILES.get('image')
+            image = request.FILES.get('outfitImage')
 
             if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
                     'description') == ' ':
@@ -231,6 +231,7 @@ def add_outfit(request):
                 description=description,
                 user=user
             )
+
             if tops is not None:
                 outfit.garments.add(*tops)
             if bottoms is not None:
@@ -242,9 +243,9 @@ def add_outfit(request):
 
             outfit.save()
 
-            return redirect('home')
+            return redirect('closet_outfits')
         except IntegrityError as e:
-            messages.error(request, e)
+            messages.error(request, "The name of the outfit is already taken")
             return redirect('add_outfit')
 
 

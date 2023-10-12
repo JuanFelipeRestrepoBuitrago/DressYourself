@@ -42,13 +42,14 @@ class Garment(models.Model):
 
     class Meta:
         ordering = ['name']
+        unique_together = ['name', 'user']
 
 
 class Outfit(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(null=True)
     garments = models.ManyToManyField(Garment)
-    image = models.ImageField(upload_to='outfits/', null=True)
+    image = models.ImageField(upload_to='outfits/')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -56,3 +57,4 @@ class Outfit(models.Model):
 
     class Meta:
         ordering = ['name']
+        unique_together = ['name', 'user']
