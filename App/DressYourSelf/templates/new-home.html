@@ -61,47 +61,50 @@
      
    </style>
 </head>
-</head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-   <a class="navbar-brand navbar-logo" href="{% url "new-home" %}">DressYourSelf</a>
+   <a class="navbar-brand navbar-logo" href="{% url "home" %}">DressYourSelf</a>
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
        <span class="navbar-toggler-icon"></span>
    </button>
    <div class="collapse navbar-collapse" id="navbarNav">
        <ul class="navbar-nav ml-auto">
            <li class="nav-item">
-               <a class="nav-link" href="{% url "new-home" %}"><i class="fas fa-home"></i> Home</a>
+               <a class="nav-link" href="{% url "home" %}"><i class="fas fa-home"></i> Home</a>
            </li>
            <li class="nav-item">
                <a class="nav-link" href="{% url "garments" %}"><i class="fas fa-tshirt"></i> Garments</a>
            </li>
            <li class="nav-item">
-               <a class="nav-link" href="{% url "add_garment" %}"><i class="fas fa-upload"></i> Upload Image</a>
+               <a class="nav-link" href="{% url "add_garment" %}"><i class="fas fa-upload"></i> Add Garment</a>
+           </li>
+           <li class="nav-item">
+               <a class="nav-link" href="{% url "closet_outfits" %}"><i class="fas fa-tshirt"></i> Outfits</a>
+           </li>
+           <li class="nav-item">
+               <a class="nav-link" href="{% url "add_outfit" %}"><i class="fas fa-upload"></i> Add Outfit</a>
            </li>
            {% if user.is_authenticated %}
                <li class="nav-item">
-                   <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                   <a class="nav-link" href="{% url "logout" %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
                </li>
            {% else %}
                <li class="nav-item">
-                   <a class="nav-link" href="/signUp"><i class="fas fa-user-plus"></i> SignUp</a>
+                   <a class="nav-link" href="{% url "authentication" %}"><i class="fas fa-user-plus"></i> SignUp</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="/signin"><i class="fas fa-sign-in-alt"></i> Login</a>
+                   <a class="nav-link" href="{% url "signin" %}"><i class="fas fa-sign-in-alt"></i> Login</a>
                </li>
            {% endif %}
        </ul>
    </div>
 </nav>
-<body>
-
    <div class="hero_area">
       <!-- header section strats -->
       <header class="header_section">
          <div class="container-fluid">
          </div>
-         <div style="float: righ; margin-left: 965px;">
+         <div style="margin-left: 965px;">
             <img src={% static 'images_page/logo-blur.png' %} alt="blur-logo" width="150" height="150">
          </div>
          <!-- end header section -->
@@ -118,7 +121,7 @@
                         <p>
                            We want you to take advantage of our application, so here we leave you with what you can do with it.</p>
                         <div class="btn-box">
-                           <a href="{% url 'authentication' %}" class="btn-2">
+                           <a href="{% url 'home' %}" class="btn-2">
                               Learn more
                            </a>
                         </div>
@@ -133,6 +136,7 @@
                </div>
             </div>
          </section>
+        </header>
    </div>
    <!-- footer section -->
    <section class="container-fluid footer_section">
@@ -142,7 +146,6 @@
          </p>
       </div>
    </section>
-   </div>
 
 </body>
    <script>

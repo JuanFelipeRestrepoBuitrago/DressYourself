@@ -253,7 +253,7 @@ def add_outfit(request):
 @transaction.atomic
 def signin(request):
     if request.user.is_authenticated:
-        return redirect('new-home')
+        return redirect('home')
     if request.method == 'GET':
         return render(request, 'signin.html')
     elif request.method == 'POST':
@@ -266,7 +266,7 @@ def signin(request):
                 return redirect('signin')
             else:
                 login(request, user)
-                return redirect('new-home')
+                return redirect('home')
         except CustomUser.DoesNotExist:
             messages.error(request, 'User does not exist')
             return redirect('authentication')
@@ -300,16 +300,14 @@ def authentication(request):
 
 
 def home(request):
+    if request.user.is_authenticated:
+        return render(request, 'new-home.html')
     return render(request, 'home.html')
 
 
 def signout(request):
     logout(request)
     return redirect('home')
-
-
-def new_home(request):
-    return render(request, 'new-home.html')
 
 
 def closet_outfits(request):
