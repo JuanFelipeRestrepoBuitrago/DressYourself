@@ -41,7 +41,6 @@ closeDetails.addEventListener('click', closeDetailsContainer);
 
 searchInput.addEventListener('input', (event) => {
     const searchValue = searchInput.value.toLowerCase();
-    console.log(searchValue);
     garments.forEach(garment => {
         const garmentName = garment.querySelector('.garment-info [data-garment-name]').getAttribute('data-garment-name').toLowerCase();
         const garmentCategory = garment.querySelector('.garment-info [data-garment-category]').getAttribute('data-garment-category').toLowerCase();
@@ -49,13 +48,10 @@ searchInput.addEventListener('input', (event) => {
         const garmentBrand = garment.querySelector('.garment-info [data-garment-brand]').getAttribute('data-garment-brand').toLowerCase();
         const garmentColor = garment.querySelector('.garment-info [data-garment-color]').getAttribute('data-garment-color').toLowerCase();
         const garmentSize = garment.querySelector('.garment-info [data-garment-size]').getAttribute('data-garment-size').toLowerCase();
-        console.log(garmentName, garmentCategory, garmentDescription, garmentBrand, garmentColor, garmentSize);
 
         if (garmentName.includes(searchValue) || garmentCategory.includes(searchValue) || garmentDescription.includes(searchValue) || garmentBrand.includes(searchValue) || garmentColor.includes(searchValue) || garmentSize.includes(searchValue)) {
-            console.log('includes');
             garment.classList.remove('inactive');
         } else {
-            console.log('not includes');
             garment.classList.add('inactive');
         }
     });

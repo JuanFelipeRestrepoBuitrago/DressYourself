@@ -29,6 +29,16 @@ body {
     background-size: cover;
 }
 
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    left: 0;
+}
+
 .main-container {
     width: 100%;
     min-height: 100vh;
@@ -164,6 +174,7 @@ body {
 .form-group:nth-child(5) {
     grid-column: 2 / 3;
     grid-row: 2 / 8;
+    position: relative;
 }
 
 .form-group:nth-child(6) {
@@ -299,117 +310,3 @@ body {
         width: 40%;
     }
 }
-
-
-
-/*.alert {*/
-/*    position: relative;*/
-/*    padding: 0.75rem 1.25rem;*/
-/*    margin-bottom: 1rem;*/
-/*    border: 1px solid transparent;*/
-/*    border-radius: 0.25rem;*/
-/*}*/
-
-/*.alert-heading {*/
-/*    color: inherit;*/
-/*}*/
-
-/*.alert-link {*/
-/*    font-weight: 700;*/
-/*}*/
-
-/*.alert-dismissible {*/
-/*    padding-right: 4rem;*/
-/*}*/
-
-/*.alert-dismissible .close {*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    right: 0;*/
-/*    padding: 0.75rem 1.25rem;*/
-/*    color: inherit;*/
-/*}*/
-
-
-
-/*.alert-primary hr {*/
-/*    border-top-color: #9fcdff;*/
-/*}*/
-
-/*.alert-primary .alert-link {*/
-/*    color: #002752;*/
-/*}*/
-
-
-
-/*.alert-secondary hr {*/
-/*    border-top-color: #c8cbcf;*/
-/*}*/
-
-/*.alert-secondary .alert-link {*/
-/*    color: #202326;*/
-/*}*/
-
-
-/*.alert-success hr {*/
-/*    border-top-color: #b1dfbb;*/
-/*}*/
-
-/*.alert-success .alert-link {*/
-/*    color: #0b2e13;*/
-/*}*/
-
-
-
-/*.alert-info hr {*/
-/*    border-top-color: #abdde5;*/
-/*}*/
-
-/*.alert-info .alert-link {*/
-/*    color: #062c33;*/
-/*}*/
-
-
-
-/*.alert-warning hr {*/
-/*    border-top-color: #ffe8a1;*/
-/*}*/
-
-/*.alert-warning .alert-link {*/
-/*    color: #533f03;*/
-/*}*/
-
-
-/*.alert-danger hr {*/
-/*    border-top-color: #f1b0b7;*/
-/*}*/
-
-/*.alert-danger .alert-link {*/
-/*    color: #491217;*/
-/*}*/
-
-
-
-/*.alert-light hr {*/
-/*    border-top-color: #ececf6;*/
-/*}*/
-
-/*.alert-light .alert-link {*/
-/*    color: #686868;*/
-/*}*/
-
-
-
-/*.alert-dark hr {*/
-/*    border-top-color: #b9bbbe;*/
-/*}*/
-
-/*.alert-dark .alert-link {*/
-/*    color: #040505;*/
-/*}*/
-
-
-
-/*a.text-dark:hover, a.text-dark:focus {*/
-/*    color: #121416 !important;*/
-/*}*/

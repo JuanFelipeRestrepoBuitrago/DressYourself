@@ -1,0 +1,203 @@
+{% extends 'base/base_no_nav.html' %}
+
+{% block content %}
+    <div class="main-container">
+        <div class="row">
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="alert alert-dismissible alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+                            <strong class="text-dark">{{ message }}</strong>
+                            <button type="button" class="btn btn-close" data-bs-dismiss="alert">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <h1 class="title">New Outfit</h1>
+        <form action="" method="POST" class="card" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" value="" class="form-control" id="name" placeholder="Enter the garment's name" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea name="description" class="form-control" id="description" placeholder="Enter the garment's description"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="file" class="hidden" name="outfitImage" id="outfitImage" accept="image/*" required>
+                <label>Image</label>
+                <label for="outfitImage" class="form-control image-review">
+                    <img id="imagePreview" src="" alt="Upload an Image">
+                </label>
+            </div>
+            <div class="form-group">
+                <a href="{% url 'home' %}" class="btn btn-danger">Cancel</a>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+
+            <div class="form-group">
+                <label for="tops">Top</label>
+                <input type="text" name="tops" value="" hidden id="tops">
+                <div class="garments-container tops">
+                    <div class="chosen-garments">
+                        <button class="btn btn-input" type="button" data-modal-button>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+
+                    <dialog class="modal inactive">
+                        <h3 class="title">Choose a Top</h3>
+                        <div class="garments-container">
+                            {% if tops.count == 0 %}
+                                <p class="text-center">No garments available yet. <a href="{% url 'add_garment' %}">Add One</a></p>
+                            {% else %}
+                                <div class="garments">
+                                    {% for top in tops %}
+                                    	<div class="garment"
+                                            data-garment-id="{{ top.id }}"
+                                            data-garment-name="{{ top.name }}"
+                                            data-garment-image="{{ top.image.url }}"
+                                            >
+                                            <img src="{{ top.image.url }}" alt="{{ top.name }}">
+                                            <p>{{ top.name }}</p>
+                                            <button type="button" class="btn btn-close inactive">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <button type="button" class="btn btn-close" data-modal-close>
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </dialog>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bottoms">Bottom</label>
+                <input type="text" name="bottoms" value="" hidden id="bottoms">
+                <div class="garments-container bottoms">
+                    <div class="chosen-garments">
+                        <button class="btn btn-input" type="button" data-modal-button>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+
+                    <dialog class="modal inactive">
+                        <h3 class="title">Choose a Bottom</h3>
+                        <div class="garments-container">
+                            {% if bottoms.count == 0 %}
+                                <p class="text-center">No garments available yet. <a href="{% url 'add_garment' %}">Add One</a></p>
+                            {% else %}
+                                <div class="garments">
+                                    {% for bottom in bottoms %}
+                                    	<div class="garment"
+                                            data-garment-id="{{ bottom.id }}"
+                                            data-garment-name="{{ bottom.name }}"
+                                            data-garment-image="{{ bottom.image.url }}"
+                                            >
+                                            <img src="{{ bottom.image.url }}" alt="{{ bottom.name }}">
+                                            <p>{{ bottom.name }}</p>
+                                            <button type="button" class="btn btn-close inactive">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <button type="button" class="btn btn-close" data-modal-close>
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </dialog>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="footwears">Footwear</label>
+                <input type="text" name="footwears" value="" hidden id="footwears">
+                <div class="garments-container footwears">
+                    <div class="chosen-garments">
+                        <button class="btn btn-input" type="button" data-modal-button>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+
+                    <dialog class="modal inactive">
+                        <h3 class="title">Choose a Footwear</h3>
+                        <div class="garments-container">
+                            {% if footwears.count == 0 %}
+                                <p class="text-center">No garments available yet. <a href="{% url 'add_garment' %}">Add One</a></p>
+                            {% else %}
+                                <div class="garments">
+                                    {% for footwear in footwears %}
+                                    	<div class="garment"
+                                            data-garment-id="{{ footwear.id }}"
+                                            data-garment-name="{{ footwear.name }}"
+                                            data-garment-image="{{ footwear.image.url }}"
+                                            >
+                                            <img src="{{ footwear.image.url }}" alt="{{ footwear.name }}">
+                                            <p>{{ footwear.name }}</p>
+                                            <button type="button" class="btn btn-close inactive">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <button type="button" class="btn btn-close" data-modal-close>
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </dialog>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="others">Others</label>
+                <input type="text" name="others" value="" hidden id="others">
+                <div class="garments-container others">
+                    <div class="chosen-garments">
+                        <button class="btn btn-input" type="button" data-modal-button>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+
+                    <dialog class="modal inactive">
+                        <h3 class="title">Choose a Garment</h3>
+                        <div class="garments-container">
+                            {% if others.count == 0 %}
+                                <p class="text-center">No garments available yet. <a href="{% url 'add_garment' %}">Add One</a></p>
+                            {% else %}
+                                <div class="garments">
+                                    {% for other in others %}
+                                    	<div class="garment"
+                                            data-garment-id="{{ other.id }}"
+                                            data-garment-name="{{ other.name }}"
+                                            data-garment-image="{{ other.image.url }}"
+                                            >
+                                            <img src="{{ other.image.url }}" alt="{{ other.name }}">
+                                            <p>{{ other.name }}</p>
+                                            <button type="button" class="btn btn-close inactive">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <button type="button" class="btn btn-close" data-modal-close>
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </dialog>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-secondary">Generate Outfit</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
