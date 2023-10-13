@@ -40,7 +40,7 @@
 body {
     background-color: var(--background-color);
     font-family: "Montserrat", sans-serif;
-    background-image: url(../images_page/hero-bg.png);
+    background-image: url("../images_page/12.gif");
     background-repeat: no-repeat;
     background-size: cover;
 }

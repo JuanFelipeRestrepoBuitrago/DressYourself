@@ -1,0 +1,203 @@
+body {
+   font-family: "Poppins", sans-serif;
+   background: url('/static/images_page/closet_1.png') no-repeat fixed center center/cover;
+   margin: 0;
+   padding: 0;
+}
+
+.container {
+   max-width: 1200px;
+   margin: 0 auto;
+   padding: 3px;
+}
+
+.page-title {
+   text-align: center;
+   margin-bottom: 40px;
+}
+
+.page-title h1 {
+   font-size: 36px;
+   margin-bottom: 10px;
+}
+
+.page-title p {
+   font-size: 18px;
+}
+
+.outfits-container {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+}
+
+.outfit-card {
+   width: 250px;
+   margin: 20px;
+   border: 1px solid #ddd;
+   padding: 15px;
+   border-radius: 5px;
+   text-align: center;
+   position: relative;
+   overflow: hidden;
+   transition: transform 0.3s ease-in-out;
+}
+
+.carousel-container {
+   overflow: hidden;
+   display: flex;
+   justify-content: center;
+   margin-top: 20px;
+}
+
+.closet-carousel {
+   max-width: 500px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: 20px;
+}
+
+.outfit {
+   border: none;
+   padding: 40px;
+   box-shadow: none;
+   text-align: center;
+   position: relative;
+   overflow: hidden;
+   transition: transform 0.3s ease-in-out;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.outfit img {
+   max-width: 100%;
+   height: auto;
+   margin-bottom: 15px;
+   max-height: 400px;
+   /* Ajusta el tamaño máximo de la altura de la imagen */
+   transition: transform 0.3s ease-in-out;
+}
+
+.outfit:hover .outfit img {
+   transform: scale(1.05);
+   /* Ajusta la escala al hacer hover */
+}
+
+.outfit-description {
+   opacity: 0;
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   transition: opacity 0.3s ease-in-out;
+   text-align: center;
+}
+
+.outfit:hover {
+   transform: scale(1);
+}
+
+.outfit:hover .outfit-description {
+   opacity: 1;
+}
+
+.outfit-description h2 {
+   font-size: 18px;
+   margin-bottom: 10px;
+}
+
+.outfit-description p {
+   font-size: 14px;
+   margin-bottom: 10px;
+}
+
+.outfit-description .btn {
+   background: #333;
+   color: white;
+   border: none;
+   padding: 8px 16px;
+   font-size: 14px;
+   border-radius: 4px;
+   cursor: pointer;
+}
+
+.outfit-description .btn:hover {
+   background: #555;
+}
+
+.outfit-description .btn:active {
+   background: #777;
+}
+
+.outfit-description .btn:focus {
+   outline: none;
+}
+
+.outfit-description .btn:disabled {
+   background: #999;
+   cursor: not-allowed;
+}
+
+.outfit-description .btn:disabled:hover {
+   background: #999;
+}
+
+.eliminar-btn {
+   background: #f44336;
+   color: white;
+   border: none;
+   padding: 8px 16px;
+   font-size: 14px;
+   border-radius: 4px;
+   cursor: pointer;
+   display: none;
+   margin-top: 10px;
+   display: inline-block;
+}
+
+.outfit:hover .eliminar-btn {
+   display: inline-block;
+}
+
+
+.previous-button {
+   font-family: "Poppins", sans-serif;
+   align-content: center;
+   align-self: center;
+   background: whitesmoke;
+   color: black;
+   align-items: center;
+   padding: 8px 16px;
+   font-size: 14px;
+   border-radius: 10px;
+   cursor: pointer;
+   display: inline-flex;
+   margin: 10px;
+}
+
+.next-button {
+   font-family: "Poppins", sans-serif;
+   align-self: flex-end;
+   background: whitesmoke;
+   color: black;
+   padding: 8px 16px;
+   font-size: 14px;
+   border-radius: 10px;
+   cursor: pointer;
+   display: inline-flex;
+   margin: 10px;
+   margin-left: auto;
+}
+
+@media screen and (max-width: 768px) {
+   .outfits-container {
+      justify-content: center;
+   }
+
+   .outfit-card {
+      width: 100%;
+   }
+}

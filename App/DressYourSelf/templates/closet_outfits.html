@@ -1,175 +1,79 @@
-{% load static %}
+{% extends 'base/base.html' %} {% load static %} {% block content %}
+<title>Outfits Closet</title>
+<link rel="stylesheet" href="{% static 'css/closet_outfits.css' %}" />
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css"
+/>
 
+<div class="container mt-4 text-center">
+  <h1>Outfits</h1>
+</div>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Outfits Closet</title>
-    <!-- Incluye Glide.js desde un CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
-
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('{% static 'images_page/closet6.jpg' %}'); /* Reemplaza 'url_de_tu_imagen_de_fondo.jpg' con la URL o la ruta de tu imagen de fondo */
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-position: center center;
-            padding: 20px;
-            margin: 0;
-        }
-
-
-        /* Estilos para el contenedor del carrusel */
-        .carousel-container {
-            overflow: hidden;
-            display: flex;
-            justify-content: center; /* Centra horizontalmente el carrusel */
-        }
-
-
-        /* Estilos para el carrusel */
-        .closet-carousel {
-            max-width: 500px; /* Ajusta el ancho máximo del carrusel según tus necesidades */
-        }
-
-
-        /* Estilos para los outfits en el carrusel */
-        .outfit {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease-in-out;
-        }
-
-
-        .outfit h2 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-
-        .outfit img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            transform: scale(0.9);
-        }
-
-
-        .outfit-description {
-            opacity: 0;
-            background-color: rgba(255, 255, 255, 0.9);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-
-        .outfit:hover .outfit-description {
-            opacity: 1;
-        }
-
-
-        /* Estilos para el botón de eliminar */
-        .eliminar-btn {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            font-size: 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: none; /* Oculta el botón por defecto */
-            margin-top: 10px;
-        }
-
-
-        .outfit:hover .eliminar-btn {
-            display: inline-block; /* Muestra el botón cuando el mouse está sobre el outfit */
-        }
-
-
-        /* Estilos personalizados para los botones de navegación */
-        .glide__arrow {
-            background-color: black;
-            color: white;
-            padding: 8px 16px;
-            font-size: 14px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-
-        .glide__arrow:hover {
-            background-color: #333;
-        }
-    </style>
-</head>
-<body>
-    <h1>Outfits Closet</h1>
-      <!-- Formulario de búsqueda -->
-    <div class="container mt-4 text-center">
-        <form class="form-inline justify-content-center" method="get" action="{% url 'closet_outfits' %}">
-            <div class="form-group">
-                <input type="text" class="form-control" name="search" placeholder="..." value="{{ search_query }}">
-            </div>
-            <button type="submit" class="btn btn-dark ml-2">Search</button>
-        </form>
+<div class="container mt-4 text-center">
+  <form
+    class="form-inline justify-content-center"
+    method="get"
+    action="{% url 'closet_outfits' %}"
+  >
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        name="search"
+        placeholder="..."
+        value="{{ search_query }}"
+      />
     </div>
-    
-    <div class="carousel-container">
-        <div class="closet-carousel glide">
-            <div class="glide__track" data-glide-el="track">
-                <ul class="glide__slides">
-                    {% for outfit in outfits %}
-                        <li class="outfit glide__slide">
-                            <h2>{{ outfit.name }}</h2>
-                            <img src="{{ outfit.image.url }}" alt="{{ outfit.name }}">
-                            <div class="outfit-description">
-                                <p>{{ outfit.description }}</p>
-                                <form method="post" action="{% url 'closet_outfits' %}">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="outfit_id" value="{{ outfit.id }}">
-                                    <button class="eliminar-btn" type="submit">Delete Outfit</button>
-                                </form>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="glide__arrows" data-glide-el="controls">
-                <button class="glide__arrow glide__arrow--left" data-glide-dir="<">Previous</button>
-                <button class="glide__arrow glide__arrow--right" data-glide-dir=">">Next</button>
-            </div>
-        </div>
+    <button type="submit" class="btn btn-dark ml-2">Search</button>
+  </form>
+</div>
+
+<div class="carousel-container">
+  <div class="closet-carousel glide">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        {% for outfit in outfits %}
+        <li class="outfit glide__slide">
+          <h2>{{ outfit.name }}</h2>
+          <img src="{{ outfit.image.url }}" alt="{{ outfit.name }}" />
+          <div class="outfit-description">
+            <p>{{ outfit.description }}</p>
+            <form method="post" action="{% url 'closet_outfits' %}">
+              {% csrf_token %}
+              <input type="hidden" name="outfit_id" value="{{ outfit.id }}" />
+              <button class="eliminar-btn" type="submit">Delete Outfit</button>
+            </form>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+      <div class="glide__arrows" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--left previous-button" data-glide-dir="<">
+          Previous
+        </button>
+      </div>
+      <div class="glide__arrows" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--right next-button" data-glide-dir=">">
+          Next
+        </button>
+      </div>
+    </div>
+    </div>
     </div>
 
 
-    <script>
-        new Glide('.glide', {
-            type: 'carousel',
-            startAt: 0,
-            perView: 1, // Muestra un outfit a la vez
-        }).mount();
-    </script>
-</body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+<script>
+  new Glide(".glide", {
+    type: "carousel",
+    startAt: 0,
+    perView: 1, // Muestra un outfit a la vez
+  }).mount();
+</script>
+{% endblock %}
