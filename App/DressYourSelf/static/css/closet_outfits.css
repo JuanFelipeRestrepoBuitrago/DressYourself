@@ -163,34 +163,114 @@ body {
 }
 
 
+/* Estilo para el botón "Previous" en el carrusel */
 .previous-button {
-   font-family: "Poppins", sans-serif;
-   align-content: center;
-   align-self: center;
-   background: whitesmoke;
-   color: black;
-   align-items: center;
-   padding: 8px 16px;
-   font-size: 14px;
+   background: #ffffff;
+   /* Cambia el color de fondo según tu preferencia */
+   color: #000000;
+   /* Cambia el color del texto según tu preferencia */
+   border: none;
    border-radius: 10px;
+   padding: 10px 15px;
+   font-size: 16px;
    cursor: pointer;
-   display: inline-flex;
-   margin: 10px;
+   margin-bottom: 10px;
+   margin-top: 10px;
+   margin-left: 20px;
+   margin-right: 20 px;
+   /* Añade un margen a la derecha */
 }
 
-.next-button {
-   font-family: "Poppins", sans-serif;
-   align-self: flex-end;
-   background: whitesmoke;
-   color: black;
-   padding: 8px 16px;
-   font-size: 14px;
-   border-radius: 10px;
-   cursor: pointer;
-   display: inline-flex;
-   margin: 10px;
-   margin-left: auto;
+/* Estilo al hacer hover sobre el botón "Previous" */
+.previous-button:hover {
+   background: #e0e0e0;
+   /* Cambia el color de fondo al hacer hover */
 }
+
+/* Estilo para el botón "Next" en el carrusel */
+.next-button {
+   background: #ffffff;
+   /* Cambia el color de fondo según tu preferencia */
+   color: #000000;
+   /* Cambia el color del texto según tu preferencia */
+   border: none;
+   border-radius: 10px;
+   padding: 10px 15px;
+   font-size: 16px;
+   cursor: pointer;
+   margin-bottom: 10px;
+   margin-top: 10px;
+   margin-right: 20 px;
+   margin-left: 20px;
+}
+
+/* Estilo al hacer hover sobre el botón "Next" */
+.next-button:hover {
+   background: #e0e0e0;
+   /* Cambia el color de fondo al hacer hover */
+}
+
+/* Agrega estilos personalizados para los botones */
+.btn-dark {
+   background-color: #333;
+   color: #fff;
+   border: none;
+   border-radius: 10px;
+   padding: 10px 20px;
+   font-size: 16px;
+}
+
+/* Estilo al hacer hover sobre el botón */
+.btn-dark:hover {
+   background-color: #555;
+}
+
+/* Estilo al hacer clic en el botón */
+.btn-dark:active {
+   background-color: #777;
+}
+
+/* Estilo para el botón eliminar */
+.eliminar-btn {
+   background: #f44336;
+   color: white;
+   border: none;
+   border-radius: 10px;
+   padding: 10px 20px;
+   font-size: 16px;
+}
+
+/* Estilo al hacer hover sobre el botón eliminar */
+.eliminar-btn:hover {
+   background: #d32f2f;
+}
+
+/* Estilo al hacer clic en el botón eliminar */
+.eliminar-btn:active {
+   background: #b71c1c;
+}
+
+.footer_section {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: center;
+   -ms-flex-pack: center;
+   justify-content: center;
+   position: relative;
+}
+
+.footer_section p {
+   color: #ffffff;
+   margin: 0 auto;
+   text-align: center;
+   padding: 20px;
+}
+
+.footer_section a {
+   color: #ffffff;
+}
+
 
 @media screen and (max-width: 768px) {
    .outfits-container {

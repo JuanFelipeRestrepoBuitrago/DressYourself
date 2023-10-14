@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-
+{% load static %}
 {% block content %}
     <div class="main-container">
         <div class="row">
@@ -21,11 +21,11 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" name="name" value="" class="form-control" id="name" placeholder="Enter the garment's name" required>
+                <input type="text" name="name" value="" class="form-control custom-font" id="name" placeholder="Enter the garment's name" required>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" class="form-control" id="description" placeholder="Enter the garment's description"></textarea>
+                <input name="description" class="form-control custom-font" id="description" placeholder="Enter the garment's description"></input>
             </div>
             <div class="form-group">
                 <input type="file" class="hidden" name="outfitImage" id="outfitImage" accept="image/*" required>
@@ -200,4 +200,12 @@
             </div>
         </form>
     </div>
+    <section class="container-fluid footer_section">
+        <div class="container">
+            <p style="color: white;">&copy; 2023 All Rights Reserved By
+                <a href="#" style="color: white;">DressYourSelf TEAM</a>
+            </p>
+        </div>
+    </section>
+</div>
 {% endblock %}
