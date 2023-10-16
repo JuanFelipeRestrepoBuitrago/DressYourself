@@ -46,8 +46,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: 100px 0;
-    gap: 24px;
+    margin: 3px 0;
 }
 
 .row {
