@@ -6,7 +6,7 @@ from django.contrib import messages
 from .models import Outfit, Garment, CustomUser
 # from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
+from .forms import UserProfileForm
 
 # Create your views here.
 @login_required
@@ -329,3 +329,18 @@ def closet_outfits(request):
         return redirect('closet_outfits')
 
     return render(request, 'closet_outfits.html', {'outfits': outfits, 'search_query': search_query})
+
+
+#vista de profile
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = UserProfileForm(instance=request.user)
+    
+    return render(request, 'profile.html', {'form': form})
