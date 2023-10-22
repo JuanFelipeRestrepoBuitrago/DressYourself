@@ -1,11 +1,19 @@
 {% extends "base/base.html" %}
 {% load static %}
 {% block content %}
-  <h2>Mi Perfil</h2>
+  <h2>My Profile</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Guardar Cambios</button>
+    <button type="submit">Save Changes</button>
   </form>
+
+  <h2>Change Password</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ password_change_form.as_p }}
+    <button type="submit">Change Password</button>
+  </form>
+
   <link rel="stylesheet" href="{% static 'css/password.css' %}">
 {% endblock %}
