@@ -6,7 +6,9 @@ from django.contrib import messages
 from .models import Outfit, Garment, CustomUser
 # from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
+from .forms import UserProfileForm
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 @login_required
@@ -329,3 +331,26 @@ def closet_outfits(request):
         return redirect('closet_outfits')
 
     return render(request, 'closet_outfits.html', {'outfits': outfits, 'search_query': search_query})
+
+
+#vista de profile
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        password_change_form = PasswordChangeForm(request.user, request.POST)
+
+        if form.is_valid() and password_change_form.is_valid():
+            form.save()
+            password_change_form.save()
+            update_session_auth_hash(request, password_change_form.user)
+            messages.success(request, 'Tu perfil y contraseña se han actualizado correctamente.')
+            return redirect('home')
+        else:
+            messages.error(request, 'Hubo un error al actualizar el perfil y/o la contraseña.')
+    else:
+        form = UserProfileForm(instance=request.user)
+        password_change_form = PasswordChangeForm(request.user)
+
+    return render(request, 'profile.html', {'form': form, 'password_change_form': password_change_form})
