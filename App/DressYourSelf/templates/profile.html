@@ -9,11 +9,12 @@
   </form>
 
   <h2>Change Password</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ password_change_form.as_p }}
-    <button type="submit">Change Password</button>
-  </form>
+<form method="post" id="password-form">
+  {% csrf_token %}
+  {{ password_change_form.as_p }}
+  <button type="submit">Change Password</button>
+</form>
+
 
   <link rel="stylesheet" href="{% static 'css/password.css' %}">
 {% endblock %}

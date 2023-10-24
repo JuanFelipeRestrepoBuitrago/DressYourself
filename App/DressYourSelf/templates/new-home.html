@@ -19,7 +19,7 @@
 
    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
 
-   <link href={% static 'css/home.css' %} rel="stylesheet" type="text/css" media="all" />
+   <link href={% static 'css/new-home.css' %} rel="stylesheet" type="text/css" media="all" />
    <style>
       .body {
           font-family: "Poppins", sans-serif;
@@ -85,6 +85,8 @@
                <a class="nav-link" href="{% url "add_outfit" %}"><i class="fas fa-upload"></i> Add Outfit</a>
            </li>
            {% if user.is_authenticated %}
+           <li class="nav-item">
+            <a class="nav-link" href="/profile"><i class="fas fa-user"></i> Profile</a>
                <li class="nav-item">
                    <a class="nav-link" href="{% url "logout" %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
                </li>
