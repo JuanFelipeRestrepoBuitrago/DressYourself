@@ -338,20 +338,22 @@ def closet_outfits(request):
 def edit_user(request):
     if request.method == 'POST':
         form = CustomUserChangeForm(instance=request.user, data=request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            new_password = form.cleaned_data['new_password']
+        password_change_form = PasswordChangeForm(user=request.user, data=request.POST)
+        
+        if form.is_valid() and password_change_form.is_valid():
+            user = form.save()
+            password_change_form.save()
 
-            if new_password:
-                # Establecer la nueva contraseña si se proporciona una
-                user.set_password(new_password)
+            update_session_auth_hash(request, user)
 
-            user.save()
-            messages.success(request, 'Tu perfil ha sido actualizado con éxito.')
+            messages.success(request, 'Tu perfil ha sido actualizado con éxito y tu contraseña ha sido cambiada si proporcionaste una nueva contraseña.')
             return redirect('home')  # Redirigir a la página de inicio
     else:
         form = CustomUserChangeForm(instance=request.user)
-    return render(request, 'edit_user.html', {'form': form})
+        password_change_form = PasswordChangeForm(user=request.user)
+
+    return render(request, 'edit_user.html', {'form': form, 'password_change_form': password_change_form})
+
 """
 def edit_user(request):
     if request.method == 'POST':

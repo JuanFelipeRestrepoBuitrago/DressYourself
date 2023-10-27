@@ -1,18 +1,12 @@
-{% extends "base/base.html" %}
-{% load static %}
-{% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Editar Usuario</title>
-</head>
-<body>
-    <h1>Editar Usuario</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar Cambios</button>
-    </form>
-</body>
-</html>
-{% endblock %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <h2>Cambiar contraseña</h2>
+    <label for="{{ form.new_password.id_for_label }}">Nueva contraseña:</label>
+    {{ form.new_password }}
+    <label for="id_old_password">Contraseña actual:</label>
+    <input type="password" name="old_password" id="id_old_password">
+    <label for="id_confirm_password">Confirmar contraseña:</label>
+    <input type="password" name="confirm_password" id="id_confirm_password">
+    <button type="submit">Guardar Cambios</button>
+</form>
