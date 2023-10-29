@@ -33,3 +33,8 @@ python -m pip install Pillow
 python -m pip install sqlparse
 ```
 
+**requests**: the used version was the 2.31.0
+```cmd
+python -m pip install requests
+```
+
