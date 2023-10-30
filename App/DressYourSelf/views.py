@@ -9,6 +9,11 @@ from django.shortcuts import render, redirect
 from .forms import UserProfileForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from .generation import APIs
+
+
+apis = APIs()
+
 
 # Create your views here.
 @login_required
@@ -35,11 +40,6 @@ def add_garment(request):
             else:
                 category = request.POST.get('category')
             image = request.FILES.get('image')
-            if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
-                    'description') == ' ':
-                description = None
-            else:
-                description = request.POST.get('description')
             if request.POST.get('brand') == '' or request.POST.get('brand') is None or request.POST.get('brand') == ' ':
                 brand = None
             else:
@@ -53,6 +53,8 @@ def add_garment(request):
             else:
                 color = request.POST.get('color')
             user = request.user
+
+            description = apis.get_caption(image)
 
             garment = Garment.objects.create(
                 name=name,
