@@ -43,6 +43,8 @@ def add_garment(request):
                 description = apis.get_caption(image)
             else:
                 description = request.POST.get('description')
+                if len(description) < 20:
+                    raise IntegrityError('Description must be at least 20 characters long')
             if request.POST.get('brand') == '' or request.POST.get('brand') is None or request.POST.get('brand') == ' ':
                 brand = None
             else:
@@ -72,7 +74,10 @@ def add_garment(request):
 
             return redirect('garments')
         except IntegrityError as e:
-            messages.error(request, "The name of the garment is already taken")
+            if e.args[0] == 'UNIQUE constraint failed: DressYourSelf_garment.name, DressYourSelf_garment.user_id':
+                messages.error(request, "The name of the garment is already taken")
+            else:
+                messages.error(request, e)
             return redirect('add_garment')
 
 
