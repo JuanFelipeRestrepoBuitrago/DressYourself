@@ -1,0 +1,12 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <button type="submit">Guardar Cambios</button>
+</form>
+<a href="{% url 'change_password' %}">Cambiar Contraseña</a>
+<link rel="stylesheet" href="{% static 'css/password.css' %}">
+{% endblock %}

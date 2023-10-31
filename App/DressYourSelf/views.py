@@ -6,12 +6,12 @@ from django.contrib import messages
 from .models import Outfit, Garment, CustomUser
 # from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .forms import UserProfileForm
-from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from .forms import CustomUserChangeForm, CustomPasswordChangeForm
 from .generation import APIs
 
 apis = APIs()
+
 
 # Create your views here.
 @login_required
@@ -291,12 +291,11 @@ def authentication(request):
     if request.method == 'GET':
         return render(request, 'signup.html')
     elif request.method == 'POST':
-        if request.POST['password'] == request.POST['passwordc']:
+        if request.POST['password'] == request.POST['password']:
             try:
                 # Creates a new user object
                 user = CustomUser.objects.create(username=request.POST['username'], password=request.POST['password'],
-                                                 email=request.POST['email'], first_name=request.POST['name'],
-                                                 last_name=request.POST['lastname'])
+                                                 email=request.POST['email'], first_name=request.POST['name'],                                         last_name=request.POST['lastname'])
                 # Saves the user object
                 user.save()
                 login(request, user)
@@ -344,21 +343,75 @@ def closet_outfits(request):
 #vista de profile
 
 @login_required
-def profile(request):
+def edit_user(request):
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=request.user)
-        password_change_form = PasswordChangeForm(request.user, request.POST)
-
-        if form.is_valid() and password_change_form.is_valid():
-            form.save()
-            password_change_form.save()
-            update_session_auth_hash(request, password_change_form.user)
-            messages.success(request, 'Tu perfil y contraseña se han actualizado correctamente.')
-            return redirect('home')
-        else:
-            messages.error(request, 'Hubo un error al actualizar el perfil y/o la contraseña.')
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, 'Tu perfil ha sido actualizado con éxito.')
+            return redirect('home')  # Cambia 'home' a la URL de la página de inicio de tu aplicación
     else:
-        form = UserProfileForm(instance=request.user)
-        password_change_form = PasswordChangeForm(request.user)
+        form = CustomUserChangeForm(instance=request.user)
 
-    return render(request, 'profile.html', {'form': form, 'password_change_form': password_change_form})
+    return render(request, 'edit_user.html', {'form': form})
+
+def change_password(request):
+    if request.method == 'POST':
+        form = CustomPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Actualiza la sesión del usuario para evitar que se cierre la sesión
+            messages.success(request, 'Tu contraseña ha sido actualizada con éxito.')
+            return redirect('home')  # Cambia 'home' a la URL de la página de inicio de tu aplicación
+    else:
+        form = CustomPasswordChangeForm(request.user)
+
+    return render(request, 'change_password.html', {'form': form})
+"""
+def edit_user(request):
+    if request.method == 'POST':
+        form = CustomUserChangeForm(instance=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Actualizar la sesión del usuario en caso de que cambie la contraseña
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Tu perfil ha sido actualizado con éxito.')
+            return redirect('home')  # Cambia 'profile' a la URL de la página de perfil del usuario
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    return render(request, 'edit_user.html', {'form': form})
+
+
+def edit_user(request):
+    if request.method == 'POST':
+        form = CustomUserChangeForm(instance=request.user, data=request.POST)
+        password_change_form = PasswordChangeForm(user=request.user, data=request.POST)
+        
+        if form.is_valid() and password_change_form.is_valid():
+            user = form.save()
+            password_change_form.save()
+
+            update_session_auth_hash(request, user)
+
+            messages.success(request, 'Tu perfil ha sido actualizado con éxito y tu contraseña ha sido cambiada si proporcionaste una nueva contraseña.')
+            return redirect('home')  # Redirigir a la página de inicio
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+        password_change_form = PasswordChangeForm(user=request.user)
+
+    return render(request, 'edit_user.html', {'form': form, 'password_change_form': password_change_form})
+
+
+def edit_user(request):
+    if request.method == 'POST':
+        form = CustomUserChangeForm(instance=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Actualizar la sesión del usuario en caso de que cambie la contraseña
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Tu perfil ha sido actualizado con éxito.')
+            return redirect('home')  # Cambia 'profile' a la URL de la página de perfil del usuario
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    return render(request, 'edit_user.html', {'form': form})
+"""

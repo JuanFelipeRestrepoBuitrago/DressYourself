@@ -33,3 +33,23 @@ python -m pip install Pillow
 python -m pip install sqlparse
 ```
 
+**requests**: the used version was the 2.31.0
+```cmd
+python -m pip install requests
+```
+
+**diffusers**: the used version was the 0.21.4
+```cmd
+python -m pip install diffusers
+```
+
+**transformers**: the used version was the 4.31.1
+```cmd
+python -m pip install transformers
+```
+
+**accelerate**: the used version was the 0.24.1
+```cmd
+python -m pip install accelerate
+```
+
