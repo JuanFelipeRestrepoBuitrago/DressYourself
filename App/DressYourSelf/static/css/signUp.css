@@ -59,7 +59,7 @@ form.sign-up-form {
 
 form.sign-in-form {
   z-index: 2;
-  /* margin: auto 0 0 0 ; */
+
 }
 
 .title {
@@ -102,6 +102,15 @@ form.sign-in-form {
 .input-field input::placeholder {
   color: #aaa;
   font-weight: 500;
+}
+
+/* En tu archivo signUp.css */
+.pw a {
+  color: #aaa;
+}
+
+.pw a:hover {
+  color: lightgray; /* Cambia el color cuando el usuario pasa el cursor sobre el enlace */
 }
 
 .social-text {
@@ -233,8 +242,6 @@ form.sign-in-form {
 .right-panel .content {
   transform: translateX(800px);
 }
-
-/* ANIMATION */
 
 .container.sign-up-mode:before {
   transform: translate(100%, -50%);

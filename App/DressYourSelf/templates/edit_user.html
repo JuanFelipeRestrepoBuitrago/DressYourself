@@ -1,12 +1,21 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    
-    <button type="submit">Guardar Cambios</button>
-</form>
-<a href="{% url 'change_password' %}">Cambiar Contraseña</a>
-<link rel="stylesheet" href="{% static 'css/password.css' %}">
+    <div class="profile-card">
+        <img src="{% static 'images_page/profile.png' %}" alt="profile" style="width: 100px; height: 100px;">
+        <h1>My Profile</h1>
+        <p><i class="fa fa-user"></i> Name: {{ user.first_name }} {{ user.last_name }}</p>
+        <p><i class="fa fa-envelope"></i> Email: {{ user.email }}</p>        
+        <form method="post">
+            <div class="form-group">
+                {% csrf_token %}
+                <label for="first_name">Edit First name:</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}">
+                <label for="last_name">Edit Last name:</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}">
+            <button type="submit" class="button">Save changes</button>
+        </form>
+        <a href="{% url 'change_password' %}" class="button">Change password</a>
+    </div>
+    <link rel="stylesheet" href="{% static 'css/edit_user.css' %}">
 {% endblock %}
