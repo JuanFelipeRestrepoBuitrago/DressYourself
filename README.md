@@ -53,3 +53,18 @@ python -m pip install transformers
 python -m pip install accelerate
 ```
 
+**torch**: the used version was the 2.1.0
+```cmd
+python -m pip install torch
+```
+
+**torchaudio**: the used version was the 2.1.0
+```cmd
+python -m pip install torchaudio
+```
+
+**torchvision**: the used version was the 0.16.0
+```cmd
+python -m pip install torchvision
+```
+
