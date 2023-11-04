@@ -21,24 +21,24 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" name="name" value="" class="form-control custom-font" id="name" placeholder="Enter the garment's name" required>
+                <input type="text" name="name" value="{% if name %}{{ name }}{% endif %}" class="form-control custom-font" id="name" placeholder="Enter the garment's name" required>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <input name="description" class="form-control custom-font" id="description" placeholder="Enter the garment's description"></input>
+                <input name="description" class="form-control custom-font" id="description" placeholder="Enter the garment's description" value="{% if description %}{{ description }}{% endif %}">
             </div>
             <div class="form-group">
-                <input type="file" class="hidden" name="outfitImage" id="outfitImage" accept="image/*" required>
+                <input type="file" class="hidden" name="outfitImage" id="outfitImage" accept="image/*">
                 <label>Image</label>
                 <label for="outfitImage" class="form-control image-review">
                     <img id="imagePreview" src="" alt="Upload an Image">
                 </label>
             </div>
             <div class="form-group">
-                <input type="file" class="hidden" name="maskImage" id="maskImage" accept="image/*" required>
+                <input type="file" class="hidden" name="maskImage" id="maskImage" accept="image/*">
                 <label>Image Mask</label>
                 <label for="maskImage" class="form-control image-review">
-                    <img id="maskImagePreview" src="" alt="Upload an Image">
+                    <img id="maskImagePreview" src="{% if mask %}{{ mask }}{% endif %}" alt="Upload an Image">
                 </label>
             </div>
             <div class="form-group">
@@ -54,6 +54,21 @@
                         <button class="btn btn-input" type="button" data-modal-button>
                             <i class="fas fa-plus"></i>
                         </button>
+                        {% if selected_tops %}
+                            {% for top in selected_tops %}
+                                <div class="garment chosen"
+                                    data-garment-id="{{ top.id }}"
+                                    data-garment-name="{{ top.name }}"
+                                    data-garment-image="{{ top.image.url }}"
+                                    >
+                                    <img src="{{ top.image.url }}" alt="{{ top.name }}">
+                                    <p>{{ top.name }}</p>
+                                    <button type="button" class="btn btn-close">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
 
                     <dialog class="modal inactive">
@@ -64,17 +79,45 @@
                             {% else %}
                                 <div class="garments">
                                     {% for top in tops %}
-                                    	<div class="garment"
-                                            data-garment-id="{{ top.id }}"
-                                            data-garment-name="{{ top.name }}"
-                                            data-garment-image="{{ top.image.url }}"
-                                            >
-                                            <img src="{{ top.image.url }}" alt="{{ top.name }}">
-                                            <p>{{ top.name }}</p>
-                                            <button type="button" class="btn btn-close inactive">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
+                                        {% if selected_tops %}
+                                            {% if top in selected_tops %}
+                                                <div class="garment chosen"
+                                                    data-garment-id="{{ top.id }}"
+                                                    data-garment-name="{{ top.name }}"
+                                                    data-garment-image="{{ top.image.url }}"
+                                                    >
+                                                    <img src="{{ top.image.url }}" alt="{{ top.name }}">
+                                                    <p>{{ top.name }}</p>
+                                                    <button type="button" class="btn btn-close">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            {% else %}
+                                                <div class="garment"
+                                                    data-garment-id="{{ top.id }}"
+                                                    data-garment-name="{{ top.name }}"
+                                                    data-garment-image="{{ top.image.url }}"
+                                                    >
+                                                    <img src="{{ top.image.url }}" alt="{{ top.name }}">
+                                                    <p>{{ top.name }}</p>
+                                                    <button type="button" class="btn btn-close inactive">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="garment"
+                                                data-garment-id="{{ top.id }}"
+                                                data-garment-name="{{ top.name }}"
+                                                data-garment-image="{{ top.image.url }}"
+                                                >
+                                                <img src="{{ top.image.url }}" alt="{{ top.name }}">
+                                                <p>{{ top.name }}</p>
+                                                <button type="button" class="btn btn-close inactive">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             {% endif %}
@@ -93,6 +136,21 @@
                         <button class="btn btn-input" type="button" data-modal-button>
                             <i class="fas fa-plus"></i>
                         </button>
+                        {% if selected_bottoms %}
+                            {% for bottom in selected_bottoms %}
+                                <div class="garment chosen"
+                                    data-garment-id="{{ bottom.id }}"
+                                    data-garment-name="{{ bottom.name }}"
+                                    data-garment-image="{{ bottom.image.url }}"
+                                    >
+                                    <img src="{{ bottom.image.url }}" alt="{{ bottom.name }}">
+                                    <p>{{ bottom.name }}</p>
+                                    <button type="button" class="btn btn-close">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
 
                     <dialog class="modal inactive">
@@ -103,17 +161,45 @@
                             {% else %}
                                 <div class="garments">
                                     {% for bottom in bottoms %}
-                                    	<div class="garment"
-                                            data-garment-id="{{ bottom.id }}"
-                                            data-garment-name="{{ bottom.name }}"
-                                            data-garment-image="{{ bottom.image.url }}"
-                                            >
-                                            <img src="{{ bottom.image.url }}" alt="{{ bottom.name }}">
-                                            <p>{{ bottom.name }}</p>
-                                            <button type="button" class="btn btn-close inactive">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
+                                        {% if selected_bottoms %}
+                                            {% if bottom in selected_bottoms %}
+                                                <div class="garment chosen"
+                                                    data-garment-id="{{ bottom.id }}"
+                                                    data-garment-name="{{ bottom.name }}"
+                                                    data-garment-image="{{ bottom.image.url }}"
+                                                    >
+                                                    <img src="{{ bottom.image.url }}" alt="{{ bottom.name }}">
+                                                    <p>{{ bottom.name }}</p>
+                                                    <button type="button" class="btn btn-close">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            {% else %}
+                                                <div class="garment"
+                                                    data-garment-id="{{ bottom.id }}"
+                                                    data-garment-name="{{ bottom.name }}"
+                                                    data-garment-image="{{ bottom.image.url }}"
+                                                    >
+                                                    <img src="{{ bottom.image.url }}" alt="{{ bottom.name }}">
+                                                    <p>{{ bottom.name }}</p>
+                                                    <button type="button" class="btn btn-close inactive">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="garment"
+                                                data-garment-id="{{ bottom.id }}"
+                                                data-garment-name="{{ bottom.name }}"
+                                                data-garment-image="{{ bottom.image.url }}"
+                                                >
+                                                <img src="{{ bottom.image.url }}" alt="{{ bottom.name }}">
+                                                <p>{{ bottom.name }}</p>
+                                                <button type="button" class="btn btn-close inactive">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             {% endif %}
@@ -132,6 +218,21 @@
                         <button class="btn btn-input" type="button" data-modal-button>
                             <i class="fas fa-plus"></i>
                         </button>
+                        {% if selected_footwears %}
+                            {% for footwear in selected_footwears %}
+                                <div class="garment chosen"
+                                    data-garment-id="{{ footwear.id }}"
+                                    data-garment-name="{{ footwear.name }}"
+                                    data-garment-image="{{ footwear.image.url }}"
+                                    >
+                                    <img src="{{ footwear.image.url }}" alt="{{ footwear.name }}">
+                                    <p>{{ footwear.name }}</p>
+                                    <button type="button" class="btn btn-close">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
 
                     <dialog class="modal inactive">
@@ -142,17 +243,45 @@
                             {% else %}
                                 <div class="garments">
                                     {% for footwear in footwears %}
-                                    	<div class="garment"
-                                            data-garment-id="{{ footwear.id }}"
-                                            data-garment-name="{{ footwear.name }}"
-                                            data-garment-image="{{ footwear.image.url }}"
-                                            >
-                                            <img src="{{ footwear.image.url }}" alt="{{ footwear.name }}">
-                                            <p>{{ footwear.name }}</p>
-                                            <button type="button" class="btn btn-close inactive">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
+                                    	{% if selected_footwears %}
+                                            {% if footwear in selected_footwears %}
+                                                <div class="garment chosen"
+                                                    data-garment-id="{{ footwear.id }}"
+                                                    data-garment-name="{{ footwear.name }}"
+                                                    data-garment-image="{{ footwear.image.url }}"
+                                                    >
+                                                    <img src="{{ footwear.image.url }}" alt="{{ footwear.name }}">
+                                                    <p>{{ footwear.name }}</p>
+                                                    <button type="button" class="btn btn-close">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            {% else %}
+                                                <div class="garment"
+                                                    data-garment-id="{{ footwear.id }}"
+                                                    data-garment-name="{{ footwear.name }}"
+                                                    data-garment-image="{{ footwear.image.url }}"
+                                                    >
+                                                    <img src="{{ footwear.image.url }}" alt="{{ footwear.name }}">
+                                                    <p>{{ footwear.name }}</p>
+                                                    <button type="button" class="btn btn-close inactive">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="garment"
+                                                data-garment-id="{{ footwear.id }}"
+                                                data-garment-name="{{ footwear.name }}"
+                                                data-garment-image="{{ footwear.image.url }}"
+                                                >
+                                                <img src="{{ footwear.image.url }}" alt="{{ footwear.name }}">
+                                                <p>{{ footwear.name }}</p>
+                                                <button type="button" class="btn btn-close inactive">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             {% endif %}
@@ -171,6 +300,22 @@
                         <button class="btn btn-input" type="button" data-modal-button>
                             <i class="fas fa-plus"></i>
                         </button>
+
+                        {% if selected_others %}
+                            {% for other in selected_others %}
+                                <div class="garment chosen"
+                                    data-garment-id="{{ other.id }}"
+                                    data-garment-name="{{ other.name }}"
+                                    data-garment-image="{{ other.image.url }}"
+                                    >
+                                    <img src="{{ other.image.url }}" alt="{{ other.name }}">
+                                    <p>{{ other.name }}</p>
+                                    <button type="button" class="btn btn-close">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
 
                     <dialog class="modal inactive">
@@ -181,17 +326,45 @@
                             {% else %}
                                 <div class="garments">
                                     {% for other in others %}
-                                    	<div class="garment"
-                                            data-garment-id="{{ other.id }}"
-                                            data-garment-name="{{ other.name }}"
-                                            data-garment-image="{{ other.image.url }}"
-                                            >
-                                            <img src="{{ other.image.url }}" alt="{{ other.name }}">
-                                            <p>{{ other.name }}</p>
-                                            <button type="button" class="btn btn-close inactive">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
+                                    	{% if selected_others %}
+                                            {% if other in selected_others %}
+                                                <div class="garment chosen"
+                                                    data-garment-id="{{ other.id }}"
+                                                    data-garment-name="{{ other.name }}"
+                                                    data-garment-image="{{ other.image.url }}"
+                                                    >
+                                                    <img src="{{ other.image.url }}" alt="{{ other.name }}">
+                                                    <p>{{ other.name }}</p>
+                                                    <button type="button" class="btn btn-close">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            {% else %}
+                                                <div class="garment"
+                                                    data-garment-id="{{ other.id }}"
+                                                    data-garment-name="{{ other.name }}"
+                                                    data-garment-image="{{ other.image.url }}"
+                                                    >
+                                                    <img src="{{ other.image.url }}" alt="{{ other.name }}">
+                                                    <p>{{ other.name }}</p>
+                                                    <button type="button" class="btn btn-close inactive">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="garment"
+                                                data-garment-id="{{ other.id }}"
+                                                data-garment-name="{{ other.name }}"
+                                                data-garment-image="{{ other.image.url }}"
+                                                >
+                                                <img src="{{ other.image.url }}" alt="{{ other.name }}">
+                                                <p>{{ other.name }}</p>
+                                                <button type="button" class="btn btn-close inactive">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             {% endif %}
@@ -203,8 +376,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="submit" formmethod="GET" formaction="{% url 'add_outfit_generated' %}" class="btn btn-secondary">Generate Outfit</button>
+                <button type="submit" formaction="{% url 'add_outfit_generated' %}" class="btn btn-secondary">Generate Outfit</button>
             </div>
+
+            {% if mask %}
+                <input type="text" name="mask" value="{{ mask }}" hidden>
+            {% endif %}
+            {% if image %}
+                <input type="text" name="image" value="{{ image }}" hidden>
+            {% endif %}
         </form>
     </div>
     <section class="container-fluid footer_section">
@@ -214,5 +394,4 @@
             </p>
         </div>
     </section>
-</div>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.db import transaction, IntegrityError
 from django.db.models import Q
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Outfit, Garment, CustomUser
@@ -9,8 +9,44 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import update_session_auth_hash
 from .forms import CustomUserChangeForm, CustomPasswordChangeForm
 from .generation import APIs, get_outfit_caption, get_outfit
+from .temp import *
 
 apis = APIs()
+
+
+def get_garments_by_category(method):
+    if method.get('tops') == '' or method.get('tops') is None or method.get('tops') == ' ':
+        tops = None
+    else:
+        tops = method.get('tops')
+        tops = tops.split(',')
+        tops = Garment.objects.filter(id__in=tops)
+
+    if method.get('bottoms') == '' or method.get('bottoms') is None or method.get(
+            'bottoms') == ' ':
+        bottoms = None
+    else:
+        bottoms = method.get('bottoms')
+        bottoms = bottoms.split(',')
+        bottoms = Garment.objects.filter(id__in=bottoms)
+
+    if method.get('footwears') == '' or method.get('footwears') is None or method.get(
+            'footwears') == ' ':
+        footwears = None
+    else:
+        footwears = method.get('footwears')
+        footwears = footwears.split(',')
+        footwears = Garment.objects.filter(id__in=footwears)
+
+    if method.get('others') == '' or method.get('others') is None or method.get(
+            'others') == ' ':
+        others = None
+    else:
+        others = method.get('others')
+        others = others.split(',')
+        others = Garment.objects.filter(id__in=others)
+
+    return tops, bottoms, footwears, others
 
 
 # Create your views here.
@@ -189,14 +225,16 @@ def add_outfit(request):
             'others': others
         })
     elif request.method == 'POST':
-        print(request.POST)
         try:
             if request.POST.get('name') == '' or request.POST.get('name') is None or request.POST.get('name') == ' ':
                 raise IntegrityError('Name is required')
             else:
                 name = request.POST.get('name')
 
-            image = request.FILES.get('outfitImage')
+            if request.FILES.get('outfitImage') is None or request.FILES.get('outfitImage') == '' or request.FILES.get('outfitImage') == ' ':
+                raise FileNotFoundError('Image is required')
+            else:
+                image = request.FILES.get('outfitImage')
 
             if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
                     'description') == ' ':
@@ -204,36 +242,7 @@ def add_outfit(request):
             else:
                 description = request.POST.get('description')
 
-            if request.POST.get('tops') == '' or request.POST.get('tops') is None or request.POST.get('tops') == ' ':
-                tops = None
-            else:
-                tops = request.POST.get('tops')
-                tops = tops.split(',')
-                tops = Garment.objects.filter(id__in=tops)
-
-            if request.POST.get('bottoms') == '' or request.POST.get('bottoms') is None or request.POST.get(
-                    'bottoms') == ' ':
-                bottoms = None
-            else:
-                bottoms = request.POST.get('bottoms')
-                bottoms = bottoms.split(',')
-                bottoms = Garment.objects.filter(id__in=bottoms)
-
-            if request.POST.get('footwears') == '' or request.POST.get('footwears') is None or request.POST.get(
-                    'footwears') == ' ':
-                footwears = None
-            else:
-                footwears = request.POST.get('footwears')
-                footwears = footwears.split(',')
-                footwears = Garment.objects.filter(id__in=footwears)
-
-            if request.POST.get('others') == '' or request.POST.get('others') is None or request.POST.get(
-                    'others') == ' ':
-                others = None
-            else:
-                others = request.POST.get('others')
-                others = others.split(',')
-                others = Garment.objects.filter(id__in=others)
+            tops, bottoms, footwears, others = get_garments_by_category(request.POST)
 
             user = request.user
             outfit = Outfit.objects.create(
@@ -258,6 +267,9 @@ def add_outfit(request):
         except IntegrityError:
             messages.error(request, "The name of the outfit is already taken")
             return redirect('add_outfit')
+        except FileNotFoundError:
+            messages.error(request, "An image is required")
+            return redirect('add_outfit')
 
 
 @login_required
@@ -268,17 +280,95 @@ def add_outfit_generated(request):
     footwears = Garment.objects.filter(user=request.user, category="Footwear")
     others = Garment.objects.filter(user=request.user).exclude(category="Top").exclude(category="Bottom").exclude(
         category="Footwear")
-    if request.method == 'GET':
-        return render(request, 'add_outfit.html', {
-            'cssBootstrap': False,
-            'jsBootstrap': True,
-            'cssName': '/css/add_outfit.css',
-            'jsName': '/js/add_outfit.js',
-            'tops': tops,
-            'bottoms': bottoms,
-            'footwears': footwears,
-            'others': others
-        })
+    if request.method == 'POST':
+        try:
+            name = request.POST.get('name')
+            description = request.POST.get('description')
+            if description is None or description == '' or description == ' ':
+                description = None
+
+            if request.FILES.get('outfitImage') is None or request.FILES.get('outfitImage') == '' or request.FILES.get(
+                    'outfitImage') == ' ':
+                raise FileNotFoundError('Image is required')
+            else:
+                image = request.FILES.get('outfitImage')
+            if request.FILES.get('maskImage') is None or request.FILES.get('maskImage') == '' or request.FILES.get(
+                    'maskImage') == ' ':
+                raise FileNotFoundError('Mask is required')
+            else:
+                mask = request.FILES.get('maskImage')
+                temp_mask_path = upload_image(mask)
+
+            selected_tops, selected_bottoms, selected_footwears, selected_others = get_garments_by_category(request.POST)
+            captions
+            # generated_image = get_outfit(get_outfit_caption(),image, mask) #TODO, get outfit caption
+            return render(request, 'add_outfit.html', {
+                'cssBootstrap': False,
+                'jsBootstrap': True,
+                'cssName': '/css/add_outfit.css',
+                'jsName': '/js/add_outfit.js',
+                'tops': tops,
+                'bottoms': bottoms,
+                'footwears': footwears,
+                'others': others,
+                'name': name,
+                'mask': temp_mask_path,
+                'description': description,
+                'selected_tops': selected_tops,
+                'selected_bottoms': selected_bottoms,
+                'selected_footwears': selected_footwears,
+                'selected_others': selected_others
+            })
+        except FileNotFoundError as e:
+            messages.error(request, e)
+            return redirect('add_outfit')
+
+
+@login_required
+def save_outfit_generated(request):
+    if request.method == "POST":
+        try:
+            mask = request.POST.get('mask')
+            delete_temporary_image(mask)
+
+            if request.POST.get('name') == '' or request.POST.get('name') is None or request.POST.get('name') == ' ':
+                raise IntegrityError('Name is required')
+            else:
+                name = request.POST.get('name')
+
+            image = request.POST.get('image')
+
+            if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
+                    'description') == ' ':
+                description = None
+            else:
+                description = request.POST.get('description')
+
+            tops, bottoms, footwears, others = get_garments_by_category(request.POST)
+
+            user = request.user
+            outfit = Outfit.objects.create(
+                name=name,
+                image=image,
+                description=description,
+                user=user
+            )
+
+            if tops is not None:
+                outfit.garments.add(*tops)
+            if bottoms is not None:
+                outfit.garments.add(*bottoms)
+            if footwears is not None:
+                outfit.garments.add(*footwears)
+            if others is not None:
+                outfit.garments.add(*others)
+
+            outfit.save()
+
+            return redirect('closet_outfits')
+        except IntegrityError:
+            messages.error(request, "The name of the outfit is already taken")
+            return redirect('add_outfit')
 
 
 # transaction.atomic() is used to rollback the database if an error occurs
