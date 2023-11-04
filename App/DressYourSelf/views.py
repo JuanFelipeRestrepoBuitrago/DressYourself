@@ -189,6 +189,7 @@ def add_outfit(request):
             'others': others
         })
     elif request.method == 'POST':
+        print(request.POST)
         try:
             if request.POST.get('name') == '' or request.POST.get('name') is None or request.POST.get('name') == ' ':
                 raise IntegrityError('Name is required')
@@ -257,6 +258,27 @@ def add_outfit(request):
         except IntegrityError:
             messages.error(request, "The name of the outfit is already taken")
             return redirect('add_outfit')
+
+
+@login_required
+# Create your views here.
+def add_outfit_generated(request):
+    tops = Garment.objects.filter(user=request.user, category="Top")
+    bottoms = Garment.objects.filter(user=request.user, category="Bottom")
+    footwears = Garment.objects.filter(user=request.user, category="Footwear")
+    others = Garment.objects.filter(user=request.user).exclude(category="Top").exclude(category="Bottom").exclude(
+        category="Footwear")
+    if request.method == 'GET':
+        return render(request, 'add_outfit.html', {
+            'cssBootstrap': False,
+            'jsBootstrap': True,
+            'cssName': '/css/add_outfit.css',
+            'jsName': '/js/add_outfit.js',
+            'tops': tops,
+            'bottoms': bottoms,
+            'footwears': footwears,
+            'others': others
+        })
 
 
 # transaction.atomic() is used to rollback the database if an error occurs
