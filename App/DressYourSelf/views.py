@@ -270,13 +270,10 @@ def signin(request):
         try:
             username = CustomUser.objects.all().get(
                 Q(username=request.POST.get('username')) | Q(email=request.POST.get('username'))).username
-            user = authenticate(username=username, password=request.POST.get('password'))
-            print(user)
             user = CustomUser.objects.all().get(username=username, password=request.POST.get('password'))
+
             if user is None:
                 messages.error(request, 'Invalid username or password')
-                print('Invalid username or password')
-                print(username, request.POST.get('password'))
                 return redirect('signin')
             else:
                 login(request, user)
