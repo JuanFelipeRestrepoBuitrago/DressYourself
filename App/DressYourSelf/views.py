@@ -8,7 +8,7 @@ from .models import Outfit, Garment, CustomUser
 from django.shortcuts import render, redirect
 from django.contrib.auth import update_session_auth_hash
 from .forms import CustomUserChangeForm, CustomPasswordChangeForm
-from .generation import APIs
+from .generation import APIs, get_outfit_caption, get_outfit
 
 apis = APIs()
 
@@ -164,7 +164,7 @@ def edit_garment(request, identification):
             garment.save()
 
             return redirect('garments')
-        except IntegrityError as e:
+        except IntegrityError:
             messages.error(request, "The name of the garment is already taken")
             return redirect('edit_garment')
 
@@ -254,7 +254,7 @@ def add_outfit(request):
             outfit.save()
 
             return redirect('closet_outfits')
-        except IntegrityError as e:
+        except IntegrityError:
             messages.error(request, "The name of the outfit is already taken")
             return redirect('add_outfit')
 
@@ -271,8 +271,12 @@ def signin(request):
             username = CustomUser.objects.all().get(
                 Q(username=request.POST.get('username')) | Q(email=request.POST.get('username'))).username
             user = authenticate(username=username, password=request.POST.get('password'))
+            print(user)
+            user = CustomUser.objects.all().get(username=username, password=request.POST.get('password'))
             if user is None:
                 messages.error(request, 'Invalid username or password')
+                print('Invalid username or password')
+                print(username, request.POST.get('password'))
                 return redirect('signin')
             else:
                 login(request, user)
@@ -295,7 +299,8 @@ def authentication(request):
             try:
                 # Creates a new user object
                 user = CustomUser.objects.create(username=request.POST['username'], password=request.POST['password'],
-                                                 email=request.POST['email'], first_name=request.POST['name'],                                         last_name=request.POST['lastname'])
+                                                 email=request.POST['email'], first_name=request.POST['name'],
+                                                 last_name=request.POST['lastname'])
                 # Saves the user object
                 user.save()
                 login(request, user)
@@ -340,8 +345,7 @@ def closet_outfits(request):
     return render(request, 'closet_outfits.html', {'outfits': outfits, 'search_query': search_query})
 
 
-#vista de profile
-
+# vista de profile
 @login_required
 def edit_user(request):
     if request.method == 'POST':
@@ -355,18 +359,22 @@ def edit_user(request):
 
     return render(request, 'edit_user.html', {'form': form})
 
+
 def change_password(request):
     if request.method == 'POST':
         form = CustomPasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  # Actualiza la sesión del usuario para evitar que se cierre la sesión
+            update_session_auth_hash(request,
+                                     user)  # Actualiza la sesión del usuario para evitar que se cierre la sesión
             messages.success(request, 'Tu contraseña ha sido actualizada con éxito.')
             return redirect('home')  # Cambia 'home' a la URL de la página de inicio de tu aplicación
     else:
         form = CustomPasswordChangeForm(request.user)
 
     return render(request, 'change_password.html', {'form': form})
+
+
 """
 def edit_user(request):
     if request.method == 'POST':
