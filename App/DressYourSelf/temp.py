@@ -6,7 +6,6 @@ from django.conf import settings
 def delete_temporary_image(temporary_image_path):
     if default_storage.exists(temporary_image_path):
         default_storage.delete(temporary_image_path)
-        print("Deleted temporary image: ", temporary_image_path)
 
 
 def upload_image(name, contentFile):

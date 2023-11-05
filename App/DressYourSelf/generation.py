@@ -92,7 +92,6 @@ def get_outfit(caption: str, image, mask_image):
     ).images[0]
 
     with default_storage.open(os.path.join("uploaded_images", "generated_image.png"), "wb") as destination:
-        print(destination)
         image.save(destination)
 
     return "/media/uploaded_images/generated_image.png", os.path.join("uploaded_images", "generated_image.png")

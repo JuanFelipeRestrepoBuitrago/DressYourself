@@ -19,6 +19,8 @@ def get_garments_by_category(method):
         tops = None
     else:
         tops = method.get('tops')
+        if tops[-1] == ',' or tops[-1] == ', ' or tops[-1] == ' ':
+            tops = tops[:-1]
         tops = tops.split(',')
         tops = Garment.objects.filter(id__in=tops)
 
@@ -27,6 +29,8 @@ def get_garments_by_category(method):
         bottoms = None
     else:
         bottoms = method.get('bottoms')
+        if bottoms[-1] == ',' or bottoms[-1] == ', ' or bottoms[-1] == ' ':
+            bottoms = bottoms[:-1]
         bottoms = bottoms.split(',')
         bottoms = Garment.objects.filter(id__in=bottoms)
 
@@ -35,6 +39,8 @@ def get_garments_by_category(method):
         footwears = None
     else:
         footwears = method.get('footwears')
+        if footwears[-1] == ',' or footwears[-1] == ', ' or footwears[-1] == ' ':
+            footwears = footwears[:-1]
         footwears = footwears.split(',')
         footwears = Garment.objects.filter(id__in=footwears)
 
@@ -43,6 +49,8 @@ def get_garments_by_category(method):
         others = None
     else:
         others = method.get('others')
+        if others[-1] == ',' or others[-1] == ', ' or others[-1] == ' ':
+            others = others[:-1]
         others = others.split(',')
         others = Garment.objects.filter(id__in=others)
 
@@ -51,9 +59,6 @@ def get_garments_by_category(method):
 
 # Create your views here.
 @login_required
-# Create your views here.
-
-
 def add_garment(request):
     if request.method == 'GET':
         categories = Garment.Category.choices
@@ -312,8 +317,7 @@ def add_outfit_generated(request):
 
             temp_outfit_image = get_outfit(captions, temp_image_path[1], temp_mask_path[1])
 
-
-            # delete_temporary_image(temp_image_path[1])
+            delete_temporary_image(temp_image_path[1])
             return render(request, 'add_outfit.html', {
                 'cssBootstrap': False,
                 'jsBootstrap': True,
@@ -324,8 +328,8 @@ def add_outfit_generated(request):
                 'footwears': footwears,
                 'others': others,
                 'name': name,
-                'mask': temp_mask_path[0],
-                'image': temp_outfit_image[0],
+                'mask': temp_mask_path,
+                'image': temp_outfit_image,
                 'description': description,
                 'selected_tops': selected_tops,
                 'selected_bottoms': selected_bottoms,
@@ -350,8 +354,7 @@ def save_outfit_generated(request):
                 name = request.POST.get('name')
 
             image_temp = request.POST.get('image')
-            image = default_storage.open(image_temp, "rb")
-            delete_temporary_image(image_temp)
+            image = default_storage.open(image_temp, "rb").read()
 
             if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
                     'description') == ' ':
@@ -364,10 +367,11 @@ def save_outfit_generated(request):
             user = request.user
             outfit = Outfit.objects.create(
                 name=name,
-                image=image,
                 description=description,
                 user=user
             )
+            outfit.image.save("generated_image.png", ContentFile(image))
+            delete_temporary_image(image_temp)
 
             if tops is not None:
                 outfit.garments.add(*tops)
@@ -384,7 +388,8 @@ def save_outfit_generated(request):
         except IntegrityError:
             messages.error(request, "The name of the outfit is already taken")
             return redirect('add_outfit')
-        
+
+
 def generate_random_outfit(request):
     if request.method == 'POST':
         
@@ -426,7 +431,6 @@ def generate_random_outfit(request):
             'footwear': footwear,
             'other': other,
         })
-    
 
 
 # transaction.atomic() is used to rollback the database if an error occurs
