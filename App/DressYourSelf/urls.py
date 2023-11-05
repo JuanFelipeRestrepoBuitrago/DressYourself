@@ -10,6 +10,8 @@ urlpatterns = [
     path('garments', garments, name='garments'),
     # Outfits
     path('outfits/add', add_outfit, name='add_outfit'),
+    path('outfits/add/generated', add_outfit_generated, name='add_outfit_generated'),
+    path('outfits/add/save', save_outfit_generated, name='save_outfit_generated'),
     path('closet_outfits/', closet_outfits, name='closet_outfits'),
     path('random_outfits/', generate_random_outfit, name='random_outfits'),
     # Route for handling the login page

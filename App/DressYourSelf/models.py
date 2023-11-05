@@ -30,7 +30,7 @@ class Garment(models.Model):
         COSTUME = 'C', _('Costume')
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='garments/')
-    description = models.TextField(null=True)
+    description = models.TextField()
     category = models.CharField(max_length=2, choices=Category.choices, default=Category.COSTUME)
     brand = models.CharField(max_length=100, null=True)
     size = models.CharField(max_length=100, null=True)

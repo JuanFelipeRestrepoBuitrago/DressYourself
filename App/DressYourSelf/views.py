@@ -1,24 +1,64 @@
 from django.db import transaction, IntegrityError
 from django.db.models import Q
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Outfit, Garment, CustomUser
-# from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import update_session_auth_hash
 from .forms import CustomUserChangeForm, CustomPasswordChangeForm
-from django.http import JsonResponse
-from random import choice
-from .models import Garment
+from .generation import APIs, get_outfit_caption, get_outfit
+from .temp import *
+from django.core.files.base import ContentFile
 
+apis = APIs()
+
+
+def get_garments_by_category(method):
+    if method.get('tops') == '' or method.get('tops') is None or method.get('tops') == ' ':
+        tops = None
+    else:
+        tops = method.get('tops')
+        if tops[-1] == ',' or tops[-1] == ', ' or tops[-1] == ' ':
+            tops = tops[:-1]
+        tops = tops.split(',')
+        tops = Garment.objects.filter(id__in=tops)
+
+    if method.get('bottoms') == '' or method.get('bottoms') is None or method.get(
+            'bottoms') == ' ':
+        bottoms = None
+    else:
+        bottoms = method.get('bottoms')
+        if bottoms[-1] == ',' or bottoms[-1] == ', ' or bottoms[-1] == ' ':
+            bottoms = bottoms[:-1]
+        bottoms = bottoms.split(',')
+        bottoms = Garment.objects.filter(id__in=bottoms)
+
+    if method.get('footwears') == '' or method.get('footwears') is None or method.get(
+            'footwears') == ' ':
+        footwears = None
+    else:
+        footwears = method.get('footwears')
+        if footwears[-1] == ',' or footwears[-1] == ', ' or footwears[-1] == ' ':
+            footwears = footwears[:-1]
+        footwears = footwears.split(',')
+        footwears = Garment.objects.filter(id__in=footwears)
+
+    if method.get('others') == '' or method.get('others') is None or method.get(
+            'others') == ' ':
+        others = None
+    else:
+        others = method.get('others')
+        if others[-1] == ',' or others[-1] == ', ' or others[-1] == ' ':
+            others = others[:-1]
+        others = others.split(',')
+        others = Garment.objects.filter(id__in=others)
+
+    return tops, bottoms, footwears, others
 
 
 # Create your views here.
 @login_required
-# Create your views here.
-
-
 def add_garment(request):
     if request.method == 'GET':
         categories = Garment.Category.choices
@@ -43,9 +83,11 @@ def add_garment(request):
             image = request.FILES.get('image')
             if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
                     'description') == ' ':
-                description = None
+                description = apis.get_caption(image)
             else:
                 description = request.POST.get('description')
+                if len(description) < 15:
+                    raise IntegrityError('Description must be at least 15 characters long')
             if request.POST.get('brand') == '' or request.POST.get('brand') is None or request.POST.get('brand') == ' ':
                 brand = None
             else:
@@ -75,7 +117,10 @@ def add_garment(request):
 
             return redirect('garments')
         except IntegrityError as e:
-            messages.error(request, "The name of the garment is already taken")
+            if e.args[0] == 'UNIQUE constraint failed: DressYourSelf_garment.name, DressYourSelf_garment.user_id':
+                messages.error(request, "The name of the garment is already taken")
+            else:
+                messages.error(request, e)
             return redirect('add_garment')
 
 
@@ -133,9 +178,11 @@ def edit_garment(request, identification):
                 image = request.FILES.get('image')
             if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
                     'description') == ' ':
-                description = None
+                description = apis.get_caption(image)
             else:
                 description = request.POST.get('description')
+                if len(description) < 15:
+                    raise IntegrityError('Description must be at least 15 characters long')
             if request.POST.get('brand') == '' or request.POST.get('brand') is None or request.POST.get('brand') == ' ':
                 brand = None
             else:
@@ -163,7 +210,10 @@ def edit_garment(request, identification):
 
             return redirect('garments')
         except IntegrityError as e:
-            messages.error(request, "The name of the garment is already taken")
+            if e.args[0] == 'UNIQUE constraint failed: DressYourSelf_garment.name, DressYourSelf_garment.user_id':
+                messages.error(request, "The name of the garment is already taken")
+            else:
+                messages.error(request, e)
             return redirect('edit_garment')
 
 
@@ -193,7 +243,10 @@ def add_outfit(request):
             else:
                 name = request.POST.get('name')
 
-            image = request.FILES.get('outfitImage')
+            if request.FILES.get('outfitImage') is None or request.FILES.get('outfitImage') == '' or request.FILES.get('outfitImage') == ' ':
+                raise FileNotFoundError('Image is required')
+            else:
+                image = request.FILES.get('outfitImage')
 
             if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
                     'description') == ' ':
@@ -201,36 +254,7 @@ def add_outfit(request):
             else:
                 description = request.POST.get('description')
 
-            if request.POST.get('tops') == '' or request.POST.get('tops') is None or request.POST.get('tops') == ' ':
-                tops = None
-            else:
-                tops = request.POST.get('tops')
-                tops = tops.split(',')
-                tops = Garment.objects.filter(id__in=tops)
-
-            if request.POST.get('bottoms') == '' or request.POST.get('bottoms') is None or request.POST.get(
-                    'bottoms') == ' ':
-                bottoms = None
-            else:
-                bottoms = request.POST.get('bottoms')
-                bottoms = bottoms.split(',')
-                bottoms = Garment.objects.filter(id__in=bottoms)
-
-            if request.POST.get('footwears') == '' or request.POST.get('footwears') is None or request.POST.get(
-                    'footwears') == ' ':
-                footwears = None
-            else:
-                footwears = request.POST.get('footwears')
-                footwears = footwears.split(',')
-                footwears = Garment.objects.filter(id__in=footwears)
-
-            if request.POST.get('others') == '' or request.POST.get('others') is None or request.POST.get(
-                    'others') == ' ':
-                others = None
-            else:
-                others = request.POST.get('others')
-                others = others.split(',')
-                others = Garment.objects.filter(id__in=others)
+            tops, bottoms, footwears, others = get_garments_by_category(request.POST)
 
             user = request.user
             outfit = Outfit.objects.create(
@@ -252,10 +276,120 @@ def add_outfit(request):
             outfit.save()
 
             return redirect('closet_outfits')
-        except IntegrityError as e:
+        except IntegrityError:
             messages.error(request, "The name of the outfit is already taken")
             return redirect('add_outfit')
-        
+        except FileNotFoundError:
+            messages.error(request, "An image is required")
+            return redirect('add_outfit')
+
+
+@login_required
+# Create your views here.
+def add_outfit_generated(request):
+    tops = Garment.objects.filter(user=request.user, category="Top")
+    bottoms = Garment.objects.filter(user=request.user, category="Bottom")
+    footwears = Garment.objects.filter(user=request.user, category="Footwear")
+    others = Garment.objects.filter(user=request.user).exclude(category="Top").exclude(category="Bottom").exclude(
+        category="Footwear")
+    if request.method == 'POST':
+        try:
+            name = request.POST.get('name')
+            description = request.POST.get('description')
+            if description is None or description == '' or description == ' ':
+                description = None
+
+            if request.FILES.get('outfitImage') is None or request.FILES.get('outfitImage') == '' or request.FILES.get(
+                    'outfitImage') == ' ':
+                raise FileNotFoundError('Image is required')
+            else:
+                image = request.FILES.get('outfitImage')
+                temp_image_path = upload_image(image.name, ContentFile(image.read()))
+            if request.FILES.get('maskImage') is None or request.FILES.get('maskImage') == '' or request.FILES.get(
+                    'maskImage') == ' ':
+                raise FileNotFoundError('Mask is required')
+            else:
+                mask = request.FILES.get('maskImage')
+                temp_mask_path = upload_image(mask.name, ContentFile(mask.read()))
+
+            selected_tops, selected_bottoms, selected_footwears, selected_others = get_garments_by_category(request.POST)
+            captions = get_outfit_caption(selected_tops, selected_bottoms, selected_footwears, selected_others)
+
+            temp_outfit_image = get_outfit(captions, temp_image_path[1], temp_mask_path[1])
+
+            delete_temporary_image(temp_image_path[1])
+            return render(request, 'add_outfit.html', {
+                'cssBootstrap': False,
+                'jsBootstrap': True,
+                'cssName': '/css/add_outfit.css',
+                'jsName': '/js/add_outfit.js',
+                'tops': tops,
+                'bottoms': bottoms,
+                'footwears': footwears,
+                'others': others,
+                'name': name,
+                'mask': temp_mask_path,
+                'image': temp_outfit_image,
+                'description': description,
+                'selected_tops': selected_tops,
+                'selected_bottoms': selected_bottoms,
+                'selected_footwears': selected_footwears,
+                'selected_others': selected_others
+            })
+        except FileNotFoundError as e:
+            messages.error(request, e)
+            return redirect('add_outfit')
+
+
+@login_required
+def save_outfit_generated(request):
+    if request.method == "POST":
+        try:
+            mask = request.POST.get('mask')
+            delete_temporary_image(mask)
+
+            if request.POST.get('name') == '' or request.POST.get('name') is None or request.POST.get('name') == ' ':
+                raise IntegrityError('Name is required')
+            else:
+                name = request.POST.get('name')
+
+            image_temp = request.POST.get('image')
+            image = default_storage.open(image_temp, "rb").read()
+
+            if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
+                    'description') == ' ':
+                description = None
+            else:
+                description = request.POST.get('description')
+
+            tops, bottoms, footwears, others = get_garments_by_category(request.POST)
+
+            user = request.user
+            outfit = Outfit.objects.create(
+                name=name,
+                description=description,
+                user=user
+            )
+            outfit.image.save("generated_image.png", ContentFile(image))
+            delete_temporary_image(image_temp)
+
+            if tops is not None:
+                outfit.garments.add(*tops)
+            if bottoms is not None:
+                outfit.garments.add(*bottoms)
+            if footwears is not None:
+                outfit.garments.add(*footwears)
+            if others is not None:
+                outfit.garments.add(*others)
+
+            outfit.save()
+
+            return redirect('closet_outfits')
+        except IntegrityError:
+            messages.error(request, "The name of the outfit is already taken")
+            return redirect('add_outfit')
+
+
 def generate_random_outfit(request):
     if request.method == 'POST':
         
@@ -297,7 +431,6 @@ def generate_random_outfit(request):
             'footwear': footwear,
             'other': other,
         })
-    
 
 
 # transaction.atomic() is used to rollback the database if an error occurs
@@ -311,7 +444,8 @@ def signin(request):
         try:
             username = CustomUser.objects.all().get(
                 Q(username=request.POST.get('username')) | Q(email=request.POST.get('username'))).username
-            user = authenticate(username=username, password=request.POST.get('password'))
+            user = CustomUser.objects.all().get(username=username, password=request.POST.get('password'))
+
             if user is None:
                 messages.error(request, 'Invalid username or password')
                 return redirect('signin')
@@ -336,7 +470,8 @@ def authentication(request):
             try:
                 # Creates a new user object
                 user = CustomUser.objects.create(username=request.POST['username'], password=request.POST['password'],
-                                                 email=request.POST['email'], first_name=request.POST['name'],                                         last_name=request.POST['lastname'])
+                                                 email=request.POST['email'], first_name=request.POST['name'],
+                                                 last_name=request.POST['lastname'])
                 # Saves the user object
                 user.save()
                 login(request, user)
@@ -381,8 +516,7 @@ def closet_outfits(request):
     return render(request, 'closet_outfits.html', {'outfits': outfits, 'search_query': search_query})
 
 
-#vista de profile
-
+# vista de profile
 @login_required
 def edit_user(request):
     if request.method == 'POST':
@@ -396,18 +530,22 @@ def edit_user(request):
 
     return render(request, 'edit_user.html', {'form': form})
 
+
 def change_password(request):
     if request.method == 'POST':
         form = CustomPasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  # Actualiza la sesión del usuario para evitar que se cierre la sesión
+            update_session_auth_hash(request,
+                                     user)  # Actualiza la sesión del usuario para evitar que se cierre la sesión
             messages.success(request, 'Tu contraseña ha sido actualizada con éxito.')
             return redirect('home')  # Cambia 'home' a la URL de la página de inicio de tu aplicación
     else:
         form = CustomPasswordChangeForm(request.user)
 
     return render(request, 'change_password.html', {'form': form})
+
+
 """
 def edit_user(request):
     if request.method == 'POST':
