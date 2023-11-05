@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<div class="main-container">
+    <h1 class="title">Random Outfit</h1>
+    <div class="outfit">
+        <div class="garment-category">
+            <h3>Top</h3>
+            <div class="image-container">
+                <img src="{{ top.image.url }}" alt="{{ top.name }}">
+            </div>
+        </div>
+        <div class="garment-category">
+            <h3>Bottom</h3>
+            <div class="image-container">
+                <img src="{{ bottom.image.url }}" alt="{{ bottom.name }}">
+            </div>
+        </div>
+        <div class="garment-category">
+            <h3>Footwear</h3>
+            <div class="image-container">
+                <img src="{{ footwear.image.url }}" alt="{{ footwear.name }}">
+            </div>
+        </div>
+        <div class="garment-category">
+            <h3>Other</h3>
+            <div class="image-container">
+                <img src="{{ other.image.url }}" alt="{{ other.name }}">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+        <a href="{% url 'random_outfits' %}" class="btn btn-primary">Generate Another Random Outfit</a>
+        <button type="button" class="btn btn-success" id="save-outfit-button">Save Outfit</button>
+    </div>
+    <div class="modal" id="save-outfit-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Save Outfit</h2>
+            <form id="save-outfit-form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="outfit-name">Name</label>
+                    <input type="text" name="name" class="form-control" id="outfit-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="outfit-description">Description</label>
+                    <textarea name="description" class="form-control" id="outfit-description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="outfit-image">Image</label>
+                    <input type="file" name="outfitImage" class="form-control" id="outfit-image" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+        
+</div>
+<section class="container-fluid footer_section">
+    <div class="container">
+        <p style="color: white;">&copy; 2023 All Rights Reserved By
+            <a href="#" style="color: white;">DressYourSelf TEAM</a>
+        </p>
+    </div>
+</section>
+</div>
+<link rel="stylesheet" type="text/css" href="{% static 'css/random_outfits.css' %}">
+<script src="{% static 'js/random_outfits.js' %}"></script>
+{% endblock %}
