@@ -1,23 +1,39 @@
 import requests
 from diffusers import StableDiffusionControlNetInpaintPipeline, ControlNetModel
-from diffusers.utils import load_image
 from diffusers.schedulers import DDIMScheduler
 import numpy as np
 import torch
+from django.core.files.storage import default_storage
+from PIL import Image
+import os
+from django.conf import settings
 
-
-def get_outfit_caption(garments_caption: list):
+def get_outfit_caption(tops: list, bottoms: list, footwears: list, others: list):
     """
-    This function takes a list of garments captions and returns a single caption
-
-    :type garments_caption: list
-    :param garments_caption: list of garments captions
-    :return: single caption
+    This function takes a list of tops, bottoms, footwears and others and returns a caption
+    :param tops: list of tops
+    :param bottoms: list of bottoms
+    :param footwears: list of footwears
+    :param others: list of others
+    :return: caption
     """
-
-    caption = ""
-    for garment_caption in garments_caption:
-        caption += garment_caption + " "
+    caption = "A beautiful person with: "
+    if tops is not None and len(tops) > 0:
+        for top in tops:
+            caption += top.description + ", "
+    if bottoms is not None and len(bottoms) > 0:
+        for bottom in bottoms:
+            caption += bottom.description + ", "
+    if footwears is not None and len(footwears) > 0:
+        for footwear in footwears:
+            caption += footwear.description + ", "
+    if others is not None and len(others) > 0:
+        for other in others:
+            caption += other.description + ", "
+    if caption != "" and caption != " " and caption[-2:] == ", ":
+        caption = caption[:-2]
+    else:
+        caption = "Same Image"
     return caption
 
 
@@ -45,12 +61,14 @@ def get_outfit(caption: str, image, mask_image):
     :param mask_image: Mask
     :return: Image of the new outfit
     """
-    init_image = load_image(image)
+    init_image = default_storage.open(image, "rb")
+    init_image = Image.open(init_image)
     init_image = init_image.resize((512, 512))
 
     generator = torch.Generator(device="cpu").manual_seed(1)
 
-    mask_image = load_image(mask_image)
+    mask_image = default_storage.open(mask_image, "rb")
+    mask_image = Image.open(mask_image)
     mask_image = mask_image.resize((512, 512))
 
     control_image = make_inpaint_condition(init_image, mask_image)
@@ -73,7 +91,11 @@ def get_outfit(caption: str, image, mask_image):
         control_image=control_image,
     ).images[0]
 
-    return image
+    with default_storage.open(os.path.join("uploaded_images", "generated_image.png"), "wb") as destination:
+        print(destination)
+        image.save(destination)
+
+    return "/media/uploaded_images/generated_image.png", os.path.join("uploaded_images", "generated_image.png")
 
 
 class APIs:

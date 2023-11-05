@@ -4,12 +4,12 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Outfit, Garment, CustomUser
-# from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import update_session_auth_hash
 from .forms import CustomUserChangeForm, CustomPasswordChangeForm
 from .generation import APIs, get_outfit_caption, get_outfit
 from .temp import *
+from django.core.files.base import ContentFile
 
 apis = APIs()
 
@@ -79,8 +79,8 @@ def add_garment(request):
                 description = apis.get_caption(image)
             else:
                 description = request.POST.get('description')
-                if len(description) < 20:
-                    raise IntegrityError('Description must be at least 20 characters long')
+                if len(description) < 15:
+                    raise IntegrityError('Description must be at least 15 characters long')
             if request.POST.get('brand') == '' or request.POST.get('brand') is None or request.POST.get('brand') == ' ':
                 brand = None
             else:
@@ -174,6 +174,8 @@ def edit_garment(request, identification):
                 description = apis.get_caption(image)
             else:
                 description = request.POST.get('description')
+                if len(description) < 15:
+                    raise IntegrityError('Description must be at least 15 characters long')
             if request.POST.get('brand') == '' or request.POST.get('brand') is None or request.POST.get('brand') == ' ':
                 brand = None
             else:
@@ -200,8 +202,11 @@ def edit_garment(request, identification):
             garment.save()
 
             return redirect('garments')
-        except IntegrityError:
-            messages.error(request, "The name of the garment is already taken")
+        except IntegrityError as e:
+            if e.args[0] == 'UNIQUE constraint failed: DressYourSelf_garment.name, DressYourSelf_garment.user_id':
+                messages.error(request, "The name of the garment is already taken")
+            else:
+                messages.error(request, e)
             return redirect('edit_garment')
 
 
@@ -292,16 +297,21 @@ def add_outfit_generated(request):
                 raise FileNotFoundError('Image is required')
             else:
                 image = request.FILES.get('outfitImage')
+                temp_image_path = upload_image(image.name, ContentFile(image.read()))
             if request.FILES.get('maskImage') is None or request.FILES.get('maskImage') == '' or request.FILES.get(
                     'maskImage') == ' ':
                 raise FileNotFoundError('Mask is required')
             else:
                 mask = request.FILES.get('maskImage')
-                temp_mask_path = upload_image(mask)
+                temp_mask_path = upload_image(mask.name, ContentFile(mask.read()))
 
             selected_tops, selected_bottoms, selected_footwears, selected_others = get_garments_by_category(request.POST)
-            captions
-            # generated_image = get_outfit(get_outfit_caption(),image, mask) #TODO, get outfit caption
+            captions = get_outfit_caption(selected_tops, selected_bottoms, selected_footwears, selected_others)
+
+            temp_outfit_image = get_outfit(captions, temp_image_path[1], temp_mask_path[1])
+
+
+            # delete_temporary_image(temp_image_path[1])
             return render(request, 'add_outfit.html', {
                 'cssBootstrap': False,
                 'jsBootstrap': True,
@@ -312,7 +322,8 @@ def add_outfit_generated(request):
                 'footwears': footwears,
                 'others': others,
                 'name': name,
-                'mask': temp_mask_path,
+                'mask': temp_mask_path[0],
+                'image': temp_outfit_image[0],
                 'description': description,
                 'selected_tops': selected_tops,
                 'selected_bottoms': selected_bottoms,
@@ -336,7 +347,9 @@ def save_outfit_generated(request):
             else:
                 name = request.POST.get('name')
 
-            image = request.POST.get('image')
+            image_temp = request.POST.get('image')
+            image = default_storage.open(image_temp, "rb")
+            delete_temporary_image(image_temp)
 
             if request.POST.get('description') == '' or request.POST.get('description') is None or request.POST.get(
                     'description') == ' ':
