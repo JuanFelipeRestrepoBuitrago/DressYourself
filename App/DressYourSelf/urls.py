@@ -11,6 +11,7 @@ urlpatterns = [
     # Outfits
     path('outfits/add', add_outfit, name='add_outfit'),
     path('closet_outfits/', closet_outfits, name='closet_outfits'),
+    path('random_outfits/', generate_random_outfit, name='random_outfits'),
     # Route for handling the login page
     path('authentication/', authentication, name='authentication'),
     path('signin/', signin, name='signin'),
@@ -23,4 +24,5 @@ urlpatterns = [
     #profile
     path('edit_user/', edit_user, name='edit_user'),
     path('change_password/', change_password, name='change_password'),
+
 ]

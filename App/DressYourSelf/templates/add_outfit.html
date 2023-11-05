@@ -196,8 +196,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-secondary">Generate Outfit</button>
+                <button type="button" class="btn btn-primary" id="generate-random-outfit" onclick="window.location.href='/random_outfits'">Generate Random Outfit</button>
             </div>
+            
         </form>
     </div>
     <section class="container-fluid footer_section">
@@ -208,4 +209,5 @@
         </div>
     </section>
 </div>
+<script src="{% static 'random_outfit.js' %}"></script>
 {% endblock %}

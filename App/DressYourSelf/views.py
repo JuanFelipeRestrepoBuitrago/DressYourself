@@ -8,10 +8,17 @@ from .models import Outfit, Garment, CustomUser
 from django.shortcuts import render, redirect
 from django.contrib.auth import update_session_auth_hash
 from .forms import CustomUserChangeForm, CustomPasswordChangeForm
+from django.http import JsonResponse
+from random import choice
+from .models import Garment
+
+
 
 # Create your views here.
 @login_required
 # Create your views here.
+
+
 def add_garment(request):
     if request.method == 'GET':
         categories = Garment.Category.choices
@@ -248,6 +255,49 @@ def add_outfit(request):
         except IntegrityError as e:
             messages.error(request, "The name of the outfit is already taken")
             return redirect('add_outfit')
+        
+def generate_random_outfit(request):
+    if request.method == 'POST':
+        
+        # Recupera los datos del formulario enviado
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        image = request.FILES.get('outfitImage')
+        tops = request.POST.getlist('tops')  # En tu formulario, esto debe ser un conjunto de checkbox
+        bottoms = request.POST.getlist('bottoms')  # En tu formulario, esto debe ser un conjunto de checkbox
+        footwears = request.POST.getlist('footwears')  # En tu formulario, esto debe ser un conjunto de checkbox
+        others = request.POST.getlist('others')  # En tu formulario, esto debe ser un conjunto de checkbox
+
+        # Crea una instancia de Outfit y guárdala en la base de datos
+        outfit = Outfit(name=name, description=description, image=image, user=request.user)
+        outfit.save()
+
+        # Añade los componentes del atuendo al atuendo
+        if tops:
+            outfit.garments.add(*Garment.objects.filter(id__in=tops))
+        if bottoms:
+            outfit.garments.add(*Garment.objects.filter(id__in=bottoms))
+        if footwears:
+            outfit.garments.add(*Garment.objects.filter(id__in=footwears))
+        if others:
+            outfit.garments.add(*Garment.objects.filter(id__in=others))
+
+        return redirect('closet_outfits')
+
+    else:
+        # Lógica para generar un atuendo aleatorio
+        top = Garment.objects.filter(category="Top").order_by('?').first()
+        bottom = Garment.objects.filter(category="Bottom").order_by('?').first()
+        footwear = Garment.objects.filter(category="Footwear").order_by('?').first()
+        other = Garment.objects.exclude(category__in=["Top", "Bottom", "Footwear"]).order_by('?').first()
+
+        return render(request, 'random_outfits.html', {
+            'top': top,
+            'bottom': bottom,
+            'footwear': footwear,
+            'other': other,
+        })
+    
 
 
 # transaction.atomic() is used to rollback the database if an error occurs

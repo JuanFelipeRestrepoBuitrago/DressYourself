@@ -1,0 +1,256 @@
+:root {
+   --xxs: 12px;
+   --xs: 14px;
+   --sm: 16px;
+   --md: 18px;
+   --lg: 20px;
+   --xl: 28px;
+   --white-color: #e6e6e6d4;
+   --black-color: #000;
+   --black-hover-color: #5b5b5c;
+   --background-border-color: #ccc;
+   --background-hover-color: #e6e6e6;
+   --background-color: #f0f0f0;
+   --primary-color: #4d79ff;
+   --danger-color: #ff4d4d;
+   --primary-hover-color: #3c64e6;
+   --danger-hover-color: #e63c3c;
+}
+
+.row {
+   display: flex;
+   flex-wrap: wrap;
+   width: 600px;
+}
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+.inactive {
+   display: none !important;
+}
+
+.hidden {
+   opacity: 0;
+   pointer-events: none;
+   cursor: default;
+   position: absolute;
+   top: 50%;
+   width: 100%;
+   left: 0;
+}
+
+body {
+   background-color: var(--background-color);
+   font-family: "Poppins", sans-serif;
+   background-image: url("../images_page/12.gif");
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+
+.main-container {
+   width: 100%;
+   min-height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   margin: 3px 0;
+   gap: 24px;
+}
+
+.title {
+   font-size: var(--xl);
+   color: var(--white-color);
+   font-weight: 600;
+}
+
+.outfit {
+   border: 1px solid var(--background-border-color);
+   background-color: var(--background-color);
+   transition: background 0.3s;
+   outline: none;
+   cursor: pointer;
+   position: relative;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   flex-wrap: wrap;
+   background-image: url("../images_page/10.jpg");
+   border-radius: 15px;
+   padding: 20px;
+   box-shadow: 0px 0px 10px rgb(0, 0, 0);
+   margin-bottom: 20px;
+}
+
+.garment-category {
+   text-align: center;
+   margin: 10px;
+}
+
+.garment-category h2 {
+   font-size: 18px;
+   margin: 5px;
+}
+
+.image-container {
+   width: 150px;
+   height: 150px;
+   overflow: hidden;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   margin: 10px auto;
+}
+
+.image-container img {
+   max-width: 100%;
+   max-height: 100%;
+   object-fit: cover;
+}
+
+.garment-category p {
+   font-size: 16px;
+   margin: 5px;
+}
+
+.form-group {
+   display: flex;
+   justify-content: space-around;
+   margin-top: 20px;
+}
+
+.btn {
+   padding: 10px 20px;
+   font-size: 16px;
+   text-align: center;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+.btn-secondary {
+   background-color: #333;
+   color: #fff;
+   border: 1px solid #333;
+}
+
+.btn-primary {
+   background-color: #007bff;
+   color: #fff;
+   border: 1px solid #007bff;
+}
+
+.btn-secondary:hover {
+   background-color: #000;
+}
+
+.btn-primary:hover {
+   background-color: #0056b3;
+}
+.footer_section {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: center;
+   -ms-flex-pack: center;
+   justify-content: center;
+   position: relative;
+}
+
+.footer_section p {
+   color: #ffffff;
+   margin: 0 auto;
+   text-align: center;
+   padding: 20px;
+}
+
+.footer_section a {
+   color: #ffffff;
+}
+
+#save-outfit-form {
+   max-width: 500px;
+   margin: 0 auto;
+   padding: 20px;
+   background-image: url("../images_page/10.jpg");
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.close {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   font-size: 30px;
+   cursor: pointer;
+   color: #ffffff;
+}
+
+h2 {
+   font-size: 24px;
+   margin-bottom: 20px;
+   color : #fff;
+   text-align: center;
+}
+
+h3 {
+   font-size: 20px;
+   margin-bottom: 20px;
+   color : #000;
+   text-align: center;
+}
+
+#save-outfit-form h2 {
+   text-align: center;
+   margin-bottom: 20px;
+}
+
+#save-outfit-form .form-group {
+   margin-bottom: 20px;
+}
+
+#save-outfit-form label {
+   display: block;
+   font-weight: bold;
+   margin-bottom: 5px;
+   color: #010101; /* Cambia el color de las etiquetas si lo deseas */
+   font-size: 18px; /* Aumenta el tamaño de fuente de las etiquetas */
+}
+
+#save-outfit-form input[type="text"],
+#save-outfit-form input[type="file"],
+#save-outfit-form textarea {
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #000000; 
+   border-radius: 5px;
+   font-size: 16px;
+   margin-bottom: 10px;
+   margin-top: 10px;
+   margin-left: 10px;
+   box-sizing: border-box;
+}
+
+#save-outfit-form input[type="file"] {
+   padding: 5px;
+}
+
+#save-outfit-form button[type="submit"] {
+   background-color: #007BFF;
+   color: #fff;
+   padding: 10px 20px;
+   border: none;
+   border-radius: 5px;
+   font-size: 18px; /* Aumenta el tamaño de fuente del botón */
+   cursor: pointer;
+   transition: background-color 0.3s; /* Agrega una transición suave al color de fondo */
+}
+
+#save-outfit-form button[type="submit"]:hover {
+   background-color: #0056b3;
+}
+
+
+/* Agrega más estilos según tus preferencias */
