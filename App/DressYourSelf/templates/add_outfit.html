@@ -31,14 +31,14 @@
                 <input type="file" class="hidden" name="outfitImage" id="outfitImage" accept="image/*">
                 <label>Image</label>
                 <label for="outfitImage" class="form-control image-review">
-                    <img id="imagePreview" src="{% if image %}{{ image }}{% endif %}" alt="Upload an Image">
+                    <img id="imagePreview" src="{% if image %}{{ image.0 }}{% endif %}" alt="Upload an Image">
                 </label>
             </div>
             <div class="form-group">
                 <input type="file" class="hidden" name="maskImage" id="maskImage" accept="image/*">
                 <label>Image Mask</label>
                 <label for="maskImage" class="form-control image-review">
-                    <img id="maskImagePreview" src="{% if mask %}{{ mask }}{% endif %}" alt="Upload an Image">
+                    <img id="maskImagePreview" src="{% if mask %}{{ mask.0 }}{% endif %}" alt="Upload an Image">
                 </label>
             </div>
             <div class="form-group">
@@ -48,7 +48,11 @@
 
             <div class="form-group">
                 <label for="tops">Top</label>
-                <input type="text" name="tops" value="" hidden id="tops">
+                {% if selected_tops %}
+                    <input type="text" name="tops" value="{% for top in selected_tops %}{{ top.id }},{% endfor %}" hidden id="tops">
+                {% else %}
+                    <input type="text" name="tops" value="" hidden id="tops">
+                {% endif %}
                 <div class="garments-container tops">
                     <div class="chosen-garments">
                         <button class="btn btn-input" type="button" data-modal-button>
@@ -130,7 +134,11 @@
             </div>
             <div class="form-group">
                 <label for="bottoms">Bottom</label>
-                <input type="text" name="bottoms" value="" hidden id="bottoms">
+                {% if selected_bottoms %}
+                    <input type="text" name="bottoms" value="{% for bottom in selected_bottoms %}{{ bottom.id }},{% endfor %}" hidden id="bottoms">
+                {% else %}
+                    <input type="text" name="bottoms" value="" hidden id="bottoms">
+                {% endif %}
                 <div class="garments-container bottoms">
                     <div class="chosen-garments">
                         <button class="btn btn-input" type="button" data-modal-button>
@@ -212,7 +220,11 @@
             </div>
             <div class="form-group">
                 <label for="footwears">Footwear</label>
-                <input type="text" name="footwears" value="" hidden id="footwears">
+                {% if selected_footwears %}
+                    <input type="text" name="footwears" value="{% for footwear in selected_footwears %}{{ footwear.id }},{% endfor %}" hidden id="footwears">
+                {% else %}
+                    <input type="text" name="footwears" value="" hidden id="footwears">
+                {% endif %}
                 <div class="garments-container footwears">
                     <div class="chosen-garments">
                         <button class="btn btn-input" type="button" data-modal-button>
@@ -294,7 +306,11 @@
             </div>
             <div class="form-group">
                 <label for="others">Others</label>
-                <input type="text" name="others" value="" hidden id="others">
+                {% if selected_others %}
+                    <input type="text" name="others" value="{% for other in selected_others %}{{ other.id }},{% endfor %}" hidden id="others">
+                {% else %}
+                    <input type="text" name="others" value="" hidden id="others">
+                {% endif %}
                 <div class="garments-container others">
                     <div class="chosen-garments">
                         <button class="btn btn-input" type="button" data-modal-button>
@@ -381,10 +397,10 @@
             </div>
 
             {% if mask %}
-                <input type="text" name="mask" value="{{ mask }}" hidden>
+                <input type="text" name="mask" value="{{ mask.1 }}" hidden>
             {% endif %}
             {% if image %}
-                <input type="text" name="image" value="{{ image }}" hidden>
+                <input type="text" name="image" value="{{ image.1 }}" hidden>
             {% endif %}
         </form>
     </div>
