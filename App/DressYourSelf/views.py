@@ -257,6 +257,7 @@ def add_outfit(request):
             return redirect('add_outfit')
         
 def generate_random_outfit(request):
+    
     if request.method == 'POST':
         
         # Recupera los datos del formulario enviado
@@ -271,6 +272,8 @@ def generate_random_outfit(request):
         # Crea una instancia de Outfit y guárdala en la base de datos
         outfit = Outfit(name=name, description=description, image=image, user=request.user)
         outfit.save()
+        
+        
 
         # Añade los componentes del atuendo al atuendo
         if tops:
@@ -281,7 +284,8 @@ def generate_random_outfit(request):
             outfit.garments.add(*Garment.objects.filter(id__in=footwears))
         if others:
             outfit.garments.add(*Garment.objects.filter(id__in=others))
-
+            
+        
         return redirect('closet_outfits')
 
     else:
@@ -290,7 +294,7 @@ def generate_random_outfit(request):
         bottom = Garment.objects.filter(category="Bottom").order_by('?').first()
         footwear = Garment.objects.filter(category="Footwear").order_by('?').first()
         other = Garment.objects.exclude(category__in=["Top", "Bottom", "Footwear"]).order_by('?').first()
-
+        
         return render(request, 'random_outfits.html', {
             'top': top,
             'bottom': bottom,
