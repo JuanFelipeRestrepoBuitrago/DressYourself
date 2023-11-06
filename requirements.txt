@@ -1,0 +1,10 @@
+django==4.2.4
+Pillow==10.0.0
+sqlparse==0.4.4
+requests==2.31.0
+diffusers==0.21.4
+transformers==4.31.1
+accelerate==0.24.1
+torch==2.1.0
+torchaudio==2.1.0
+torchvision==0.16.0

@@ -1,9 +1,16 @@
 const imageInput = document.querySelector('#outfitImage');
 const imagePreview = document.querySelector('#imagePreview')
+const imageMaskInput = document.querySelector('#maskImage');
+const imageMaskPreview = document.querySelector('#maskImagePreview')
 
 imageInput.addEventListener('change', () => {
     const image = imageInput.files[0];
     imagePreview.src = URL.createObjectURL(image);
+});
+
+imageMaskInput.addEventListener('change', () => {
+    const image = imageMaskInput.files[0];
+    imageMaskPreview.src = URL.createObjectURL(image);
 });
 
 function hideModals(modals) {

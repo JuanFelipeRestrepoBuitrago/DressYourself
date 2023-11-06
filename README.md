@@ -14,6 +14,12 @@ This project is a web product which allows people to store and to try their clot
 10.6.0
 
 # Requirements
+## Install Requirements
+You must execute the following command in order to install the requirements, we recommend to use a virtual enviroment.
+```cmd
+python -m pip install -r requirements.txt
+```
+## Packages Individually
 You must have the following packages in your python interpreter or your python virtual enviroment in order to execute it.
 
 ![](https://skillicons.dev/icons?i=django) 
