@@ -10,6 +10,12 @@ from .forms import CustomUserChangeForm, CustomPasswordChangeForm
 from .generation import APIs, get_outfit_caption, get_outfit
 from .temp import *
 from django.core.files.base import ContentFile
+import openai
+import os
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 apis = APIs()
 
@@ -391,6 +397,7 @@ def save_outfit_generated(request):
 
 
 def generate_random_outfit(request):
+    
     if request.method == 'POST':
         
         # Recupera los datos del formulario enviado
@@ -405,6 +412,8 @@ def generate_random_outfit(request):
         # Crea una instancia de Outfit y guárdala en la base de datos
         outfit = Outfit(name=name, description=description, image=image, user=request.user)
         outfit.save()
+        
+        
 
         # Añade los componentes del atuendo al atuendo
         if tops:
@@ -415,7 +424,8 @@ def generate_random_outfit(request):
             outfit.garments.add(*Garment.objects.filter(id__in=footwears))
         if others:
             outfit.garments.add(*Garment.objects.filter(id__in=others))
-
+            
+        
         return redirect('closet_outfits')
 
     else:
@@ -424,7 +434,7 @@ def generate_random_outfit(request):
         bottom = Garment.objects.filter(category="Bottom").order_by('?').first()
         footwear = Garment.objects.filter(category="Footwear").order_by('?').first()
         other = Garment.objects.exclude(category__in=["Top", "Bottom", "Footwear"]).order_by('?').first()
-
+        
         return render(request, 'random_outfits.html', {
             'top': top,
             'bottom': bottom,
@@ -594,3 +604,68 @@ def edit_user(request):
         form = CustomUserChangeForm(instance=request.user)
     return render(request, 'edit_user.html', {'form': form})
 """
+#chatbot
+
+openai.api_key = 'su respectiva api key'
+
+
+def get_completion(prompt, model="gpt-3.5-turbo"):
+    messages = [{"role": "user", "content": prompt}]
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=0,  # this is the degree of randomness of the model's output
+    )
+    return response.choices[0].message["content"]
+
+
+def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0):
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=temperature,  # this is the degree of randomness of the model's output
+    )
+    return response.choices[0].message["content"]
+
+
+def collect_messages(prompt, context):
+    context.append({'role': 'user', 'content': f"{prompt}"})
+    response = get_completion_from_messages(context)
+    context.append({'role': 'assistant', 'content': f"{response}"})
+    return response
+
+
+def chat(request):
+    context = [{'role': 'system', 'content': """
+    You are the virtual assistant of DreesYourSelf, your job is to resolve doubts for clients and be short with the messages/
+    DressYourSelf is a platform that simulates a virtual closet and allows its clients to organize their clothes in a virtual environment.
+    First you greet the user and offer to answer their questions/
+    The operation of the application is as follows, this can help the user tu know how to use the platform/
+    In the Add Garments button you can enter the desired garments by uploading images/
+    In Garments section it will allow you to see what clothes you have uploaded to the platform and search por specific ones/
+    The button Closet will allow you to see your created outfits and will have a search bar/
+    Add outfit will be the way to assemble his clothes of the garments you had uppload, match them, see how he looks on himself and generate random outfits/
+    In addition to this it has the basic functions of editing profile and forgot password/
+
+
+    """}]
+
+
+    return render(request, 'chat.html',)
+
+
+def get_bot_response(request):
+    user_input = request.GET.get('user_input', '')
+    context = [{'role': 'system', 'content': """
+    You are the virtual assistant of DreesYourSelf, your job is to resolve doubts for clients and be short with the messages/
+    DressYourSelf is a platform that simulates a virtual closet and allows its clients to organize their clothes in a virtual environment.
+    First you greet the user and offer to answer their questions/
+    The operation of the application is as follows, this can help the user tu know how to use the platform/
+    In the Add Garments button you can enter the desired garments by uploading images/
+    In Garments section it will allow you to see what clothes you have uploaded to the platform and search por specific ones/
+    The button Closet will allow you to see your created outfits and will have a search bar/
+    Add outfit will be the way to assemble his clothes of the garments you had uppload, match them, see how he looks on himself and generate random outfits/
+    In addition to this it has the basic functions of editing profile and forgot password/
+    """}]
+    response_data = {'assistant_response': collect_messages(user_input, context)}
+    return JsonResponse(response_data)

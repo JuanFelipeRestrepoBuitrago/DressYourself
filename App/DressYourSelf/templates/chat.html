@@ -1,0 +1,88 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body {
+            background-color: #f0f0f0; /* Color de fondo para el cuerpo de la página */
+        }
+
+
+        #welcome-message {
+            color: white; /* Cambia el color del texto a blanco */
+            text-align: center; /* Centra el texto */
+            margin-top: 20px; /* Espacio superior */
+        }
+
+
+        #chat-container {
+            background-color: white; /* Color de fondo para el contenedor del chat */
+            width: 300px; /* Ancho del contenedor del chat, ajusta según tus necesidades */
+            margin: auto; /* Centra el contenedor del chat en la página */
+            padding: 20px; /* Añade un espacio interno alrededor del contenedor del chat */
+            border-radius: 10px; /* Bordes redondeados para el contenedor del chat */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para resaltar el contenedor del chat */
+        }
+
+
+        #chat-messages p {
+            color: black; /* Cambia el color del texto a negro para mejorar la legibilidad */
+        }
+
+
+        /* Añade este estilo para cambiar el color del texto específico a blanco */
+        #chat-container p {
+            color: black;
+        }
+
+
+        /* Añade este estilo para cambiar el color del texto específico a blanco */
+        #chat-container p.welcome-message {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="welcome-message">
+        <p>Welcom to DressYourSelf assistant!</p>
+    </div>
+
+
+    <div id="chat-container">
+        <div id="chat-messages">
+            {% for message in context %}
+                {% if message.role == 'system' %}
+                    <p class="welcome-message">{{ message.role }}: {{ message.content }}</p>
+                {% else %}
+                    <p>{{ message.role }}: {{ message.content }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <input type="text" id="user-input" placeholder="You: ">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+
+    <script>
+        function sendMessage() {
+            var userInput = document.getElementById("user-input").value;
+            document.getElementById("chat-messages").innerHTML += "<p>User: " + userInput + "</p>";
+            document.getElementById("user-input").value = "";
+
+
+            // Call the Django view to get the bot's response
+            fetch('/get_bot_response/?user_input=' + encodeURIComponent(userInput))
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("chat-messages").innerHTML += "<p>Assistant: " + data.assistant_response + "</p>";
+                });
+        }
+    </script>
+</body>
+</html>
+{% endblock %}
