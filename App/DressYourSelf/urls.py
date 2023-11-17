@@ -26,5 +26,8 @@ urlpatterns = [
     #profile
     path('edit_user/', edit_user, name='edit_user'),
     path('change_password/', change_password, name='change_password'),
+    #chatbot
+    path('chat/', chat, name='chat'),
+    path('get_bot_response/', get_bot_response, name='get_bot_response'),
 
 ]
